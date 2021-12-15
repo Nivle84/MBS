@@ -23,27 +23,37 @@ namespace SplashScreenTest02.Droid
 	public class SplashActivity : Activity, Android.Animation.Animator.IAnimatorListener
 	{
 		//https://www.serkanseker.com/animated-splash-screen/
+		//Splash skal tjekke om der er en bruger logget ind, og om moods og influences listerne har værdier.
+		//Moods og influences bliver vel hentet af sig selv hvis vi henter dage med lazy loading?
+		//Hvis ikke fører den til login/registrér.
+		//Notes på historik skærmen kan hentes via lazy loading.
+
+		public Intent mainAct;
 		public void OnAnimationCancel(Animator animation)
 		{
-			throw new NotImplementedException();
 			//TODO If startup task is complete, cancel animation
-			//StartActivity(new Intent(Application.Context, typeof(MainActivity)));
+			//StartActivity(mainAct);
 		}
 
 		public void OnAnimationEnd(Animator animation)
 		{
 			//throw new NotImplementedException();
-			StartActivity(new Intent(Application.Context, typeof(MainActivity)));
+			//StartActivity(new Intent(Application.Context, typeof(MainActivity)));
+			//mainAct = new Intent(this, typeof(MainActivity));
+			//mainAct.PutExtra();
+
 		}
 
 		public void OnAnimationRepeat(Animator animation)
 		{
-			//throw new NotImplementedException();
 		}
 
 		public void OnAnimationStart(Animator animation)
 		{
-			//throw new NotImplementedException();
+			//Tjek lister for influence og mood
+			//Tjek om der er en bruger logget ind
+
+
 		}
 
 		protected override void OnCreate(Bundle savedInstanceState)
