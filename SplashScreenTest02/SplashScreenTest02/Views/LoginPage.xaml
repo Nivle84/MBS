@@ -4,11 +4,87 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="SplashScreenTest02.Views.LoginPage"
-             Shell.NavBarIsVisible="False">
+             x:Class="MBStest03.Views.LoginPage"
+             Shell.NavBarIsVisible="False"
+             xmlns:local="clr-namespace:MBStest03">
+    <!--<ContentPage.Resources>
+        <ResourceDictionary>
+            <x:String x:Key="loginImage">Splash_screen.jpg</x:String>
+        </ResourceDictionary>
+    </ContentPage.Resources>-->
     <ContentPage.Content>
-        <StackLayout Padding="10,0,10,0" VerticalOptions="Center">
-            <Button VerticalOptions="Center" Text="Login" Command="{Binding LoginCommand}"/>
-        </StackLayout>
+        <Grid Margin="2,2,2,2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="20"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <!--<ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>-->
+                <ColumnDefinition Width="20"/>
+            </Grid.ColumnDefinitions>
+            <!--<BoxView BackgroundColor="Aquamarine" Grid.Column="1" Grid.Row="1"/>
+            <BoxView BackgroundColor="Aqua" Grid.Column="2" Grid.Row="1"/>
+            <BoxView BackgroundColor="Bisque" Grid.Column="3" Grid.Row="1"/>
+            <BoxView BackgroundColor="Aquamarine" Grid.Column="1" Grid.Row="2"/>
+            <BoxView BackgroundColor="Aqua" Grid.Column="2" Grid.Row="2"/>
+            <BoxView BackgroundColor="Bisque" Grid.Column="3" Grid.Row="2"/>
+            <BoxView BackgroundColor="Aquamarine" Grid.Column="1" Grid.Row="3"/>
+            <BoxView BackgroundColor="Aqua" Grid.Column="2" Grid.Row="3"/>
+            <BoxView BackgroundColor="Bisque" Grid.Column="3" Grid.Row="3"/>
+            <BoxView BackgroundColor="Aquamarine" Grid.Column="1" Grid.Row="4"/>
+            <BoxView BackgroundColor="Aqua" Grid.Column="2" Grid.Row="4"/>
+            <BoxView BackgroundColor="Bisque" Grid.Column="3" Grid.Row="4"/>
+            <BoxView BackgroundColor="Aquamarine" Grid.Column="1" Grid.Row="5"/>
+            <BoxView BackgroundColor="Aqua" Grid.Column="2" Grid.Row="5"/>
+            <BoxView BackgroundColor="Bisque" Grid.Column="3" Grid.Row="5"/>
+            <BoxView BackgroundColor="Aquamarine" Grid.Column="1" Grid.Row="6"/>
+            <BoxView BackgroundColor="Aqua" Grid.Column="2" Grid.Row="6"/>
+            <BoxView BackgroundColor="Bisque" Grid.Column="3" Grid.Row="6"/>
+            <BoxView BackgroundColor="Aquamarine" Grid.Column="1" Grid.Row="7"/>
+            <BoxView BackgroundColor="Aqua" Grid.Column="2" Grid.Row="7"/>
+            <BoxView BackgroundColor="Bisque" Grid.Column="3" Grid.Row="7"/>-->
+            
+            <!--<Image Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="3" Grid.RowSpan="3" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"
+                Source="C:\Users\Nivle84\source\repos\MBStest03\MBStest03\MBStest03\Assets\Splash_screen.jpg"/>-->
+                
+            <!--https://docs.microsoft.com/en-us/xamarin/get-started/tutorials/image/?tabs=vswin&tutorial-step=1-->
+            <!--<Image Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="3" Grid.RowSpan="3" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"
+                Source="Assets/Splash_screen.jpg"/>-->
+            <!--<Image Source="C:\Users\Nivle84\source\repos\MBStest03\MBStest03\MBStest03.Android\Resources\drawable\Splash_screen.jpg"
+                   HeightRequest="300" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3" Grid.RowSpan="3" Aspect="AspectFit"/>-->
+            <!--<Image Source="resources\drawable\splash.jpg" Grid.Column="1" Grid.Row="1"
+                   Aspect="AspectFit"/>-->
+
+            <Image x:Name="imgDisp" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Grid.RowSpan="3"/>
+            <Label Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" 
+                Text="Mange Bække Små" FontSize="40" HorizontalTextAlignment="Center"/>
+
+            <StackLayout Grid.Row="5" Grid.RowSpan="3" Grid.Column="1" Grid.ColumnSpan="3" >
+                <Label Text="Log ind" FontSize="Large" HorizontalTextAlignment="Center"/>
+                <Entry HorizontalOptions="Fill" HorizontalTextAlignment="Center" Placeholder="E-mail"/>
+                <Entry HorizontalOptions="Fill" Placeholder="Kodeord" HorizontalTextAlignment="Center" IsPassword="True"/>
+                <Button Text="Log ind" HorizontalOptions="Center" Command="{Binding LoginCommand}"/>
+                <Button Text="Ny Konto" HorizontalOptions="End" VerticalOptions="EndAndExpand"/>
+            </StackLayout>
+            <!--<StackLayout Padding="10,0,10,0" VerticalOptions="Center">
+            <Image Source=".\assets\Splash_screen.jpg" Aspect="AspectFit"/>
+                <Label Text="Mange Bække Små" HorizontalOptions="Center" />
+                <Button VerticalOptions="Center" Text="Login" Command="{Binding LoginCommand}"/>
+        </StackLayout>-->
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

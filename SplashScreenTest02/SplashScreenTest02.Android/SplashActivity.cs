@@ -4,6 +4,8 @@ using Android.Content;
 using Android.Content.PM;
 using Android.OS;
 using System;
+using SplashScreenTest02.Services;
+using System.Threading.Tasks;
 
 namespace SplashScreenTest02.Droid
 {
@@ -31,7 +33,7 @@ namespace SplashScreenTest02.Droid
 		public Intent mainAct;
 		public void OnAnimationCancel(Animator animation)
 		{
-			//TODO If startup task is complete, cancel animation
+			//TODO Pass data fra prelaunch.cs til mainAct
 			//StartActivity(mainAct);
 		}
 
@@ -50,10 +52,15 @@ namespace SplashScreenTest02.Droid
 
 		public void OnAnimationStart(Animator animation)
 		{
+			PreLaunch preLaunch = new PreLaunch();
+			if (Task.Run(() => preLaunch.preLaunchTasks).IsCompletedSuccessfully)
+			{
+				animation.Cancel();
+			}
+
+
 			//Tjek lister for influence og mood
 			//Tjek om der er en bruger logget ind
-
-
 		}
 
 		protected override void OnCreate(Bundle savedInstanceState)
