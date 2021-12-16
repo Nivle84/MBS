@@ -31,10 +31,12 @@ namespace SplashScreenTest02.Droid
 		//Notes på historik skærmen kan hentes via lazy loading.
 
 		public Intent mainAct;
+		//private readonly UserState UserState = new UserState();
 		public void OnAnimationCancel(Animator animation)
 		{
-			//TODO Pass data fra prelaunch.cs til mainAct
-			//StartActivity(mainAct);
+			//TODO Pass data fra prelaunch.cs til mainAct (skulle være klaret)
+
+			StartActivity(mainAct);
 		}
 
 		public void OnAnimationEnd(Animator animation)
@@ -55,6 +57,10 @@ namespace SplashScreenTest02.Droid
 			PreLaunch preLaunch = new PreLaunch();
 			if (Task.Run(() => preLaunch.preLaunchTasks).IsCompletedSuccessfully)
 			{
+				//Bundle bundle;
+				//bundle = preLaunch.GatherBundle();
+				mainAct = new Intent(this, typeof(MainActivity));
+				mainAct.PutExtras(preLaunch.GatherBundle());
 				animation.Cancel();
 			}
 

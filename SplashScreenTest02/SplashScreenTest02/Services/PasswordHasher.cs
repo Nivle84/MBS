@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using BCrypt.Net;
 
 namespace SplashScreenTest02.Services
 {
-	internal class PasswordHasher
+	public class PasswordHasher
 	{
+		private void Hasher(string passToHash)
+		{
 
+		}
 	}
 }
