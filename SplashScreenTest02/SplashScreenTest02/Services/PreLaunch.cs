@@ -15,11 +15,11 @@ namespace SplashScreenTest02.Services
 		//public static IList<Mood> moods;
 		//public static IList<Influence> influences;
 		private static Uri baseUri = new Uri(string.Format ("https://localhost:44314/api/", string.Empty));
-		private static HttpClient client;
+		private static HttpClient client = new HttpClient();
 		private readonly UserState userState;
 		public static string storedInfluences { get; set; }
 		public static string storedMoods { get; set; }
-		private static async void GetInfluencesAsync()
+		private static async Task GetInfluencesAsync()
 		{
 			storedInfluences = (string)JsonConvert.DeserializeObject(Preferences.Get("StoredInfluences", "default_value"));
 			if (storedInfluences == null)
@@ -39,7 +39,7 @@ namespace SplashScreenTest02.Services
 			//return null;
 		}
 
-		private static async void GetMoodsAsync()
+		private static async Task GetMoodsAsync()
 		{
 			//var storedMoods;
 			storedMoods = (string)JsonConvert.DeserializeObject(Preferences.Get("StoredMoods", "default_value"));
@@ -69,26 +69,27 @@ namespace SplashScreenTest02.Services
 			return launchBundle;
 		}
 
-		public async void LoggedInUserExists()
-		{
-			//var storedUser = JsonConvert.DeserializeObject(Preferences.Get("StoredUser", "default_value"));
+		//public async void LoggedInUserExists()
+		//{
+		//	//var storedUser = JsonConvert.DeserializeObject(Preferences.Get("StoredUser", "default_value"));
 
-		}
+		//}
 
 		public PreLaunch()
 		{
+			//preLaunchTasks.ForEach(task => task.Start());
 			//influences = (IList<Influence>)GetInfluencesAsync();
 			//moods = (IList<Mood>)GetMoodsAsync();
 		}
 
-		static Task moodTask =		new Task(GetMoodsAsync);
-		static Task influenceTask = new Task(GetInfluencesAsync);
+		static Task moodTask =		GetMoodsAsync();
+		static Task influenceTask = GetInfluencesAsync();
 		//static Task userTask = new Task(LoggedInUserExists);
 
 		public List<Task> preLaunchTasks = new List<Task>()
 		{
 			moodTask,
-			influenceTask,
+			influenceTask
 			//userTask
 		};
 

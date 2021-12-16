@@ -57,7 +57,7 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="6"/>
                 </Grid.ColumnDefinitions>
-                <ListView ItemsSource=""/>
+                <!--<ListView ItemsSource=""/>-->
             </Grid>
             <Editor Grid.Row="4" Grid.Column="1" Grid.RowSpan="2" Grid.ColumnSpan="3"
                 IsSpellCheckEnabled="True" IsVisible="False"/>

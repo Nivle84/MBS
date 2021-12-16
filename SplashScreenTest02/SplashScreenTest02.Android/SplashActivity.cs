@@ -55,7 +55,14 @@ namespace SplashScreenTest02.Droid
 		public void OnAnimationStart(Animator animation)
 		{
 			PreLaunch preLaunch = new PreLaunch();
-			if (Task.Run(() => preLaunch.preLaunchTasks).IsCompletedSuccessfully)
+			foreach (var item in preLaunch.preLaunchTasks)
+			{
+				item.
+			}
+
+			//while (!preLaunch.preLaunchTasks[0].IsCompletedSuccessfully | !preLaunch.preLaunchTasks[1].IsCompletedSuccessfully)
+
+			if (preLaunch.preLaunchTasks[0].IsCompletedSuccessfully && preLaunch.preLaunchTasks[1].IsCompletedSuccessfully)
 			{
 				//Bundle bundle;
 				//bundle = preLaunch.GatherBundle();
