@@ -17,8 +17,8 @@ namespace SplashScreenTest02.Services
 		private static Uri baseUri = new Uri(string.Format ("https://localhost:44314/api/", string.Empty));
 		private static HttpClient client = new HttpClient();
 		private readonly UserState userState;
-		public static string storedInfluences { get; set; }
-		public static string storedMoods { get; set; }
+		public static string storedInfluences;
+		public static string storedMoods;
 		private static async Task GetInfluencesAsync()
 		{
 			storedInfluences = (string)JsonConvert.DeserializeObject(Preferences.Get("StoredInfluences", "default_value"));
@@ -82,16 +82,16 @@ namespace SplashScreenTest02.Services
 			//moods = (IList<Mood>)GetMoodsAsync();
 		}
 
-		static Task moodTask =		GetMoodsAsync();
+		static Task moodTask = new Task(new Action(GetMoodsAsync));
 		static Task influenceTask = GetInfluencesAsync();
 		//static Task userTask = new Task(LoggedInUserExists);
 
-		public List<Task> preLaunchTasks = new List<Task>()
-		{
-			moodTask,
-			influenceTask
-			//userTask
-		};
+		//public List<Task> preLaunchTasks = new List<Task>()
+		//{
+		//	moodTask,
+		//	influenceTask
+		//	//userTask
+		//};
 
 
 		//Kig efter om der er en bruger i secure storage
