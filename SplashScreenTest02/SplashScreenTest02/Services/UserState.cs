@@ -9,18 +9,30 @@ namespace SplashScreenTest02.Services
 {
 	public class UserState
 	{
+		private User _currentUser;
+
 		public User CurrentUser
 		{
 			get
 			{
-				var currentUser = JsonConvert.DeserializeObject<User>(Preferences.Get("LoggedInUserKey", "default_value"));
-				return currentUser;
+				//_currentUser = Preferences.Set("CurrentUser", JsonConvert.SerializeObject(value));
+				_currentUser = JsonConvert.DeserializeObject<User>(Preferences.Get("CurrentUser", null));
+				return _currentUser;
 			}
 			set
 			{
-				Preferences.Set("LoggedInUserKey", JsonConvert.SerializeObject(value));
+				_currentUser = value;
 			}
 		}
+
+		private int myVar;
+
+		public int MyProperty
+		{
+			get { return myVar; }
+			set { myVar = value; }
+		}
+
 
 		public UserState()
 		{

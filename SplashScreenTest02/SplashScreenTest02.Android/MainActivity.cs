@@ -19,7 +19,7 @@ namespace SplashScreenTest02.Droid
 
             string storedInfluences = Intent.GetStringExtra("StoredInfluences");
             string storedMoods = Intent.GetStringExtra("StoredMoods");
-            int loggedInUserID = Intent.GetIntExtra("LoggedInUserID", 0);
+            int loggedInUserID = Intent.GetIntExtra("StoredUserID", 0);
             LoadApplication(new App());
             //LoadApplication(new App());
         }

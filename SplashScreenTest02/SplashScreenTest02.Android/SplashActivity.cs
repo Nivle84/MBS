@@ -6,6 +6,8 @@ using Android.OS;
 using System;
 using SplashScreenTest02.Services;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Net;
 
 namespace SplashScreenTest02.Droid
 {
@@ -34,8 +36,6 @@ namespace SplashScreenTest02.Droid
 		//private readonly UserState UserState = new UserState();
 		public void OnAnimationCancel(Animator animation)
 		{
-			//TODO Pass data fra prelaunch.cs til mainAct (skulle være klaret)
-
 			StartActivity(mainAct);
 		}
 
@@ -45,7 +45,7 @@ namespace SplashScreenTest02.Droid
 			//StartActivity(new Intent(Application.Context, typeof(MainActivity)));
 			//mainAct = new Intent(this, typeof(MainActivity));
 			//mainAct.PutExtra();
-
+			//animation.Cancel();
 		}
 
 		public void OnAnimationRepeat(Animator animation)
@@ -55,22 +55,14 @@ namespace SplashScreenTest02.Droid
 		public void OnAnimationStart(Animator animation)
 		{
 			PreLaunch preLaunch = new PreLaunch();
-			foreach (var item in preLaunch.preLaunchTasks)	//Tasks "faulter" før dette.
-			{
-				item.Start();
-			}
-
-			//while (!preLaunch.preLaunchTasks[0].IsCompletedSuccessfully | !preLaunch.preLaunchTasks[1].IsCompletedSuccessfully)
-
-			if (preLaunch.preLaunchTasks[0].IsCompletedSuccessfully && preLaunch.preLaunchTasks[1].IsCompletedSuccessfully)
-			{
-				//Bundle bundle;
-				//bundle = preLaunch.GatherBundle();
-				mainAct = new Intent(this, typeof(MainActivity));
-				mainAct.PutExtras(preLaunch.GatherBundle());
-				animation.Cancel();
-			}
-
+			Bundle bundle = preLaunch.GatherBundle();
+			mainAct = new Intent(this, typeof(MainActivity));
+			//mainAct.Extras.PutBundle("preLaunchBundle", bundle);
+			mainAct.PutExtra("preLaunchBundle", bundle);
+			//List<Task> preLaunchTasks = preLaunch.GatherTasks();
+			//Task.WaitAll(PreLaunch.moodTask, PreLaunch.influenceTask, PreLaunch.userTask);
+			//await Task.WhenAll(preLaunch.GatherTasks());
+			animation.Cancel();
 
 			//Tjek lister for influence og mood
 			//Tjek om der er en bruger logget ind
@@ -78,10 +70,14 @@ namespace SplashScreenTest02.Droid
 
 		protected override void OnCreate(Bundle savedInstanceState)
 		{
+			//ServicePointManager
+			//	.ServerCertificateValidationCallback +=
+			//	(sender, cert, chain, sslPolicyErrors) => true;
+
 			base.OnCreate(savedInstanceState);
 			//StartActivity(typeof(MainActivity));
 
-			SetContentView(Resource.Layout.SplashLayout);
+			SetContentView(Resource.Layout.SplashLayout);	//Vi sørger for at View'et der tilhører activity'en er vores minimalistiske layout.
 			var loading_animation = FindViewById<Com.Airbnb.Lottie.LottieAnimationView>(Resource.Id.lottieAnimationView1);
 			loading_animation.AddAnimatorListener(this);
 
