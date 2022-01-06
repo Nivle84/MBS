@@ -6,14 +6,16 @@
              mc:Ignorable="d"
              x:Class="MBStest03.Views.LoginPage"
              Shell.NavBarIsVisible="False"
-             xmlns:local="clr-namespace:MBStest03">
-    <!--<ContentPage.Resources>
-        <ResourceDictionary>
+             xmlns:local="clr-namespace:MBStest03"
+			 xmlns:viewmodel="clr-namespace:MBStest03.ViewModels">
+    <ContentPage.Resources>
+        <!--<ResourceDictionary>
             <x:String x:Key="loginImage">Splash_screen.jpg</x:String>
-        </ResourceDictionary>
-    </ContentPage.Resources>-->
+        </ResourceDictionary>-->
+		<viewmodel:LoginViewModel x:Key="lpVM_V" />
+	</ContentPage.Resources>
     <ContentPage.Content>
-        <Grid Margin="2,2,2,2">
+        <Grid Margin="2,2,2,2" BindingContext="{StaticResource lpVM_V}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="20"/>
                 <RowDefinition Height="*"/>
@@ -71,14 +73,19 @@
 
             <Image x:Name="imgDisp" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Grid.RowSpan="3"/>
             <Label Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" 
-                Text="Mange Bække Små" FontSize="40" HorizontalTextAlignment="Center"/>
+                Text="Mange Bække Små" FontSize="38" HorizontalTextAlignment="Center"/>
 
             <StackLayout Grid.Row="5" Grid.RowSpan="3" Grid.Column="1" Grid.ColumnSpan="3" >
                 <Label Text="Log ind" FontSize="Large" HorizontalTextAlignment="Center"/>
-                <Entry HorizontalOptions="Fill" HorizontalTextAlignment="Center" Placeholder="E-mail"/>
-                <Entry HorizontalOptions="Fill" Placeholder="Kodeord" HorizontalTextAlignment="Center" IsPassword="True"/>
+				<!--<Label Text="{Binding CurrentUser.UserEmail, Mode=OneWay}" />-->
+				<Entry HorizontalOptions="Fill" HorizontalTextAlignment="Center" Placeholder="E-mail" Text="{Binding CurrentUser.UserEmail, Mode=OneWayToSource}" />
+				<Entry HorizontalOptions="Fill" HorizontalTextAlignment="Center" Placeholder="Kodeord" IsPassword="True" Text="{Binding CurrentUser.UserPassword, Mode=OneWayToSource}"/>
                 <Button Text="Log ind" HorizontalOptions="Center" Command="{Binding LoginCommand}"/>
-                <Button Text="Ny Konto" HorizontalOptions="End" VerticalOptions="EndAndExpand"/>
+				<Label Text="Opret Konto" TextDecorations="Underline" HorizontalOptions="Center" VerticalOptions="EndAndExpand">
+					<Label.GestureRecognizers>
+						<TapGestureRecognizer Command="{Binding GoToCreateUserCommand}"/>
+					</Label.GestureRecognizers>
+				</Label>
             </StackLayout>
             <!--<StackLayout Padding="10,0,10,0" VerticalOptions="Center">
             <Image Source=".\assets\Splash_screen.jpg" Aspect="AspectFit"/>

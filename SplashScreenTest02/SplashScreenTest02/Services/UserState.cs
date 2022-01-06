@@ -25,15 +25,6 @@ namespace SplashScreenTest02.Services
 			}
 		}
 
-		private int myVar;
-
-		public int MyProperty
-		{
-			get { return myVar; }
-			set { myVar = value; }
-		}
-
-
 		public UserState()
 		{
 			CurrentUser = new User();

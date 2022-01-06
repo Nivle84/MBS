@@ -2,6 +2,7 @@
 <Shell xmlns="http://xamarin.com/schemas/2014/forms" 
        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
        xmlns:local="clr-namespace:SplashScreenTest02.Views"
+	   xmlns:local2="clr-namespace:MBStest03.Views"
        Title="SplashScreenTest02"
        x:Class="SplashScreenTest02.AppShell">
 
@@ -29,12 +30,30 @@
         </ResourceDictionary>
     </Shell.Resources>
 
-    <TabBar>
-        <ShellContent Title="About" Icon="icon_about.png" Route="AboutPage" ContentTemplate="{DataTemplate local:AboutPage}" />
-        <ShellContent Title="Browse" Icon="icon_feed.png" ContentTemplate="{DataTemplate local:ItemsPage}" />
+	
+    <!--<TabBar>-->
+	<TabBar Route="main" >
+		<Tab Title="Registrér" Icon="iconregister.png">
+			<ShellContent ContentTemplate="{DataTemplate local2:MainPage}"/>
+		</Tab>
+		<Tab Title="Min Å" Icon="iconmystream.png">
+			<ShellContent ContentTemplate="{DataTemplate local2:MyStreamPage}" />
+		</Tab>
+		<Tab Title="Historik" Icon="iconhistory.png">
+			<ShellContent ContentTemplate="{DataTemplate local2:HistoryPage}"/>
+		</Tab>
+		<!--<ShellContent Title="Registrér" Icon="iconregister.png" ContentTemplate="{DataTemplate local2:MainPage}" />
+		<ShellContent Title="Min Å" Icon="iconmystream.png" ContentTemplate="{DataTemplate local2:MyStreamPage}"/>
+		<ShellContent Title="Historik" Icon="iconhistory.png" ContentTemplate="{DataTemplate local2:HistoryPage}"/>-->
+		
+		<!--<ShellContent Title="About" Icon="icon_about.png" Route="AboutPage" ContentTemplate="{DataTemplate local:AboutPage}" />
+        <ShellContent Title="Browse" Icon="icon_feed.png" ContentTemplate="{DataTemplate local:ItemsPage}" />-->
     </TabBar>
 
-    <!--
+	<ShellItem Route="login">
+		<ShellContent ContentTemplate="{DataTemplate local2:LoginPage}" />
+	</ShellItem>
+	<!--
         If you would like to navigate to this content you can do so by calling
         await Shell.Current.GoToAsync("//LoginPage");
     -->

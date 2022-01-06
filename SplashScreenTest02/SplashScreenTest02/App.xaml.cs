@@ -1,6 +1,8 @@
-﻿using SplashScreenTest02.Services;
+﻿using MBStest03.Views;
+using SplashScreenTest02.Services;
 using SplashScreenTest02.Views;
 using System;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -14,7 +16,11 @@ namespace SplashScreenTest02
 			InitializeComponent();
 
 			//DependencyService.Register<MockDataStore>();
-			MainPage = new AppShell();
+
+			if (Preferences.Get("CurrentUserID", 0) != 0)	//Hvis der findes et ID, gå til AppShell. Ellers gå til Login.
+				MainPage = new AppShell();
+			else
+				MainPage = new LoginPage();
 		}
 
 		protected override void OnStart()

@@ -12,7 +12,7 @@ using System.Net;
 namespace SplashScreenTest02.Droid
 {
 	[Activity(
-		Label = "SplashScreenTest02",
+		Label = "Mange Bække Små",
 		Icon = "@drawable/mbs_logo",
 		NoHistory = true,
 		Theme = "@style/MainTheme.Splash",
@@ -45,7 +45,7 @@ namespace SplashScreenTest02.Droid
 			//StartActivity(new Intent(Application.Context, typeof(MainActivity)));
 			//mainAct = new Intent(this, typeof(MainActivity));
 			//mainAct.PutExtra();
-			//animation.Cancel();
+			animation.Cancel();
 		}
 
 		public void OnAnimationRepeat(Animator animation)
@@ -62,7 +62,7 @@ namespace SplashScreenTest02.Droid
 			//List<Task> preLaunchTasks = preLaunch.GatherTasks();
 			//Task.WaitAll(PreLaunch.moodTask, PreLaunch.influenceTask, PreLaunch.userTask);
 			//await Task.WhenAll(preLaunch.GatherTasks());
-			animation.Cancel();
+			//animation.Cancel();	//Man når desværre ikke at se den fine loadingskærm hvis cancel sker hernede.
 
 			//Tjek lister for influence og mood
 			//Tjek om der er en bruger logget ind

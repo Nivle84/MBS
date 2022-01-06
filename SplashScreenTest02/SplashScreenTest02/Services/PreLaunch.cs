@@ -13,44 +13,45 @@ namespace SplashScreenTest02.Services
 {
 	public class PreLaunch
 	{
-		private static Uri baseUri = new Uri(string.Format ("https://10.0.2.2:44314/api/", string.Empty));
-		private static HttpClient client; // = new HttpClient();
-		public static HttpClient Client
-		{
-			get
-			{
-				client = client ?? new HttpClient
-				(
-					new HttpClientHandler()
-					{
-						ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; }
-					},
-					false
-				)
-				{
-					BaseAddress = baseUri
-				};
-				return client;
-			}
-		}
+		//private static Uri baseUri = new Uri(string.Format ("https://10.0.2.2:44314/api/", string.Empty));
+		//private static HttpClient client; // = new HttpClient();
+		//public static HttpClient Client
+		//{
+		//	get
+		//	{
+		//		client = client ?? new HttpClient
+		//		(
+		//			new HttpClientHandler()
+		//			{
+		//				ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; }
+		//			},
+		//			false
+		//		)
+		//		{
+		//			BaseAddress = baseUri
+		//		};
+		//		return client;
+		//	}
+		//}
 		private readonly UserState userState = new UserState();
 		public static string storedInfluences;
 		public static string storedMoods;
+		public static ApiHelper apiHelper = new ApiHelper();
 
 		private static Task GetInfluencesAsync()
 		{
 			return Task.Run(async () =>
 			{
 				storedInfluences = Preferences.Get("StoredInfluences", String.Empty);
-				
 				if (storedInfluences == null)
 				{
-					HttpResponseMessage response = await Client.GetAsync(baseUri + "influences");
-					if (response.IsSuccessStatusCode)
-					{
-						Preferences.Set("StoredInfluences", await response.Content.ReadAsStringAsync());
+					//HttpResponseMessage response = await apiHelper.ApiGetter("influences");
+					var response = await apiHelper.ApiGetter("influences");
+					//if (response.IsSuccessStatusCode)
+					//{
+						Preferences.Set("StoredInfluences", response);
 						storedInfluences = Preferences.Get("StoredInfluences", String.Empty);
-					}
+					//}
 				}
 			});
 		}
@@ -62,17 +63,18 @@ namespace SplashScreenTest02.Services
 				storedMoods = Preferences.Get("StoredMoods", String.Empty);
 				if (storedMoods == null)
 				{
-					HttpResponseMessage response = await Client.GetAsync(baseUri + "moods");
-					if (response.IsSuccessStatusCode)
-					{
-						Preferences.Set("StoredMoods", await response.Content.ReadAsStringAsync());
+					//HttpResponseMessage response = await apiHelper.ApiGetter("moods");
+					var response = await apiHelper.ApiGetter("moods");
+					//if (response.IsSuccessStatusCode)
+					//{
+						Preferences.Set("StoredMoods", response);
 						storedMoods = Preferences.Get("StoredMoods", String.Empty);
-					}
+					//}
 				}
 			});
 		}
 
-		private static Task GetLoggedInUser()
+		private static Task GetLoggedInUser()	//Bruges ikke pt., tjekkes andetsteds... ikke??
 		{
 			return Task.Run(() =>
 			{

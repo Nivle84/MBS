@@ -2,7 +2,6 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MBStest03.Views.MainPage"
-             xmlns:model="clr-namespace:MBStest03.Models"
              xmlns:local="clr-namespace:MBStest03.ViewModels">
     <ContentPage.Resources>
         <local:MainPageVM x:Key="mpVM_V" x:Name="mpVM_CB"/>
