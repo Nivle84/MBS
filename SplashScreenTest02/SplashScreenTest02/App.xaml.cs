@@ -21,7 +21,7 @@ namespace SplashScreenTest02
 			//if (Preferences.Get(Constants.StoredUserID, 0) != 0)    //Hvis der findes et ID, gå til AppShell. Ellers gå til Login.
 			//	MainPage = new AppShell();
 			//else
-				MainPage = new NavigationPage(new LoginPage());
+				MainPage = new LoginPage();
 			//ContentPage = new CreateUserPage();
 		}
 

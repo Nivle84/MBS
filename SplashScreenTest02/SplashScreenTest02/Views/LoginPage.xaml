@@ -74,7 +74,7 @@
             <Label Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" 
                 Text="Mange Bække Små" FontSize="38" HorizontalTextAlignment="Center"/>
 
-            <StackLayout Grid.Row="5" Grid.RowSpan="3" Grid.Column="1" Grid.ColumnSpan="3" >
+            <StackLayout Grid.Row="5" Grid.RowSpan="3" Grid.Column="1" Grid.ColumnSpan="3" BindingContext="{StaticResource lpVM_V}">
                 <Label Text="Log ind" FontSize="Large" HorizontalTextAlignment="Center"/>
 				<!--<Label Text="{Binding CurrentUser.UserEmail, Mode=OneWay}" />-->
 				<Entry HorizontalOptions="Fill" HorizontalTextAlignment="Center" Placeholder="E-mail" Text="{Binding CurrentUser.UserEmail, Mode=OneWayToSource}" />
@@ -82,7 +82,8 @@
                 <Button Text="Log ind" HorizontalOptions="Center" Command="{Binding LoginCommand}"/>
 				<Label Text="Opret Konto" TextDecorations="Underline" HorizontalOptions="Center" VerticalOptions="EndAndExpand">
 					<Label.GestureRecognizers>
-						<TapGestureRecognizer Command="{Binding GoToCreateUserCommand}"/>
+						<!--<TapGestureRecognizer Command="{Binding GoToCreateUserCommand}"/>-->
+						<TapGestureRecognizer  Command="{Binding GoToCreateUserCommand}"/>
 					</Label.GestureRecognizers>
 				</Label>
             </StackLayout>
