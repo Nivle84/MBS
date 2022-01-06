@@ -17,7 +17,7 @@ namespace SplashScreenTest02
 
 			//DependencyService.Register<MockDataStore>();
 
-			if (Preferences.Get("CurrentUserID", 0) != 0)	//Hvis der findes et ID, gå til AppShell. Ellers gå til Login.
+			if (Preferences.Get(Constants.StoredUserID, 0) != 0)	//Hvis der findes et ID, gå til AppShell. Ellers gå til Login.
 				MainPage = new AppShell();
 			else
 				MainPage = new LoginPage();

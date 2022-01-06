@@ -15,6 +15,7 @@ using Android.Content;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
 using BC = BCrypt.Net.BCrypt;
+using Android.Content.Res;
 
 namespace MBStest03.ViewModels
 {
@@ -47,7 +48,7 @@ namespace MBStest03.ViewModels
 
 		private async void GoToCreateUserClicked(object obj)
 		{
-			await Shell.Current.GoToAsync($"//CreateAccountPage");
+			await Shell.Current.GoToAsync($"//createUser");
 		}
 
 		public async void OnLoginClicked(object obj)
@@ -55,7 +56,7 @@ namespace MBStest03.ViewModels
 			Console.WriteLine(CurrentUser.UserEmail.ToString());
 			Console.WriteLine(CurrentUser.UserPassword.ToString());
 
-			CurrentUser.UserPassword = hasher.Hasher(CurrentUser.UserPassword);
+			//CurrentUser.UserPassword = hasher.Hasher(CurrentUser.UserPassword);
 			if (await UserIsVerified(CurrentUser))
 			{
 				Preferences.Set(Constants.StoredUserID, CurrentUser.UserID);
@@ -76,7 +77,7 @@ namespace MBStest03.ViewModels
 			var receivedResponse = await apiHelper.ApiGetter("users/username/" + user.UserEmail);	//Henter brugeren med den matchende email.
 			var receivedUser = JsonConvert.DeserializeObject<User>(receivedResponse);				//Konverterer den hentede bruger til et User objekt.
 			
-			if (receivedUser != null && user.UserPassword == receivedUser.UserPassword)	//Stemmer de hashede passwords overens har vi fat i den rigtige bruger og set'er dens ID.
+			if (receivedUser != null && BC.Verify(user.UserPassword, receivedUser.UserPassword))	//Stemmer de hashede passwords overens har vi fat i den rigtige bruger og set'er dens ID.
 			{													//Brugeren er verificeret som værende en eksisterende bruger.
 				CurrentUser.UserID = receivedUser.UserID;
 				return true;

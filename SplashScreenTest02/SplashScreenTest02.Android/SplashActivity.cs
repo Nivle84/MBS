@@ -57,15 +57,8 @@ namespace SplashScreenTest02.Droid
 			PreLaunch preLaunch = new PreLaunch();
 			Bundle bundle = preLaunch.GatherBundle();
 			mainAct = new Intent(this, typeof(MainActivity));
-			//mainAct.Extras.PutBundle("preLaunchBundle", bundle);
 			mainAct.PutExtra("preLaunchBundle", bundle);
-			//List<Task> preLaunchTasks = preLaunch.GatherTasks();
-			//Task.WaitAll(PreLaunch.moodTask, PreLaunch.influenceTask, PreLaunch.userTask);
-			//await Task.WhenAll(preLaunch.GatherTasks());
 			//animation.Cancel();	//Man når desværre ikke at se den fine loadingskærm hvis cancel sker hernede.
-
-			//Tjek lister for influence og mood
-			//Tjek om der er en bruger logget ind
 		}
 
 		protected override void OnCreate(Bundle savedInstanceState)
