@@ -11,5 +11,10 @@ namespace SplashScreenTest02.Services
 		{
 			return BC.HashPassword(passToHash);
 		}
+
+		public bool HashVerificatoin(string passToVerify, string hash)
+		{
+			return BC.Verify(passToVerify, hash);
+		}
 	}
 }

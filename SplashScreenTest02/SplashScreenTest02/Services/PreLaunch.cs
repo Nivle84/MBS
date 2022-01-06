@@ -42,15 +42,15 @@ namespace SplashScreenTest02.Services
 		{
 			return Task.Run(async () =>
 			{
-				storedInfluences = Preferences.Get("StoredInfluences", String.Empty);
+				storedInfluences = Preferences.Get(Constants.StoredInfluences, String.Empty);
 				if (storedInfluences == null)
 				{
 					//HttpResponseMessage response = await apiHelper.ApiGetter("influences");
 					var response = await apiHelper.ApiGetter("influences");
 					//if (response.IsSuccessStatusCode)
 					//{
-						Preferences.Set("StoredInfluences", response);
-						storedInfluences = Preferences.Get("StoredInfluences", String.Empty);
+						Preferences.Set(Constants.StoredInfluences, response);
+						storedInfluences = Preferences.Get(Constants.StoredInfluences, String.Empty);
 					//}
 				}
 			});
@@ -60,15 +60,15 @@ namespace SplashScreenTest02.Services
 		{
 			return Task.Run(async () =>
 			{
-				storedMoods = Preferences.Get("StoredMoods", String.Empty);
+				storedMoods = Preferences.Get(Constants.StoredMoods, String.Empty);
 				if (storedMoods == null)
 				{
 					//HttpResponseMessage response = await apiHelper.ApiGetter("moods");
 					var response = await apiHelper.ApiGetter("moods");
 					//if (response.IsSuccessStatusCode)
 					//{
-						Preferences.Set("StoredMoods", response);
-						storedMoods = Preferences.Get("StoredMoods", String.Empty);
+						Preferences.Set(Constants.StoredMoods, response);
+						storedMoods = Preferences.Get(Constants.StoredMoods, String.Empty);
 					//}
 				}
 			});
@@ -88,18 +88,18 @@ namespace SplashScreenTest02.Services
 			Task mooTask = GetMoodsAsync();
 			Task infTask = GetInfluencesAsync();
 			Task useTask = GetLoggedInUser();
+			//Task bunTask = GatherBundle();
 
 			Task.WaitAll(mooTask, infTask, useTask);
-			//GatherBundle();
 		}
 
 		public Bundle GatherBundle()
 		{
 			Bundle launchBundle = new Bundle();
-			launchBundle.PutString("StoredMoods", storedMoods);
-			launchBundle.PutString("StoredInfluences", storedInfluences);
+			launchBundle.PutString(Constants.StoredMoods, storedMoods);
+			launchBundle.PutString(Constants.StoredInfluences, storedInfluences);
 			if (userState.CurrentUser.UserID != 0)
-				launchBundle.PutInt("StoredUserID", userState.CurrentUser.UserID);
+				launchBundle.PutInt(Constants.StoredUserID, userState.CurrentUser.UserID);
 			return launchBundle;
 		}
 	}

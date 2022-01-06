@@ -13,6 +13,8 @@ using Newtonsoft.Json;
 using Android.Widget;
 using Android.Content;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
+using BC = BCrypt.Net.BCrypt;
 
 namespace MBStest03.ViewModels
 {
@@ -25,7 +27,7 @@ namespace MBStest03.ViewModels
 		public User CurrentUser
 		{
 			get { return _currentUser; }
-			set { _currentUser = value; OnPropertyChanged(); }
+			set { _currentUser = value; }
 		}
 
 		public Command LoginCommand { get; }
@@ -38,8 +40,8 @@ namespace MBStest03.ViewModels
 			CurrentUser = new User();
 			//{
 			//	UserID = 69,
-   //             UserEmail = "placeholder_email",
-   //             UserPassword = "placeholder_password"
+			//	UserEmail = "placeholder_email",
+			//	UserPassword = "placeholder_password"
 			//};
 		}
 
@@ -56,6 +58,7 @@ namespace MBStest03.ViewModels
 			CurrentUser.UserPassword = hasher.Hasher(CurrentUser.UserPassword);
 			if (await UserIsVerified(CurrentUser))
 			{
+				Preferences.Set(Constants.StoredUserID, CurrentUser.UserID);
 				Application.Current.MainPage = new AppShell();
 				await Shell.Current.GoToAsync("//main");
 			}
@@ -65,19 +68,19 @@ namespace MBStest03.ViewModels
 			// Prefixing with `//` switches to a different navigation stack instead of pushing to the active one
 			//await Shell.Current.GoToAsync($"//{nameof(MainPage)}");
 			//await Shell.Current.GoToAsync("//MainPage");
-
-			//TODO Login logik.
 		}
 
 		ApiHelper apiHelper = new ApiHelper();
 		private async Task<bool> UserIsVerified(User user)
 		{
-			var receivedResponse = await apiHelper.ApiGetter("users/username/" + user.UserEmail);
-			var receivedUser = JsonConvert.DeserializeObject<User>(receivedResponse);
+			var receivedResponse = await apiHelper.ApiGetter("users/username/" + user.UserEmail);	//Henter brugeren med den matchende email.
+			var receivedUser = JsonConvert.DeserializeObject<User>(receivedResponse);				//Konverterer den hentede bruger til et User objekt.
 			
-			user.UserID = receivedUser.UserID;
-			if (user.UserPassword == receivedUser.UserPassword)
+			if (receivedUser != null && user.UserPassword == receivedUser.UserPassword)	//Stemmer de hashede passwords overens har vi fat i den rigtige bruger og set'er dens ID.
+			{													//Brugeren er verificeret som værende en eksisterende bruger.
+				CurrentUser.UserID = receivedUser.UserID;
 				return true;
+			}
 			else
 				return false;
 		}
