@@ -1,6 +1,8 @@
 ﻿using MBStest01.Models;
 using SplashScreenTest02.ViewModels;
 using System;
+using Xamarin.Essentials;
+using SplashScreenTest02.Services;
 
 namespace MBStest03.ViewModels
 {
@@ -96,6 +98,10 @@ namespace MBStest03.ViewModels
 			ThisInfluence = new Influence();
 			ThisNote = new Note();
 			ThisDay = new Day();
+			ThisUser = new User()
+			{
+				UserID = Preferences.Get(Constants.StoredUserID, 0)
+			};
 			//ThisDay.User = ThisUser;    //Kan jeg undgå at have HELE objektet og nøjes med ID??
 			ThisDay.Date = DateTime.Now;
 		}

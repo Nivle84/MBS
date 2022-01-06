@@ -6,7 +6,6 @@
              mc:Ignorable="d"
              x:Class="MBStest03.Views.LoginPage"
              Shell.NavBarIsVisible="False"
-             xmlns:local="clr-namespace:MBStest03"
 			 xmlns:viewmodel="clr-namespace:MBStest03.ViewModels">
     <ContentPage.Resources>
         <!--<ResourceDictionary>

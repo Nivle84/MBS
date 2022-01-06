@@ -10,6 +10,7 @@ namespace SplashScreenTest02
 {
 	public partial class App : Application
 	{
+		public CreateUserPage ContentPage { get; }
 
 		public App()
 		{
@@ -17,10 +18,11 @@ namespace SplashScreenTest02
 
 			//DependencyService.Register<MockDataStore>();
 
-			if (Preferences.Get(Constants.StoredUserID, 0) != 0)	//Hvis der findes et ID, gå til AppShell. Ellers gå til Login.
-				MainPage = new AppShell();
-			else
-				MainPage = new LoginPage();
+			//if (Preferences.Get(Constants.StoredUserID, 0) != 0)    //Hvis der findes et ID, gå til AppShell. Ellers gå til Login.
+			//	MainPage = new AppShell();
+			//else
+				MainPage = new NavigationPage(new LoginPage());
+			//ContentPage = new CreateUserPage();
 		}
 
 		protected override void OnStart()

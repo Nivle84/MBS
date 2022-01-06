@@ -16,12 +16,15 @@ using System.Threading.Tasks;
 using Xamarin.Essentials;
 using BC = BCrypt.Net.BCrypt;
 using Android.Content.Res;
+using SplashScreenTest02.Views;
 
 namespace MBStest03.ViewModels
 {
     public class LoginViewModel : BaseViewModel
     {
 		PasswordHasher hasher = new PasswordHasher();
+		//LoginPage loginPage;
+		//CreateUserPage cuPage = new CreateUserPage();
 
         //public User currentUser = new User();
 		private User _currentUser;
@@ -36,6 +39,7 @@ namespace MBStest03.ViewModels
 
         public LoginViewModel()
         {
+			//loginPage = new LoginPage();
             LoginCommand = new Command(OnLoginClicked);
 			GoToCreateUserCommand = new Command(GoToCreateUserClicked);
 			CurrentUser = new User();
@@ -48,6 +52,8 @@ namespace MBStest03.ViewModels
 
 		private async void GoToCreateUserClicked(object obj)
 		{
+			//await loginPage.Navigation.PushModalAsync(new CreateUserPage());
+			await Navigation.
 			await Shell.Current.GoToAsync($"//createUser");
 		}
 

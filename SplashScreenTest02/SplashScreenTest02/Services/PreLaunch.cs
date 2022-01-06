@@ -33,17 +33,18 @@ namespace SplashScreenTest02.Services
 		//		return client;
 		//	}
 		//}
-		private readonly UserState userState = new UserState();
+		//private readonly UserState userState;// = new UserState();
 		public static string storedInfluences;
 		public static string storedMoods;
 		public static ApiHelper apiHelper = new ApiHelper();
+		public User currentUser;// = new User();
 
 		private static Task GetInfluencesAsync()
 		{
 			return Task.Run(async () =>
 			{
 				storedInfluences = Preferences.Get(Constants.StoredInfluences, String.Empty);
-				if (storedInfluences == null)
+				if (storedInfluences == "")
 				{
 					//HttpResponseMessage response = await apiHelper.ApiGetter("influences");
 					var response = await apiHelper.ApiGetter("influences");
@@ -61,7 +62,7 @@ namespace SplashScreenTest02.Services
 			return Task.Run(async () =>
 			{
 				storedMoods = Preferences.Get(Constants.StoredMoods, String.Empty);
-				if (storedMoods == null)
+				if (storedMoods == "")
 				{
 					//HttpResponseMessage response = await apiHelper.ApiGetter("moods");
 					var response = await apiHelper.ApiGetter("moods");
@@ -85,6 +86,13 @@ namespace SplashScreenTest02.Services
 
 		public PreLaunch()
 		{
+			//userState = new UserState();
+			currentUser = new User()
+			{
+				UserID = 0,
+				UserEmail = string.Empty,
+				UserPassword = string.Empty
+			};
 			Task mooTask = GetMoodsAsync();
 			Task infTask = GetInfluencesAsync();
 			Task useTask = GetLoggedInUser();
@@ -98,8 +106,8 @@ namespace SplashScreenTest02.Services
 			Bundle launchBundle = new Bundle();
 			launchBundle.PutString(Constants.StoredMoods, storedMoods);
 			launchBundle.PutString(Constants.StoredInfluences, storedInfluences);
-			if (userState.CurrentUser.UserID != 0)
-				launchBundle.PutInt(Constants.StoredUserID, userState.CurrentUser.UserID);
+			if (currentUser.UserID != 0)
+				launchBundle.PutInt(Constants.StoredUserID, currentUser.UserID);
 			return launchBundle;
 		}
 	}

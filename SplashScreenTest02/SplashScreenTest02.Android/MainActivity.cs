@@ -7,7 +7,12 @@ using Android.OS;
 
 namespace SplashScreenTest02.Droid
 {
-    [Activity(Label = "Mange Bække Små", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = false, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize )]
+    [Activity(
+        Label = "Mange Bække Små",
+        Icon = "@mipmap/icon",
+        Theme = "@style/MainTheme",
+        MainLauncher = false,
+        ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize )]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         protected override void OnCreate(Bundle savedInstanceState)
@@ -17,9 +22,9 @@ namespace SplashScreenTest02.Droid
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
 
-            string storedInfluences = Intent.GetStringExtra("StoredInfluences");
-            string storedMoods = Intent.GetStringExtra("StoredMoods");
-            int loggedInUserID = Intent.GetIntExtra("StoredUserID", 0);
+            //string storedInfluences = Intent.GetStringExtra("StoredInfluences");
+            //string storedMoods = Intent.GetStringExtra("StoredMoods");
+            //int loggedInUserID = Intent.GetIntExtra("StoredUserID", 0);
             LoadApplication(new App());
             //LoadApplication(new App());
         }

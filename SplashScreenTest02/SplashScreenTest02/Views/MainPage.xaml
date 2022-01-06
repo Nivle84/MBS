@@ -25,11 +25,11 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="20"/>
             </Grid.ColumnDefinitions>
-            <Label Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" HorizontalOptions="CenterAndExpand"
+			<Label Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" HorizontalOptions="CenterAndExpand"
                 Text="{Binding Path=ThisDay.Date}" FontSize="Large"/>
-            <!--<Label Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3"
-                Text="Test tekst!" FontSize="Large"/>-->
-            <ImageButton Grid.Row="2" Grid.Column="1" Grid.RowSpan="2"
+			<!--<Label Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" HorizontalOptions="CenterAndExpand"
+                Text="{Binding Path=ThisUser.UserID}" FontSize="Large"/>-->
+			<ImageButton Grid.Row="2" Grid.Column="1" Grid.RowSpan="2"
                              Source="moodgood.png"
                              Clicked="GoodMood_Clicked"/>
             <ImageButton Grid.Row="2" Grid.Column="2" Grid.RowSpan="2"
