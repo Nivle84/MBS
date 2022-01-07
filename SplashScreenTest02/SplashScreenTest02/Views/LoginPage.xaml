@@ -6,7 +6,8 @@
              mc:Ignorable="d"
              x:Class="MBStest03.Views.LoginPage"
              Shell.NavBarIsVisible="False"
-			 xmlns:viewmodel="clr-namespace:MBStest03.ViewModels">
+			 xmlns:viewmodel="clr-namespace:MBStest03.ViewModels"
+			 xmlns:view="clr-namespace:MBStest03.Views">
     <ContentPage.Resources>
         <!--<ResourceDictionary>
             <x:String x:Key="loginImage">Splash_screen.jpg</x:String>
@@ -14,7 +15,7 @@
 		<viewmodel:LoginViewModel x:Key="lpVM_V" />
 	</ContentPage.Resources>
     <ContentPage.Content>
-        <Grid Margin="2,2,2,2" BindingContext="{StaticResource lpVM_V}">
+        <Grid Margin="2,2,2,2" >
             <Grid.RowDefinitions>
                 <RowDefinition Height="20"/>
                 <RowDefinition Height="*"/>
@@ -58,36 +59,22 @@
             <BoxView BackgroundColor="Aquamarine" Grid.Column="1" Grid.Row="7"/>
             <BoxView BackgroundColor="Aqua" Grid.Column="2" Grid.Row="7"/>
             <BoxView BackgroundColor="Bisque" Grid.Column="3" Grid.Row="7"/>-->
-            
-            <!--<Image Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="3" Grid.RowSpan="3" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"
-                Source="C:\Users\Nivle84\source\repos\MBStest03\MBStest03\MBStest03\Assets\Splash_screen.jpg"/>-->
-                
-            <!--https://docs.microsoft.com/en-us/xamarin/get-started/tutorials/image/?tabs=vswin&tutorial-step=1-->
-            <!--<Image Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="3" Grid.RowSpan="3" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"
-                Source="Assets/Splash_screen.jpg"/>-->
-            <!--<Image Source="C:\Users\Nivle84\source\repos\MBStest03\MBStest03\MBStest03.Android\Resources\drawable\Splash_screen.jpg"
-                   HeightRequest="300" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3" Grid.RowSpan="3" Aspect="AspectFit"/>-->
-            <!--<Image Source="resources\drawable\splash.jpg" Grid.Column="1" Grid.Row="1"
-                   Aspect="AspectFit"/>-->
 
-            <Image x:Name="imgDisp" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Grid.RowSpan="3"/>
-            <Label Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" 
-                Text="Mange Bække Små" FontSize="38" HorizontalTextAlignment="Center"/>
 
-            <StackLayout Grid.Row="5" Grid.RowSpan="3" Grid.Column="1" Grid.ColumnSpan="3" BindingContext="{StaticResource lpVM_V}">
-                <Label Text="Log ind" FontSize="Large" HorizontalTextAlignment="Center"/>
-				<!--<Label Text="{Binding CurrentUser.UserEmail, Mode=OneWay}" />-->
+			<StackLayout Grid.Row="1" Grid.RowSpan="6" Grid.Column="1" Grid.ColumnSpan="3" BindingContext="{StaticResource lpVM_V}">
+				<Image x:Name="imgDisp"/>
+				<Label Text="Mange Bække Små" FontSize="38" HorizontalTextAlignment="Center"/>
+				<Label Text="Log ind" FontSize="Large" HorizontalTextAlignment="Center"/>
 				<Entry HorizontalOptions="Fill" HorizontalTextAlignment="Center" Placeholder="E-mail" Text="{Binding CurrentUser.UserEmail, Mode=OneWayToSource}" />
 				<Entry HorizontalOptions="Fill" HorizontalTextAlignment="Center" Placeholder="Kodeord" IsPassword="True" Text="{Binding CurrentUser.UserPassword, Mode=OneWayToSource}"/>
-                <Button Text="Log ind" HorizontalOptions="Center" Command="{Binding LoginCommand}"/>
+				<Button Text="Log ind" HorizontalOptions="Center" Command="{Binding LoginCommand}"/>
 				<Label Text="Opret Konto" TextDecorations="Underline" HorizontalOptions="Center" VerticalOptions="EndAndExpand">
 					<Label.GestureRecognizers>
-						<!--<TapGestureRecognizer Command="{Binding GoToCreateUserCommand}"/>-->
-						<TapGestureRecognizer  Command="{Binding GoToCreateUserCommand}"/>
+						<TapGestureRecognizer Command="{Binding GoToCreateUserCommand}"/>
 					</Label.GestureRecognizers>
 				</Label>
-            </StackLayout>
-            <!--<StackLayout Padding="10,0,10,0" VerticalOptions="Center">
+			</StackLayout>
+			<!--<StackLayout Padding="10,0,10,0" VerticalOptions="Center">
             <Image Source=".\assets\Splash_screen.jpg" Aspect="AspectFit"/>
                 <Label Text="Mange Bække Små" HorizontalOptions="Center" />
                 <Button VerticalOptions="Center" Text="Login" Command="{Binding LoginCommand}"/>

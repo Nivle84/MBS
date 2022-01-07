@@ -15,7 +15,7 @@ namespace MBStest03.ViewModels
 {
 	public class LoginViewModel : BaseViewModel
 	{
-		PasswordHasher hasher = new PasswordHasher();
+		//PasswordHasher hasher = new PasswordHasher();
 		//LoginPage loginPage;
 		//CreateUserPage cuPage = new CreateUserPage();
 
@@ -28,13 +28,13 @@ namespace MBStest03.ViewModels
 		}
 
 		public Command LoginCommand { get; }
-		//public Command GoToCreateUserCommand { get; }
+		public Command GoToCreateUserCommand { get; }
 
 		public LoginViewModel()
 		{
 			//loginPage = new LoginPage();
 			LoginCommand = new Command(OnLoginClicked);
-			//GoToCreateUserCommand = new Command(GoToCreateUserClicked);
+			GoToCreateUserCommand = new Command(GoToCreateUserClicked);
 			CurrentUser = new User();
 			//{
 			//	UserID = 69,
@@ -46,8 +46,8 @@ namespace MBStest03.ViewModels
 		private async void GoToCreateUserClicked(object obj)
 		{
 			//await loginPage.Navigation.PushModalAsync(new CreateUserPage());
-			//await Shell.Current.GoToAsync($"//createUser");
-			Application.Current.MainPage = new CreateUserPage();
+			await Shell.Current.GoToAsync(nameof(CreateUserPage));
+			//Application.Current.MainPage = new CreateUserPage();
 			//await Shell.Current.GoToAsync($"//createUser");
 		}
 

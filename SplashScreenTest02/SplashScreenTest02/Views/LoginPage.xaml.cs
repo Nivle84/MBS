@@ -12,19 +12,19 @@ namespace MBStest03.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class LoginPage : ContentPage
     {
-        Command GoToCreateUserCommand { get; }
+        public Command GoToCreateUserCommand { get; }
         public LoginPage()
         {
             InitializeComponent();
-            GoToCreateUserCommand = new Command(GoToCreateUserPage);
+            //GoToCreateUserCommand = new Command(GoToCreateUserPage);
             imgDisp.Source = "splash.jpg";
             this.BindingContext = new LoginViewModel();
         }
 
-        private async void GoToCreateUserPage(object obj)
-		{
-            await Navigation.PopAsync();
-            await Navigation.PushModalAsync(new CreateUserPage());
-		}
+  //      private async void GoToCreateUserPage(object obj)
+		//{
+  //          await Navigation.PopAsync();
+  //          await Navigation.PushModalAsync(new CreateUserPage());
+		//}
     }
 }

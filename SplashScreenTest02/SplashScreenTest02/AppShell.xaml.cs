@@ -15,7 +15,7 @@ namespace SplashScreenTest02
 			//Routing.RegisterRoute(nameof(ItemDetailPage), typeof(ItemDetailPage));
 			//Routing.RegisterRoute(nameof(NewItemPage), typeof(NewItemPage));
 			//Routing.RegisterRoute(nameof(LoginPage), typeof(LoginPage));
-			Routing.RegisterRoute("createUser", typeof(CreateUserPage));
+			Routing.RegisterRoute(nameof(CreateUserPage), typeof(CreateUserPage));
 		}
 
 	}
