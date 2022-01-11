@@ -18,15 +18,16 @@ namespace SplashScreenTest02
 
 			//DependencyService.Register<MockDataStore>();
 
-			//if (Preferences.Get(Constants.StoredUserID, 0) != 0)    //Hvis der findes et ID, gå til AppShell. Ellers gå til Login.
-			//	MainPage = new AppShell();
-			//else
-				MainPage = new LoginPage();
-			//ContentPage = new CreateUserPage();
+			MainPage = new AppShell();
 		}
 
-		protected override void OnStart()
+		protected async override void OnStart()
 		{
+			//Preferences.Set(Constants.StoredUserID, 0);
+			if (Preferences.Get(Constants.StoredUserID, 0) != 0)    //Hvis der findes et ID, naviger til Login, ellers naviger til main.
+				await Shell.Current.GoToAsync("///main");
+			else
+				await Shell.Current.GoToAsync("LoginPage");
 		}
 
 		protected override void OnSleep()

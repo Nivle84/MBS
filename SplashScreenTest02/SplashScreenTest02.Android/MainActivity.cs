@@ -22,11 +22,7 @@ namespace SplashScreenTest02.Droid
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
 
-            //string storedInfluences = Intent.GetStringExtra("StoredInfluences");
-            //string storedMoods = Intent.GetStringExtra("StoredMoods");
-            //int loggedInUserID = Intent.GetIntExtra("StoredUserID", 0);
             LoadApplication(new App());
-            //LoadApplication(new App());
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {

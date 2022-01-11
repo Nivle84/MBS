@@ -53,8 +53,8 @@ namespace MBStest03.ViewModels
 
 		public async void OnLoginClicked(object obj)
 		{
-			Console.WriteLine(CurrentUser.UserEmail.ToString());
-			Console.WriteLine(CurrentUser.UserPassword.ToString());
+			//Console.WriteLine(CurrentUser.UserEmail.ToString());
+			//Console.WriteLine(CurrentUser.UserPassword.ToString());
 
 			//CurrentUser.UserPassword = hasher.Hasher(CurrentUser.UserPassword);
 			if (await UserIsVerified(CurrentUser))

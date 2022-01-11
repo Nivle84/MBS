@@ -3,10 +3,11 @@ using SplashScreenTest02.ViewModels;
 using System;
 using Xamarin.Essentials;
 using SplashScreenTest02.Services;
+using System.Collections.Generic;
+using Xamarin.Forms;
 
 namespace MBStest03.ViewModels
 {
-	//public class MainPageVM : INotifyPropertyChanged
 	public class MainPageVM : BaseViewModel
 	{
 		private User _user;
@@ -45,7 +46,7 @@ namespace MBStest03.ViewModels
 				if (ThisMood.MoodID != 0)
 				{
 					ThisDay.Mood = ThisMood;
-					currentMoodName = ThisMood.MoodName;
+					//currentMoodName = ThisMood.MoodName;
 				}
 				OnPropertyChanged();
 			}
@@ -78,20 +79,27 @@ namespace MBStest03.ViewModels
 				//OnPropertyChanged("ThisDay");
 			}
 		}
-		private string _currentMoodName { get; set; }
-		public string currentMoodName
-		{
-			get
-			{
-				return _currentMoodName;
-			}
-			set
-			{
-				_currentMoodName = ThisMood.MoodName;
-				OnPropertyChanged();
-			}
-		}
-
+		//private string _currentMoodName { get; set; }
+		//public string currentMoodName
+		//{
+		//	get
+		//	{
+		//		return _currentMoodName;
+		//	}
+		//	set
+		//	{
+		//		_currentMoodName = ThisMood.MoodName;
+		//		OnPropertyChanged();
+		//	}
+		//}
+		//public Command goodMoodClickedCommand { get; }
+		//public Command okMoodClickedCommand { get; }
+		//public Command badMoodClickedCommand { get; }
+		public Command moodClickedCommand { get; }
+		public Command influenceClickedCommand { get; }
+		public List<Influence> influenceList { get; set; }
+		public List<Mood> moodList { get; set; }
+		DataFiller myFiller { get; set; }
 		public MainPageVM()
 		{
 			ThisMood = new Mood();
@@ -104,23 +112,45 @@ namespace MBStest03.ViewModels
 			};
 			//ThisDay.User = ThisUser;    //Kan jeg undgå at have HELE objektet og nøjes med ID??
 			ThisDay.Date = DateTime.Now;
+			//goodMoodClickedCommand = new Command(GoodMoodClicked);
+			//okMoodClickedCommand = new Command(OkMoodClicked);
+			//badMoodClickedCommand = new Command(BadMoodClicked);
+			moodClickedCommand = new Command(MoodClicked);
+			influenceClickedCommand = new Command(InfluenceClicked);
+
+			myFiller = new DataFiller();
+			influenceList = myFiller.GetInfluences();
+			moodList = myFiller.GetMoods();
 		}
 
-		public Mood goodMood = new Mood
+		public void MoodClicked(object obj)
 		{
-			MoodID = 1,
-			MoodName = "Good"
-		};
-		public Mood okMood = new Mood
+			ThisMood = moodList.Find(m => m.MoodName == obj.ToString());
+		}
+
+		public void InfluenceClicked(object obj)
 		{
-			MoodID = 2,
-			MoodName = "Ok"
-		};
-		public Mood badMood = new Mood
-		{
-			MoodID = 3,
-			MoodName = "Bad"
-		};
+			ThisInfluence = influenceList.Find(i => i.InfluenceName == obj.ToString());
+		}
+		//public void GoodMoodClicked(object obj)
+		//{
+		//	//var click = obj as ImageButton;
+		//	//var cP = click.CommandParameter.ToString();
+		//	var click = obj.ToString();
+			
+		//	ThisMood = moodList.Find(m => m.MoodName == "Good");
+		//	//Hvordan gør jeg det her? Vil gerne associere de tre imagebuttons med deres respektive mood, som så kan udledes gennem obj parameteren, og føres igennem
+		//	//en switch statement som så får udvalgt og sendt mood'et videre i det rigtige format. Eller som minimum sendt 1-3 med som tilsvarer de forskellige moods.
+		//	//Kunne jo sagtens lave tre forskellige commands, men det virker lidt fjollet og overholder ikke DRY princippet.
+		//}
+		//public void OkMoodClicked(object obj)
+		//{
+		//	ThisMood = moodList.Find(m => m.MoodName == "Ok");
+		//}
+		//public void BadMoodClicked(object obj)
+		//{
+		//	ThisMood = moodList.Find(m => m.MoodName == "Bad");
+		//}
 
 		//private string moodName = ThisDay.Mood.MoodName;
 

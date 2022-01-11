@@ -13,19 +13,19 @@ namespace MBStest03.Views
             InitializeComponent();
         }
 
-        private void GoodMood_Clicked(object sender, EventArgs e)
-        {
-            mpVM_CB.ThisMood = mpVM_CB.goodMood;
-        }
+        //private void GoodMood_Clicked(object sender, EventArgs e)
+        //{
+        //    mpVM_CB.ThisMood = mpVM_CB.goodMood;
+        //}
 
-        private void OkMood_Clicked(object sender, EventArgs e)
-        {
-            mpVM_CB.ThisMood = mpVM_CB.okMood;
-        }
+        //private void OkMood_Clicked(object sender, EventArgs e)
+        //{
+        //    mpVM_CB.ThisMood = mpVM_CB.okMood;
+        //}
 
-        private void BadMood_Clicked(object sender, EventArgs e)
-        {
-            mpVM_CB.ThisMood = mpVM_CB.badMood;
-        }
+        //private void BadMood_Clicked(object sender, EventArgs e)
+        //{
+        //    mpVM_CB.ThisMood = mpVM_CB.badMood;
+        //}
     }
 }

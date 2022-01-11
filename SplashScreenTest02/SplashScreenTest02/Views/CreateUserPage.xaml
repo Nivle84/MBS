@@ -5,47 +5,44 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="MBStest03.Views.CreateUserPage"
-			 Shell.NavBarIsVisible="False"
+			 Shell.TabBarIsVisible="False"
 			 xmlns:viewmodel="clr-namespace:MBStest03.ViewModels">
 	<ContentPage.Resources>
 		<viewmodel:CreateUserViewModel x:Key="cuVM_V"/>
 	</ContentPage.Resources>
 	<ContentPage.Content>
-        <Grid Margin="2,2,2,2" BindingContext="{StaticResource cuVM_V}">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="20"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="20"/>
-            </Grid.RowDefinitions>
+		<Grid Margin="2,2,2,2" BindingContext="{StaticResource cuVM_V}">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="20"/>
+				<RowDefinition Height="*"/>
+				<RowDefinition Height="*"/>
+				<RowDefinition Height="*"/>
+				<RowDefinition Height="*"/>
+				<RowDefinition Height="*"/>
+				<RowDefinition Height="*"/>
+				<RowDefinition Height="*"/>
+				<RowDefinition Height="20"/>
+			</Grid.RowDefinitions>
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="20"/>
 				<ColumnDefinition Width="*" />
 				<ColumnDefinition Width="*"/>
 				<ColumnDefinition Width="*"/>
+				<!--<ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>-->
 				<ColumnDefinition Width="20"/>
 			</Grid.ColumnDefinitions>
 
-			<Image x:Name="imgDisp" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Grid.RowSpan="3"/>
-            <Label Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" 
-                Text="Mange Bække Små" FontSize="40" HorizontalTextAlignment="Center"/>
-
-            <StackLayout Grid.Row="5" Grid.RowSpan="3" Grid.Column="1" Grid.ColumnSpan="3" >
-                <Label Text="Log ind" FontSize="Large" HorizontalTextAlignment="Center"/>
-                <Entry HorizontalOptions="Fill" HorizontalTextAlignment="Center" Placeholder="E-mail"/>
-                <Entry HorizontalOptions="Fill" Placeholder="Kodeord" HorizontalTextAlignment="Center" IsPassword="True"/>
-                <Button Text="Opret konto" HorizontalOptions="Center"/>
-            </StackLayout>
-            <!--<StackLayout Padding="10,0,10,0" VerticalOptions="Center">
-            <Image Source=".\assets\Splash_screen.jpg" Aspect="AspectFit"/>
-                <Label Text="Mange Bække Små" HorizontalOptions="Center" />
-                <Button VerticalOptions="Center" Text="Login" Command="{Binding LoginCommand}"/>
-        </StackLayout>-->
-        </Grid>
-    </ContentPage.Content>
+			<StackLayout Grid.Row="1" Grid.RowSpan="6" Grid.Column="1" Grid.ColumnSpan="3" BindingContext="{StaticResource cuVM_V}">
+				<Image x:Name="imgDisp"/>
+				<Label Text="Mange Bække Små" FontSize="38" HorizontalTextAlignment="Center"/>
+				<Label Text="Opret bruger" FontSize="Large" HorizontalTextAlignment="Center"/>
+				<Entry HorizontalOptions="Fill" HorizontalTextAlignment="Center" Placeholder="E-mail" Text="{Binding CurrentUser.UserEmail, Mode=OneWayToSource}" />
+				<Entry HorizontalOptions="Fill" HorizontalTextAlignment="Center" Placeholder="Kodeord" IsPassword="True" Text="{Binding CurrentUser.UserPassword, Mode=OneWayToSource}"/>
+				<Button Text="Opret bruger" HorizontalOptions="Center" Command="{Binding CreateUserCommand}"/>
+			</StackLayout>
+		</Grid>
+	</ContentPage.Content>
 </ContentPage>

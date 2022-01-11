@@ -4,6 +4,7 @@
              x:Class="SplashScreenTest02.App">
     <!--
         Define global resources and styles here, that apply to all pages in your app.
+	    https://www.xamarinhelp.com/xamarin-forms-page-templates/
     -->
     <Application.Resources>
         <ResourceDictionary>
@@ -27,6 +28,76 @@
                     </VisualStateGroupList>
                 </Setter>
             </Style>
-        </ResourceDictionary>        
+			<ControlTemplate x:Key="MoodViewTemplate">
+				<Grid BindingContext="{StaticResource mpVM_V}" BackgroundColor="Pink" ColumnSpacing="2" RowSpacing="10">
+					<Grid.RowDefinitions>
+						<RowDefinition Height="20"/>
+						<RowDefinition Height="*"/>
+						<RowDefinition Height="*"/>
+						<RowDefinition Height="*"/>
+						<RowDefinition Height="*"/>
+						<RowDefinition Height="*"/>
+						<RowDefinition Height="*"/>
+						<RowDefinition Height="20"/>
+					</Grid.RowDefinitions>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="20"/>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="20"/>
+					</Grid.ColumnDefinitions>
+					<Label Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" HorizontalOptions="CenterAndExpand"
+                Text="{Binding Path=ThisDay.Date}" FontSize="Large"/>
+					<Label Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" HorizontalOptions="CenterAndExpand"
+                Text="{Binding Path=ThisUser.UserID}" FontSize="Large"/>
+					<StackLayout Grid.Row="2" Grid.RowSpan="1" Grid.Column="0" Grid.ColumnSpan="5" Orientation="Horizontal" BackgroundColor="SkyBlue" HorizontalOptions="Fill" IsVisible="True">
+						<ImageButton Scale="1.0"
+                                Source="moodgood.png"
+								CommandParameter="Good"
+								Command="{Binding MoodClicked}"
+								HorizontalOptions="FillAndExpand"/>
+						<ImageButton    Scale="1.0"
+                                Source="moodok.png"
+								CommandParameter="Ok"
+								Command="{Binding MoodClicked}"
+								HorizontalOptions="FillAndExpand"/>
+						<ImageButton    Scale="1.0"
+                                Source="moodbad.png"
+								CommandParameter="Bad"
+								Command="{Binding MoodClicked}"
+								HorizontalOptions="FillAndExpand"/>
+					</StackLayout>
+					<ListView Grid.Row="4" Grid.RowSpan="4" Grid.Column="1" Grid.ColumnSpan="3" >
+						
+					</ListView>
+
+					<!--<Grid Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" Grid.RowSpan="3"
+                BackgroundColor="LemonChiffon">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="6" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="6" />
+                </Grid.RowDefinitions>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="6"/>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="6"/>
+				</Grid.ColumnDefinitions>
+			</Grid>-->
+					<Editor Grid.Row="4" Grid.Column="1" Grid.RowSpan="2" Grid.ColumnSpan="3"
+                IsSpellCheckEnabled="True" IsVisible="False"/>
+				</Grid>
+			</ControlTemplate>
+			<ControlTemplate x:Key="InfluenceItemTemplate">
+				
+			</ControlTemplate>
+		</ResourceDictionary>
     </Application.Resources>
 </Application>
