@@ -19,7 +19,7 @@ namespace SplashScreenTest02.Views
 		public DayView()
 		{
 			InitializeComponent();
-			this.BindingContext = new MainPageVM();
+			this.BindingContext = new DayViewVM();
 		}
 
 		public static readonly BindableProperty TextProperty = BindableProperty.Create(

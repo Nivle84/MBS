@@ -2,22 +2,24 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MBStest03.Views.MainPage"
-             xmlns:local="clr-namespace:MBStest03.ViewModels"
+             xmlns:viewmodel="clr-namespace:MBStest03.ViewModels"
 			 xmlns:view="clr-namespace:SplashScreenTest02.Views">
 	<ContentPage.Resources>
-		<local:MainPageVM x:Key="mpVM"/>
+		<viewmodel:DayViewVM x:Key="dvVM"/>
 	</ContentPage.Resources>
 
 	<!--Det her virker meget uintuitivt, men jeg tror det giver mening.
 		I selve view'et (som vi har fra template'en DayView) har vi i dens code-behind alle vores properties.
 		Men eftersom at vi gerne vil overholde MVVM designmønstret, må ViewModel'en ikke vide noget om View'et,
+		Text=				"{Binding Source={StaticResource dvVM}, Path=ThisMood.MoodName}"
 		og vi kan derfor ikke direkte henvise til -->
-	<view:DayView Text=				"{Binding Source={StaticResource mpVM}, Path=ThisMood.MoodName}"
-				  ThisDayDV=		"{Binding Source={StaticResource mpVM}, Path=ThisDay}"
-				  ThisInfluenceDV=	"{Binding Source={StaticResource mpVM}, Path=ThisInfluence}"
-				  ThisMoodDV=		"{Binding Source={StaticResource mpVM}, Path=ThisMood}"
-				  ThisNoteDV=		"{Binding Source={StaticResource mpVM}, Path=ThisNote}"
-				  ThisUserDV=		"{Binding Source={StaticResource mpVM}, Path=ThisUser}"/>
+	<view:DayView 
+				Text=			"Placeholder!"
+				ThisDayDV=		"{Binding Source={StaticResource dvVM}, Path=ThisDay}"
+				ThisInfluenceDV="{Binding Source={StaticResource dvVM}, Path=ThisInfluence}"
+				ThisMoodDV=		"{Binding Source={StaticResource dvVM}, Path=ThisMood}"
+				ThisNoteDV=		"{Binding Source={StaticResource dvVM}, Path=ThisNote}"
+				ThisUserDV=		"{Binding Source={StaticResource dvVM}, Path=ThisUser}"/>
 	<!--<ContentPage.Content>
 		<Grid BindingContext="{StaticResource mpVM_V}" BackgroundColor="Pink" ColumnSpacing="2" RowSpacing="10">
             <Grid.RowDefinitions>

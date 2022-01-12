@@ -5,10 +5,11 @@ using Xamarin.Essentials;
 using SplashScreenTest02.Services;
 using System.Collections.Generic;
 using Xamarin.Forms;
+using System.Globalization;
 
 namespace MBStest03.ViewModels
 {
-	public class MainPageVM : BaseViewModel
+	public class DayViewVM : BaseViewModel
 	{
 		private User _user;
 		public User ThisUser
@@ -81,6 +82,25 @@ namespace MBStest03.ViewModels
 				//OnPropertyChanged("ThisDay");
 			}
 		}
+
+		//private string _shortDate;
+		public string ShortDate 
+		{
+			get
+			{
+				//return _shortDate;
+				//var date = DateTime.ParseExact(ThisDay.Date.ToString(), $"MM/dd/yy hh:mm:ss tt", CultureInfo.InvariantCulture).ToString();
+				var kultur = CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("da-DK");
+				var date = ThisDay.Date.ToString("dddd dd/MM/yy", kultur).ToUpperInvariant();
+				return date; //.ToString("dd/MM/yy");
+
+				//return ThisDay.Date.ToShortDateString();
+			}
+			//set
+			//{
+			//	_shortDate = ThisDay.Date.ToShortDateString();
+			//}
+		}
 		//private string _currentMoodName { get; set; }
 		//public string currentMoodName
 		//{
@@ -102,7 +122,7 @@ namespace MBStest03.ViewModels
 		public List<Influence> influenceList { get; set; }
 		public List<Mood> moodList { get; set; }
 		DataFiller myFiller { get; set; }
-		public MainPageVM()
+		public DayViewVM()
 		{
 			ThisMood = new Mood();
 			ThisInfluence = new Influence();
