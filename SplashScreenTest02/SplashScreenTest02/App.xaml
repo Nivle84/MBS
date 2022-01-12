@@ -57,12 +57,12 @@
 								CommandParameter="Good"
 								Command="{Binding MoodClicked}"
 								HorizontalOptions="FillAndExpand"/>
-						<ImageButton    Scale="1.0"
+						<ImageButton Scale="1.0"
                                 Source="moodok.png"
 								CommandParameter="Ok"
 								Command="{Binding MoodClicked}"
 								HorizontalOptions="FillAndExpand"/>
-						<ImageButton    Scale="1.0"
+						<ImageButton Scale="1.0"
                                 Source="moodbad.png"
 								CommandParameter="Bad"
 								Command="{Binding MoodClicked}"
@@ -95,9 +95,9 @@
                 IsSpellCheckEnabled="True" IsVisible="False"/>
 				</Grid>
 			</ControlTemplate>
-			<ControlTemplate x:Key="InfluenceItemTemplate">
+			<!--<ControlTemplate x:Key="InfluenceItemTemplate">
 				
-			</ControlTemplate>
+			</ControlTemplate>-->
 		</ResourceDictionary>
     </Application.Resources>
 </Application>

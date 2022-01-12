@@ -2,11 +2,23 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MBStest03.Views.MainPage"
-             xmlns:local="clr-namespace:MBStest03.ViewModels">
+             xmlns:local="clr-namespace:MBStest03.ViewModels"
+			 xmlns:view="clr-namespace:SplashScreenTest02.Views">
 	<ContentPage.Resources>
-		<local:MainPageVM x:Key="mpVM_V" x:Name="mpVM_CB"/>
+		<local:MainPageVM x:Key="mpVM"/>
 	</ContentPage.Resources>
-	<ContentPage.Content>
+
+	<!--Det her virker meget uintuitivt, men jeg tror det giver mening.
+		I selve view'et (som vi har fra template'en DayView) har vi i dens code-behind alle vores properties.
+		Men eftersom at vi gerne vil overholde MVVM designmønstret, må ViewModel'en ikke vide noget om View'et,
+		og vi kan derfor ikke direkte henvise til -->
+	<view:DayView Text=				"{Binding Source={StaticResource mpVM}, Path=ThisMood.MoodName}"
+				  ThisDayDV=		"{Binding Source={StaticResource mpVM}, Path=ThisDay}"
+				  ThisInfluenceDV=	"{Binding Source={StaticResource mpVM}, Path=ThisInfluence}"
+				  ThisMoodDV=		"{Binding Source={StaticResource mpVM}, Path=ThisMood}"
+				  ThisNoteDV=		"{Binding Source={StaticResource mpVM}, Path=ThisNote}"
+				  ThisUserDV=		"{Binding Source={StaticResource mpVM}, Path=ThisUser}"/>
+	<!--<ContentPage.Content>
 		<Grid BindingContext="{StaticResource mpVM_V}" BackgroundColor="Pink" ColumnSpacing="2" RowSpacing="10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="20"/>
@@ -47,27 +59,8 @@
 								HorizontalOptions="FillAndExpand"/>
 			</StackLayout>
 			
-            <!--<Grid Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" Grid.RowSpan="3"
-                BackgroundColor="LemonChiffon">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="6" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="6" />
-                </Grid.RowDefinitions>
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="6"/>
-					<ColumnDefinition Width="*"/>
-					<ColumnDefinition Width="*"/>
-					<ColumnDefinition Width="6"/>
-				</Grid.ColumnDefinitions>
-			</Grid>-->
 			<Editor Grid.Row="4" Grid.Column="1" Grid.RowSpan="2" Grid.ColumnSpan="3"
                 IsSpellCheckEnabled="True" IsVisible="False"/>
 		</Grid>
-    </ContentPage.Content>
+    </ContentPage.Content>-->
 </ContentPage>

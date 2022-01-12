@@ -45,10 +45,12 @@ namespace MBStest03.ViewModels
 				_mood = value;
 				if (ThisMood.MoodID != 0)
 				{
-					ThisDay.Mood = ThisMood;
+					ThisDay.Mood = value;
+					ThisDay.MoodID = value.MoodID;
 					//currentMoodName = ThisMood.MoodName;
 				}
 				OnPropertyChanged();
+				OnPropertyChanged("ThisDay");
 			}
 		}
 

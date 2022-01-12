@@ -24,6 +24,9 @@
     <EmbeddedResource Update="Views\CreateUserPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="Views\DayView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Views\HistoryPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
