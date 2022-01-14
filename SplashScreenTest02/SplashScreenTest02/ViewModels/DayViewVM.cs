@@ -6,6 +6,8 @@ using SplashScreenTest02.Services;
 using System.Collections.Generic;
 using Xamarin.Forms;
 using System.Globalization;
+using System.Linq;
+using System.Collections.ObjectModel;
 
 namespace MBStest03.ViewModels
 {
@@ -44,14 +46,13 @@ namespace MBStest03.ViewModels
 			set
 			{
 				_mood = value;
-				if (ThisMood.MoodID != 0)
-				{
-					ThisDay.Mood = value;
-					ThisDay.MoodID = value.MoodID;
-					//currentMoodName = ThisMood.MoodName;
-				}
+				//if (ThisMood.MoodID != 0)
+				//{
+					//ThisDay.Mood = value;
+					//ThisDay.MoodID = value.MoodID;
+				//}
 				OnPropertyChanged();
-				OnPropertyChanged("ThisDay");
+				//OnPropertyChanged("ThisDay");
 			}
 		}
 
@@ -62,8 +63,8 @@ namespace MBStest03.ViewModels
 			set
 			{
 				_influence = value;
-				if (ThisInfluence.InfluenceID != 0)
-					ThisDay.Influence = ThisInfluence;
+				//if (value.InfluenceID != 0)
+				//	ThisDay.Influence = value;
 				OnPropertyChanged();
 				//OnPropertyChanged("ThisDay");
 			}
@@ -76,8 +77,8 @@ namespace MBStest03.ViewModels
 			set
 			{
 				_note = value;
-				if (ThisNote.DayID != 0)
-					ThisDay.Note = ThisNote;
+				//if (ThisNote.DayID != 0)
+				//	ThisDay.Note = value;
 				OnPropertyChanged();
 				//OnPropertyChanged("ThisDay");
 			}
@@ -117,49 +118,76 @@ namespace MBStest03.ViewModels
 		//public Command goodMoodClickedCommand { get; }
 		//public Command okMoodClickedCommand { get; }
 		//public Command badMoodClickedCommand { get; }
-		public Command moodClickedCommand { get; }
-		public Command influenceClickedCommand { get; }
-		public List<Influence> influenceList { get; set; }
+		//public Command moodClickedCommand { get; }
+		//public Command influenceClickedCommand { get; }
+		public IEnumerable<Influence> influenceList { get; set; }
 		public List<Mood> moodList { get; set; }
 		DataFiller myFiller { get; set; }
+		public int sequenceStep
+		{
+			//Sekvensen:
+			//0		Ny-åbnet, ingenting valgt endnu
+			//1		Mood valgt
+			//2		Influence valgt
+			//3		Klar til at gemme, evt er en note skrevet
+			get { return sequenceStep; }
+			set	{ sequenceStep = value; }
+		}
+		//public ObservableCollection<Influence> influenceCollection { get; set; }
+		//public IEnumerable<Influence> influenceListToBind { get; set; }
 		public DayViewVM()
 		{
 			ThisMood = new Mood();
 			ThisInfluence = new Influence();
 			ThisNote = new Note();
-			ThisDay = new Day();
+			ThisDay = new Day()
+			{
+				Date = DateTime.Now
+			};
 			ThisUser = new User()
 			{
 				UserID = Preferences.Get(Constants.StoredUserID, 0)
 			};
 			//ThisDay.User = ThisUser;    //Kan jeg undgå at have HELE objektet og nøjes med ID??
-			ThisDay.Date = DateTime.Now;
+			//ThisDay.Date = DateTime.Now;
 			//goodMoodClickedCommand = new Command(GoodMoodClicked);
 			//okMoodClickedCommand = new Command(OkMoodClicked);
 			//badMoodClickedCommand = new Command(BadMoodClicked);
-			moodClickedCommand = new Command(MoodClicked);
-			influenceClickedCommand = new Command(InfluenceClicked);
+			//moodClickedCommand = new Command(MoodClicked);
+			//influenceClickedCommand = new Command(InfluenceClicked);
 
 			myFiller = new DataFiller();
 			influenceList = myFiller.GetInfluences();
 			moodList = myFiller.GetMoods();
+
+			//influenceListToBind = influenceList as IEnumerable<Influence>;
+
+
+			//influenceCollection = new ObservableCollection<Influence>();	//Det her virker mærkeligt. Hvorfor først lave en liste for at putte ting i ObsColl??
+			//foreach (var item in influenceList)
+			//{
+			//	influenceCollection.Add(item);
+			//}
 		}
 
-		public void MoodClicked(object obj)
-		{
-			ThisMood = moodList.Find(m => m.MoodName == obj.ToString());
-		}
+		//public void MoodClicked(object obj)
+		//{
+		//	ThisMood = moodList.FirstOrDefault(m => m.MoodID.ToString() == obj.ToString()); //Kan åbenbart ikke sammenligne ints. Virker lidt fjollet med ToString(), men det virker ¯\_(ツ)_/¯
+		//}
 
-		public void InfluenceClicked(object obj)
-		{
-			ThisInfluence = influenceList.Find(i => i.InfluenceName == obj.ToString());
-		}
+		//public void InfluenceClicked(object obj)
+		//{
+		//	//Command og metode formentlig overflødig grundet måden CollectionView.SelectedItem fungerer.
+		//	//Kan måske bruges ifm at skulle holde styr på hvor i processen af at registere/ændre en dag man er.
+
+		//	ThisInfluence = influenceList.Cast<Influence>().SingleOrDefault(i => i.InfluenceName == obj.ToString());
+		//}
 		//public void GoodMoodClicked(object obj)
 		//{
 		//	//var click = obj as ImageButton;
 		//	//var cP = click.CommandParameter.ToString();
 		//	var click = obj.ToString();
-			
+
 		//	ThisMood = moodList.Find(m => m.MoodName == "Good");
 		//	//Hvordan gør jeg det her? Vil gerne associere de tre imagebuttons med deres respektive mood, som så kan udledes gennem obj parameteren, og føres igennem
 		//	//en switch statement som så får udvalgt og sendt mood'et videre i det rigtige format. Eller som minimum sendt 1-3 med som tilsvarer de forskellige moods.

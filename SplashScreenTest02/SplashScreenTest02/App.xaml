@@ -8,7 +8,21 @@
     -->
     <Application.Resources>
         <ResourceDictionary>
-            <Color x:Key="Primary">#2196F3</Color>
+            <!--<Color x:Key="Primary">#2196F3</Color>-->
+			<!--<Color x:Key="Primary">#007ac1</Color>
+			<Color x:Key="PrimaryAccent1">#20a8cc</Color>
+			<Color x:Key="PrimaryAccent2">#004f90</Color>
+			<Color x:Key="Secondary">#408400</Color>
+			<Color x:Key="SecondaryAccent1">#789800</Color>
+			<Color x:Key="SecondaryAccent2">#0e5600</Color>-->
+			<Color x:Key="Primary">#117d9f</Color>
+			<Color x:Key="PrimaryAccent1">#5ca4a4</Color>
+			<Color x:Key="PrimaryAccent2">#005171</Color>
+			<Color x:Key="PrimaryBackground">#98a6ad</Color>
+			<Color x:Key="Secondary">#50801c</Color>
+			<Color x:Key="SecondaryAccent1">#81b04b</Color>
+			<Color x:Key="SecondaryAccent2">#215300</Color>
+			
             <Style TargetType="Button">
                 <Setter Property="TextColor" Value="White"></Setter>
                 <Setter Property="VisualStateManager.VisualStateGroups">

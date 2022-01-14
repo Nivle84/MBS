@@ -13,13 +13,14 @@
 		Men eftersom at vi gerne vil overholde MVVM designmønstret, må ViewModel'en ikke vide noget om View'et,
 		Text=				"{Binding Source={StaticResource dvVM}, Path=ThisMood.MoodName}"
 		og vi kan derfor ikke direkte henvise til -->
-	<view:DayView 
+	<view:DayView/>
+	<!--<view:DayView 
 				Text=			"Placeholder!"
 				ThisDayDV=		"{Binding Source={StaticResource dvVM}, Path=ThisDay}"
 				ThisInfluenceDV="{Binding Source={StaticResource dvVM}, Path=ThisInfluence}"
 				ThisMoodDV=		"{Binding Source={StaticResource dvVM}, Path=ThisMood}"
 				ThisNoteDV=		"{Binding Source={StaticResource dvVM}, Path=ThisNote}"
-				ThisUserDV=		"{Binding Source={StaticResource dvVM}, Path=ThisUser}"/>
+				ThisUserDV=		"{Binding Source={StaticResource dvVM}, Path=ThisUser}"/>-->
 	<!--<ContentPage.Content>
 		<Grid BindingContext="{StaticResource mpVM_V}" BackgroundColor="Pink" ColumnSpacing="2" RowSpacing="10">
             <Grid.RowDefinitions>
