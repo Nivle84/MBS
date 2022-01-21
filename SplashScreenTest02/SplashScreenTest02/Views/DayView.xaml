@@ -6,8 +6,6 @@
 	  xmlns:view="clr-namespace:SplashScreenTest02.Views"
 	  x:Name="this">
 
-	<!--<Label Text="Test fra DayView (wannabe UserControl)" />-->
-	<!--<Label Text="{Binding Text, Source={x:Reference this}}"/>-->
 	<Grid BackgroundColor="{StaticResource PrimaryBackground}" ColumnSpacing="2" RowSpacing="10">
 		<Grid.RowDefinitions>
 			<RowDefinition Height="20"/>
@@ -33,95 +31,150 @@
                 Text="{Binding ThisDayDV.Date, Source={x:Reference this}}" FontSize="Large"/>-->
 		<Label Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" HorizontalOptions="CenterAndExpand"
                Text="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:DayViewVM}}, Path=ShortDate}"
-			   FontSize="Large" TextColor="#ffffff"/>
-		<!--<Label Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" HorizontalOptions="CenterAndExpand"
-                Text="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:DayViewVM}}, Path=ThisDay.Mood.MoodName}" FontSize="Large"/>-->
-		<StackLayout Grid.Row="3" Grid.RowSpan="1" Grid.Column="0" Grid.ColumnSpan="5" Orientation="Horizontal" HorizontalOptions="Fill" IsVisible="True">
-			<ImageButton Scale="1.0"
-						 Source="moodgood.png"
-						 CommandParameter="1"
-						 HorizontalOptions="FillAndExpand"
-						 BackgroundColor="{StaticResource PrimaryAccent1}"
-						 Command="{Binding Path=MoodClickedCommand, Source={x:Reference this}}"
-						 >
-						 <!--Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:DayViewVM}}, Path=moodClickedCommand}"-->
-				<!--<ImageButton.Triggers>
-					--><!--<DataTrigger TargetType="ImageButton"
-								 Binding="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:DayViewVM}}, Path=sequenceStep}"
-								 Value="1">
-						<Setter Property="BorderColor" Value="{StaticResource Primary}"/>
-						<Setter Property="BorderWidth" Value="2"/>
-					</DataTrigger>--><!--
-					<EventTrigger Event="Clicked">
-						<view:DayView />
-					</EventTrigger>
-				</ImageButton.Triggers>-->
-				<VisualStateManager.VisualStateGroups>
-					<VisualStateGroup Name="CommonStates">
-						<VisualState Name="Pressed">
-						<!--<VisualState Name="Selected">-->
-							<!--https://docs.microsoft.com/en-us/xamarin/xamarin-forms/user-interface/visual-state-manager-->
-							<VisualState.Setters>
-								<Setter Property="BackgroundColor" Value="{StaticResource Primary}"/>
-								<!--<Setter Property="" Value="{StaticResource PrimaryBackground}"/>-->
-							</VisualState.Setters>
-						</VisualState>
-					</VisualStateGroup>
-				</VisualStateManager.VisualStateGroups>
-			</ImageButton>
-			<ImageButton Scale="1.0"
-						 Source="moodok.png"
-						 CommandParameter="2"
-						 Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:DayViewVM}}, Path=moodClickedCommand}"
-						 HorizontalOptions="FillAndExpand"
-						 BackgroundColor="{StaticResource PrimaryAccent1}"/>
-			<ImageButton Scale="1.0"
-						 Source="moodbad.png"
-						 CommandParameter="3"
-						 Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:DayViewVM}}, Path=moodClickedCommand}"
-						 HorizontalOptions="FillAndExpand"
-						 BackgroundColor="{StaticResource PrimaryAccent1}"/>
-		</StackLayout>
-		<CollectionView Grid.Row="5" Grid.RowSpan="4" Grid.Column="1" Grid.ColumnSpan="3" x:Name="collectionViewInfluences" SelectionMode="Single" IsVisible="true" 
+			   FontSize="Large" TextColor="{StaticResource Primary}"/>
+		<Label Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" HorizontalOptions="CenterAndExpand"
+               Text="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:DayViewVM}}, Path=ThisMood.MoodName}"
+               FontSize="Large"/>
+
+		<CollectionView Grid.Row="3" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="5" HorizontalScrollBarVisibility="Never" SelectionMode="Single"
+						ItemsSource="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:DayViewVM}}, Path=moodList}"
+						SelectedItem="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:DayViewVM}}, Path=ThisMood, Mode=TwoWay}"
+                        x:Name="moodCollectionView"
+                        HorizontalOptions="FillAndExpand"
+                        >
+			<!--<CollectionView.GestureRecognizers>
+				<TapGestureRecognizer Command="{Binding MoodClickedCommand, Source={x:Reference this}}"
+									  CommandParameter="5"
+									  />
+			</CollectionView.GestureRecognizers>-->
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Horizontal" HorizontalItemSpacing="5"/>
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame CornerRadius="80"
+                           IsClippedToBounds="True"
+                           >
+						<Frame.GestureRecognizers>
+							<TapGestureRecognizer Command="{Binding MoodClickedCommand, Source={x:Reference this}}"
+												  CommandParameter="{Binding .}"/>
+						</Frame.GestureRecognizers>
+                        
+                        <Image Source="{Binding Path=MoodImagePath}"
+                               Scale="1.5"
+							   InputTransparent="True"
+                               />
+						
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup Name="CommonStates">
+								<VisualState Name="Normal">
+								</VisualState>
+                                <VisualState Name="Selected">
+                                    <VisualState.Setters>
+                                        <Setter Property="BackgroundColor" Value="{StaticResource PrimaryAccent1}"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Frame>
+                </DataTemplate>
+				</CollectionView.ItemTemplate>
+			
+		</CollectionView>
+
+		<CollectionView Grid.Row="5" Grid.RowSpan="4" Grid.Column="1" Grid.ColumnSpan="3" SelectionMode="Single" IsVisible="true" 
 						ItemsSource="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:DayViewVM}}, Path=influenceList}"
-						SelectedItem="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:DayViewVM}}, Path=ThisInfluence, Mode=TwoWay}">
+						SelectedItem="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:DayViewVM}}, Path=ThisInfluence, Mode=TwoWay}"
+                        x:Name="influenceCollectionView">
 			<CollectionView.ItemsLayout>
 				<GridItemsLayout Orientation="Vertical" Span="2"/>
 			</CollectionView.ItemsLayout>
 			<CollectionView.ItemTemplate>
 				<DataTemplate>
-					<!--<Grid>
+                    <Grid>
+						<Grid.GestureRecognizers>
+							<TapGestureRecognizer Command="{Binding Path=InfluenceClickedCommand, Source={x:Reference this}}"
+												  CommandParameter="{Binding .}"/>
+						</Grid.GestureRecognizers>
 						<Grid.RowDefinitions>
-							<RowDefinition Height="auto"/>
-						</Grid.RowDefinitions>
-						<Grid.ColumnDefinitions>
-							<ColumnDefinition Width="auto"/>
-						</Grid.ColumnDefinitions>
-						<Label Text="{Binding InfluenceName}" Grid.Row="0" Grid.Column="0"/>
-					</Grid>-->
-					<Label Text="{Binding InfluenceName}" FontSize="Title" FontAttributes="Bold" FontFamily="MbsFont" Padding="0,5,0,0"
-						   VerticalTextAlignment="Center"
-						   VerticalOptions="Center"
-						   HorizontalTextAlignment="Center"
-						   HorizontalOptions="Center">
-						<VisualStateManager.VisualStateGroups>
-							<VisualStateGroup Name="CommonStates">
-								<VisualState Name="Selected">
-									<VisualState.Setters>
-										<Setter Property="BackgroundColor" Value="{StaticResource Primary}"/>
-										<Setter Property="TextColor" Value="{StaticResource PrimaryBackground}"/>
-									</VisualState.Setters>
-								</VisualState>
-							</VisualStateGroup>
-						</VisualStateManager.VisualStateGroups>
-					</Label>
-					<!--<Label Text="{Binding InfluenceName}" FontSize="Large" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Padding="0,20,0,0" />-->
-				</DataTemplate>
+                            <RowDefinition Height="1"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="1"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="1"/>
+                        </Grid.ColumnDefinitions>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup Name="CommonStates">
+                                <VisualState Name="Normal">
+                                    <VisualState.Setters>
+                                        <Setter Property="BackgroundColor" Value="White"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+
+                                <VisualState Name="Selected">
+                                    <VisualState.Setters>
+                                        <Setter Property="BackgroundColor" Value="{StaticResource PrimaryAccent1}"/>
+                                        <Setter TargetName="infLabels" Property="Label.TextColor" Value="{StaticResource PrimaryText}"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+						<Label Text="{Binding InfluenceName}" FontSize="17" FontAttributes="Bold" FontFamily="MbsFont" Padding="0,0,0,0"
+							   Grid.Column="1" Grid.Row="1"
+							   VerticalTextAlignment="Center"
+							   VerticalOptions="Center"
+							   HorizontalTextAlignment="Center"
+							   HorizontalOptions="Center"
+                               x:Name="infLabels"
+							   InputTransparent="False">
+						</Label>
+
+                        <!--Horizontal start and end separators-->
+                        <BoxView Grid.Row="0"
+								 Grid.Column="0"
+								 Grid.ColumnSpan="3"
+								 BackgroundColor="{StaticResource PrimaryAccent2}"/>
+                        <BoxView Grid.Row="2"
+								 Grid.Column="0"
+								 Grid.ColumnSpan="3"
+								 BackgroundColor="{StaticResource PrimaryAccent2}"/>
+
+                        <!--Vertical start and end separators-->
+                        <BoxView Grid.Row="0"
+                                 Grid.RowSpan="3"
+                                 Grid.Column="0"
+                                 BackgroundColor="{StaticResource PrimaryAccent2}"/>
+                        <BoxView Grid.Row="0"
+                                 Grid.RowSpan="3"
+                                 Grid.Column="2"
+                                 BackgroundColor="{StaticResource PrimaryAccent2}"/>
+                    </Grid>
+                </DataTemplate>
 			</CollectionView.ItemTemplate>
 		</CollectionView>
-		<Editor Grid.Row="3" Grid.Column="1" Grid.RowSpan="3" Grid.ColumnSpan="3" BackgroundColor="{StaticResource SecondaryAccent1}" Placeholder="Indtast evt. en note til dagen."
-                IsSpellCheckEnabled="True" IsVisible="false" BindingContext="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:DayViewVM}}, Path=ThisNote.NoteString}"/>
-		<Button Grid.Row="9" Grid.Column="3" Text="Gem Dag" Margin="0,0,0,0" BackgroundColor="{StaticResource Primary}"/>
+		<Label Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="3" BackgroundColor="{StaticResource PrimaryAccent1}" TextColor="{StaticResource PrimaryText}"
+			   Text="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:DayViewVM}}, Path=ThisInfluence.InfluenceName}"
+			   FontSize="32" FontAttributes="Bold" FontFamily="MbsFont"
+			   VerticalTextAlignment="Center"
+			   VerticalOptions="FillAndExpand"
+			   HorizontalTextAlignment="Center"
+			   HorizontalOptions="FillAndExpand"
+			   x:Name="SelectedInfluence"
+			   IsVisible="false"
+			   />
+		<Editor Grid.Row="6" Grid.Column="1" Grid.RowSpan="3" Grid.ColumnSpan="3" BackgroundColor="{StaticResource PrimaryAccent1}" Placeholder="Indtast evt. en note til dagen."
+                IsSpellCheckEnabled="True" IsVisible="false" Text="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:DayViewVM}}, Path=ThisNote.NoteString, Mode=TwoWay}"
+                x:Name="noteEditor"/>
+		<Button Grid.Row="9" Grid.Column="3" Text="Gem Dag" Margin="0,0,0,0" BackgroundColor="{StaticResource Primary}"
+				Command="{Binding SaveThisDayCommand, Source={x:Reference this}}">
+			<!--<Button.GestureRecognizers>
+				<TapGestureRecognizer Command="{Binding SaveThisDayCommand, Source={x:Reference this}}" />
+			</Button.GestureRecognizers>-->
+		</Button>
+			
 	</Grid>
 	<!--https://almirvuk.blogspot.com/2019/07/lets-play-with-collectionview-layouts.html-->
 </Grid>

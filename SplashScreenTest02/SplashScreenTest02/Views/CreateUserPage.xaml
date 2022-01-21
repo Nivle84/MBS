@@ -41,6 +41,7 @@
 				<Label Text="Opret bruger" FontSize="Large" HorizontalTextAlignment="Center"/>
 				<Entry HorizontalOptions="Fill" HorizontalTextAlignment="Center" Placeholder="E-mail" Text="{Binding CurrentUser.UserEmail, Mode=OneWayToSource}" />
 				<Entry HorizontalOptions="Fill" HorizontalTextAlignment="Center" Placeholder="Kodeord" IsPassword="True" Text="{Binding CurrentUser.UserPassword, Mode=OneWayToSource}"/>
+                <Entry HorizontalOptions="Fill" HorizontalTextAlignment="Center" Placeholder="Gentag kodeord" IsPassword="True" Text="{Binding Path=RepeatPassword, Mode=OneWayToSource}"/>
 				<Button Text="Opret bruger" HorizontalOptions="Center" Command="{Binding CreateUserCommand}"/>
 			</StackLayout>
 		</Grid>

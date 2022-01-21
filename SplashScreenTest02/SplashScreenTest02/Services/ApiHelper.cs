@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,7 +16,8 @@ namespace SplashScreenTest02.Services
 		{
 			get
 			{
-				client = client ?? new HttpClient
+				//client = client ?? new HttpClient		//Virker naturligvis ikke da HttpClient'en bliver disposed efter brug.
+				client = new HttpClient
 				(
 					new HttpClientHandler()
 					{
@@ -30,6 +32,12 @@ namespace SplashScreenTest02.Services
 			}
 		}
 
+		public async Task<bool> DoesUserExist(string userEmail)
+		{
+			var response = await Client.GetAsync(baseUri + "users/username/" + userEmail);
+			return response.IsSuccessStatusCode;
+		}
+
 		public async Task<string> ApiGetter(string address)
 		{
 			var response = await Client.GetAsync(baseUri + address);
@@ -39,7 +47,12 @@ namespace SplashScreenTest02.Services
 				return string.Empty;
 		}
 
-		public async Task<string> ApiPoster(string address, object objToPost)
+		public async Task<HttpResponseMessage> GetUser(string userEmail)		//Vil jeg have én overordnet getter, eller adskillige? Skal vel kun have to (user, dag)...
+		{
+			var response = await Client.GetAsync(baseUri + "users/username/" + userEmail);
+		}
+
+		public async Task<HttpStatusCode> ApiPoster(string address, object objToPost)
 		{
 			var json = JsonConvert.SerializeObject(objToPost, Formatting.Indented);
 			var httpContentToPost = new StringContent(json, Encoding.UTF8, "application/json");
@@ -48,17 +61,17 @@ namespace SplashScreenTest02.Services
 				try
 				{
 					var httpResponse = await Client.PostAsync(baseUri + address, httpContentToPost);
-					if (httpResponse.IsSuccessStatusCode)
-						return
-							"Post ok!";
+					return httpResponse.StatusCode;
+					
+					//if (httpResponse.IsSuccessStatusCode)
+					//	return
+					//		"Post ok!";
 				}
 				catch (Exception ex)
 				{
-					return
-						ex.Message;
 				}
 			}
-			return string.Empty;
+			return HttpStatusCode.InternalServerError;
 		}
 	}
 }

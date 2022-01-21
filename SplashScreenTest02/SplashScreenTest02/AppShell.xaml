@@ -22,10 +22,10 @@
                 <!--<Setter Property="Shell.TitleColor" Value="White" />-->
                 <Setter Property="Shell.DisabledColor" Value="#B4FFFFFF" />
                 <Setter Property="Shell.UnselectedColor" Value="#95FFFFFF" />
-                <Setter Property="Shell.TabBarBackgroundColor" Value="{StaticResource SecondaryAccent1}" />
+                <Setter Property="Shell.TabBarBackgroundColor" Value="{StaticResource PrimaryAccent1}" />
 				<Setter Property="Shell.TabBarForegroundColor" Value="#95FFFFFF"/>
                 <!--<Setter Property="Shell.TabBarForegroundColor" Value="White"/>-->
-				<Setter Property="Shell.TabBarUnselectedColor" Value="{StaticResource SecondaryAccent2}"/>
+				<Setter Property="Shell.TabBarUnselectedColor" Value="{StaticResource PrimaryAccent2}"/>
 				<Setter Property="Shell.TabBarTitleColor" Value="#95FFFFFF"/>
                 <!--<Setter Property="Shell.TabBarTitleColor" Value="White"/>-->
             </Style>
@@ -42,7 +42,7 @@
 			<ShellContent ContentTemplate="{DataTemplate local2:MainPage}"/>
 		</Tab>
 		<Tab Title="Min Å" Icon="iconmystream.png">
-			<ShellContent ContentTemplate="{DataTemplate local2:MyStreamPage}" />
+			<ShellContent ContentTemplate="{DataTemplate local2:MyStreamPage}" Route="MyStreamPage" />
 		</Tab>
 		<Tab Title="Historik" Icon="iconhistory.png">
 			<ShellContent ContentTemplate="{DataTemplate local2:HistoryPage}"/>

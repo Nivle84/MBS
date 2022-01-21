@@ -11,7 +11,7 @@
 		<viewmodel:LoginViewModel x:Key="lpVM_V" />
 	</ContentPage.Resources>
     <ContentPage.Content>
-        <Grid Margin="2,2,2,2" >
+        <Grid Margin="2,2,2,2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="20"/>
                 <RowDefinition Height="*"/>
@@ -60,11 +60,11 @@
 				<Image x:Name="imgDisp"/>
 				<Label Text="Mange Bække Små" FontSize="38" HorizontalTextAlignment="Center"/>
 				<Label Text="Log ind" FontSize="Large" HorizontalTextAlignment="Center"/>
-				<Entry HorizontalOptions="Fill" HorizontalTextAlignment="Center" Placeholder="E-mail" Text="{Binding CurrentUser.UserEmail, Mode=OneWayToSource}" />
+				<Entry HorizontalOptions="Fill" HorizontalTextAlignment="Center" Placeholder="E-mail" Text="{Binding CurrentUser.UserEmail, Mode=OneWayToSource}" IsTextPredictionEnabled="False" />
 				<Entry HorizontalOptions="Fill" HorizontalTextAlignment="Center" Placeholder="Kodeord" IsPassword="True" Text="{Binding CurrentUser.UserPassword, Mode=OneWayToSource}"/>
 				<Button Text="Log ind" HorizontalOptions="Center" Command="{Binding LoginCommand}"/>
-				<Label Text="Opret Konto" TextDecorations="Underline" HorizontalOptions="Center" VerticalOptions="EndAndExpand">
-					<Label.GestureRecognizers>
+                <Label Text="Opret Konto" TextDecorations="Underline" HorizontalOptions="Center" VerticalOptions="EndAndExpand">
+                    <Label.GestureRecognizers>
 						<TapGestureRecognizer Command="{Binding GoToCreateUserCommand}"/>
 					</Label.GestureRecognizers>
 				</Label>

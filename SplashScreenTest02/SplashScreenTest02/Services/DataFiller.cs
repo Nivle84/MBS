@@ -1,19 +1,23 @@
 ﻿using MBStest01.Models;
+using MBStest03.Helpers;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
+//using SplashScreenTest02.Resources.Images;
 
 namespace SplashScreenTest02.Services
 {
 	public class DataFiller
 	{
 		public ApiHelper ApiHelper { get; set; }
+		public TranslatorHelper Translator {get; set;}
 		public DataFiller()
 		{
 			ApiHelper = new ApiHelper();
+			Translator = new TranslatorHelper();
 		}
 
 		public List<Mood> GetMoods()
@@ -23,7 +27,14 @@ namespace SplashScreenTest02.Services
 
 			List<Mood> moods = new List<Mood>();
 			moods = JsonConvert.DeserializeObject<List<Mood>>(receivedJson);
-			return moods;
+            //Bryder mig ikke om denne her hardcoded implementering... Men kan godt forsvare den fordi der med al sandsynlighed ikke kommer flere moods til.
+
+            foreach (var mood in moods)
+            {
+				mood.MoodImagePath = "mood" + $"{mood.MoodName}".ToLower() + ".png";
+			}
+
+            return moods;
 		}
 
 		public List<Influence> GetInfluences()
@@ -33,6 +44,12 @@ namespace SplashScreenTest02.Services
 
 			List<Influence> influences = new List<Influence>();
 			influences = JsonConvert.DeserializeObject<List<Influence>>(receivedJson);
+
+            foreach (var influence in influences)
+            {
+				influence.InfluenceName = Translator.InfluenceTranslator(influence.InfluenceID);
+            }
+
 			return influences;
 		}
 

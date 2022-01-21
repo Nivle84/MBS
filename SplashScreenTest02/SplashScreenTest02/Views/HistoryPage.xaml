@@ -1,12 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MBStest03.Views.HistoryPage">
-    <ContentPage.Content>
+             x:Class="MBStest03.Views.HistoryPage"
+			 xmlns:view="clr-namespace:MBStest03.Views"
+			 xmlns:viewmodel="clr-namespace:SplashScreenTest02.ViewModels">
+	<ContentPage.Resources>
+		<viewmodel:HistoryViewModel x:Key="hpVM"/>
+	</ContentPage.Resources>
+	<ContentPage.Content>
         <StackLayout>
             <Label Text="Historik placeholder!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+                VerticalOptions="CenterAndExpand"
+                HorizontalOptions="CenterAndExpand"/>
+			<Button Text="Gå til Min Å"
+					Command="{Binding GoToMyStreamCommand, Source={StaticResource hpVM}}"
+					BackgroundColor="YellowGreen"/>
+		</StackLayout>
     </ContentPage.Content>
 </ContentPage>

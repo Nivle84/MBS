@@ -8,10 +8,12 @@
 
   <ItemGroup>
     <None Remove="Resources\Fonts\KGKeepYourHeadUp.ttf" />
+    <None Remove="Resources\Images\moodgood.png" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Resources\Fonts\KGKeepYourHeadUp.ttf" />
+    <EmbeddedResource Include="Resources\Images\moodgood.png" />
   </ItemGroup>
 
   <ItemGroup>

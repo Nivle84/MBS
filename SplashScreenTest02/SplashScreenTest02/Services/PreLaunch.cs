@@ -75,14 +75,14 @@ namespace SplashScreenTest02.Services
 			});
 		}
 
-		private static Task GetLoggedInUser()	//Bruges ikke pt., tjekkes andetsteds... ikke??
-		{
-			return Task.Run(() =>
-			{
-				//UserState userState = new UserState();
-				//var storedUser = Preferences.Get("StoredUser", String.Empty);
-			});
-		}
+		//private static Task GetLoggedInUser()	//Bruges ikke pt., tjekkes andetsteds... ikke??
+		//{
+		//	return Task.Run(() =>
+		//	{
+		//		//UserState userState = new UserState();
+		//		//var storedUser = Preferences.Get("StoredUser", String.Empty);
+		//	});
+		//}
 
 		public PreLaunch()
 		{
@@ -95,13 +95,13 @@ namespace SplashScreenTest02.Services
 			};
 			Task mooTask = GetMoodsAsync();
 			Task infTask = GetInfluencesAsync();
-			Task useTask = GetLoggedInUser();
+			//Task useTask = GetLoggedInUser();
 			//Task bunTask = GatherBundle();
 
-			Task.WaitAll(mooTask, infTask, useTask);
+			Task.WaitAll(mooTask, infTask);
 		}
 
-		public Bundle GatherBundle()
+		public Bundle GatherBundle()	//Endte egentlig med at være overflødig, da jeg læser alt fra fra Preferences alligevel.
 		{
 			Bundle launchBundle = new Bundle();
 			launchBundle.PutString(Constants.StoredMoods, storedMoods);
