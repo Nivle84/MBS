@@ -1,4 +1,7 @@
 ﻿
+using SplashScreenTest02.ViewModels;
+using System;
+using System.Diagnostics;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -8,15 +11,33 @@ namespace MBStest03.Views
     public partial class HistoryPage : ContentPage
     {
         //public Command GoToMyStreamCommand { get; }
+        public Command OpenPopupCommand { get; }
         public HistoryPage()
         {
-            InitializeComponent();
+
             //GoToMyStreamCommand = new Command(GoToMyStream);
+            //HistoryCV.ItemsSource = hpVM_CB.DaysSource;
+            //HistoryCV.ItemTemplate = hpVM_CB.DayTemplate;
+            Label labelCV = new Label();
+            OpenPopupCommand = new Command(OpenPopupClicked);
+            
+            InitializeComponent();
         }
 
-  //      public async void GoToMyStream(object obj)
+        private async void OpenPopupClicked(object obj)
+		{
+            Debug.WriteLine("OpenPopupClicked() called!");
+		}
+		//private void HistoryCV_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
 		//{
-  //          await Shell.Current.GoToAsync("MyStreamPage");
+  //          hpVM_CB.DaysSource = hpVM_CB.DaysSource;
 		//}
-    }
+
+		//ImageSource historyNote = "historynote.png";
+
+		//      public async void GoToMyStream(object obj)
+		//{
+		//          await Shell.Current.GoToAsync("MyStreamPage");
+		//}
+	}
 }

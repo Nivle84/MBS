@@ -17,6 +17,10 @@ namespace SplashScreenTest02
 			Routing.RegisterRoute(nameof(LoginPage), typeof(LoginPage));
 			Routing.RegisterRoute(nameof(CreateUserPage), typeof(CreateUserPage));
 		}
+		protected override bool OnBackButtonPressed()
+		{
+			return base.OnBackButtonPressed();
+		}
 
 	}
 }

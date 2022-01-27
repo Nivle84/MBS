@@ -36,46 +36,46 @@ namespace MBStest03.ViewModels
 			RepeatPassword = string.Empty;
 		}
 
-		public async void CreateUserClicked(object obj)					//Det her føles som lidt for mange if's på én gang...
-		{																//Kunne godt have lavet en switch-case i stedet for, men det må være ét fedt :thinking:
-			if (CurrentUser.UserPassword == RepeatPassword)				//Tjek om de to kodeod er ens.
+		public async void CreateUserClicked(object obj)
+		{
+			if (CurrentUser.UserPassword == RepeatPassword)						//Tjek om de to kodeod er ens.
 			{
-				switch (await apiHelper.ApiGetter("users/username/" + CurrentUser.UserEmail.ToString()))
+				switch (await apiHelper.DoesUserExist(CurrentUser.UserEmail))	//Tjek om brugeren findes i forvejen
 				{
-					case HttpStatusCode.OK:
+					case true:
 						Toast.MakeText(Android.App.Application.Context, "Bruger findes allerede!", ToastLength.Short).Show();
 						break;
 					
 					case false:
 						CurrentUser.UserPassword = BC.HashPassword(CurrentUser.UserPassword);   //Hash kodeord med salt.
-						var apiResponse = await apiHelper.ApiPoster("users", CurrentUser);
+						var apiResponse = await apiHelper.ApiPoster("users/", CurrentUser);
 						switch (apiResponse)
 						{
 							case HttpStatusCode.OK:
 								Toast.MakeText(Android.App.Application.Context, "Bruger oprettet!", ToastLength.Long).Show();
 								await Shell.Current.GoToAsync(nameof(LoginPage));
 								break;
-							case HttpStatusCode.OK:
+							default:
 								Toast.MakeText(Android.App.Application.Context, "Der skete en fejl. Prøv igen.", ToastLength.Short).Show();
 								break;
 						}
 						break;
 				}
 
-				if (!await apiHelper.DoesUserExist(CurrentUser.UserEmail))			        //Tjek om bruger findes i forvejen.
-				{
-					CurrentUser.UserPassword = BC.HashPassword(CurrentUser.UserPassword);   //Hash kodeord med salt.
-					var apiResponse = await apiHelper.ApiPoster("users", CurrentUser);
-					if (apiResponse == "Post ok!")
-					{
-						Toast.MakeText(Android.App.Application.Context, "Bruger oprettet!", ToastLength.Long).Show();
-						await Shell.Current.GoToAsync(nameof(LoginPage));
-					}
-					else
-						Toast.MakeText(Android.App.Application.Context, "Der skete en fejl. Prøv igen.", ToastLength.Short).Show();
-				}
-				else
-					Toast.MakeText(Android.App.Application.Context, "Bruger findes allerede!", ToastLength.Short).Show();
+				//if (!await apiHelper.DoesUserExist(CurrentUser.UserEmail))			        //Tjek om bruger findes i forvejen.
+				//{
+				//	CurrentUser.UserPassword = BC.HashPassword(CurrentUser.UserPassword);   //Hash kodeord med salt.
+				//	var apiResponse = await apiHelper.ApiPoster("users", CurrentUser);
+				//	if (apiResponse == "Post ok!")
+				//	{
+				//		Toast.MakeText(Android.App.Application.Context, "Bruger oprettet!", ToastLength.Long).Show();
+				//		await Shell.Current.GoToAsync(nameof(LoginPage));
+				//	}
+				//	else
+				//		Toast.MakeText(Android.App.Application.Context, "Der skete en fejl. Prøv igen.", ToastLength.Short).Show();
+				//}
+				//else
+				//	Toast.MakeText(Android.App.Application.Context, "Bruger findes allerede!", ToastLength.Short).Show();
 			}
 			else
 				Toast.MakeText(Android.App.Application.Context, "Kodeord matcher ikke! Prøv igen.", ToastLength.Short).Show();

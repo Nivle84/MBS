@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -40,16 +41,52 @@ namespace SplashScreenTest02.Services
 
 		public async Task<string> ApiGetter(string address)
 		{
-			var response = await Client.GetAsync(baseUri + address);
-			if (response.IsSuccessStatusCode)
-				return await response.Content.ReadAsStringAsync();
-			else
-				return string.Empty;
+			using (Client)
+			{
+				var response = await Client.GetAsync(baseUri + address);
+				if (response.IsSuccessStatusCode)
+					return await response.Content.ReadAsStringAsync();
+				else
+					return string.Empty;
+			}
 		}
 
-		public async Task<HttpResponseMessage> GetUser(string userEmail)		//Vil jeg have én overordnet getter, eller adskillige? Skal vel kun have to (user, dag)...
+		public async Task<string> GetDaysByUserID(int userID)
 		{
-			var response = await Client.GetAsync(baseUri + "users/username/" + userEmail);
+			using (Client)
+			{
+				var response = await Client.GetAsync(baseUri + "users/" + userID + "/days/");
+				Debug.WriteLine("StatusCode from GetDaysByUserID(): " + response.StatusCode);
+				switch (response.StatusCode)
+				{
+					case HttpStatusCode.OK:
+						return await response.Content.ReadAsStringAsync();
+					case HttpStatusCode.NotFound:
+						return "Requested days not found.";
+					case HttpStatusCode.ServiceUnavailable:
+						return "Service unavailable";
+					default:
+						return "Error: " + response.StatusCode.ToString();
+				}
+			}
+		}
+		public async Task<string> GetUserByEmail(string userEmail)		//Vil jeg have én overordnet getter, eller adskillige? Skal vel kun have to (user, dag)...
+		{
+			using (Client)
+			{
+				var response = await Client.GetAsync(baseUri + "users/username/" + userEmail);
+				switch (response.StatusCode)
+				{
+					case HttpStatusCode.OK:
+						return await response.Content.ReadAsStringAsync(); ;
+					case HttpStatusCode.NotFound:
+						return "Requested user not found.";
+					case HttpStatusCode.ServiceUnavailable:
+						return "Service unavailable";
+					default:
+						return "Error: " + response.StatusCode.ToString();
+				}
+			}
 		}
 
 		public async Task<HttpStatusCode> ApiPoster(string address, object objToPost)

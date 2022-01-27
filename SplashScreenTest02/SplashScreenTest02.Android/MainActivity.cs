@@ -4,6 +4,10 @@ using Android.App;
 using Android.Content.PM;
 using Android.Runtime;
 using Android.OS;
+using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
+using SplashScreenTest02.Views;
+using MBStest03.ViewModels;
 
 namespace SplashScreenTest02.Droid
 {
@@ -30,5 +34,15 @@ namespace SplashScreenTest02.Droid
 
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
-    }
+		//protected override bool OnBackPressed()
+		//{
+		//	if (BindingContext != null && BindingContext is DayViewVM)
+		//		if (noteEditor.IsVisible)
+		//		{
+		//			influenceCollectionView.IsVisible = true;
+		//			SelectedInfluence.IsVisible = false;
+		//			noteEditor.IsVisible = false;
+		//		}
+		//}
+	}
 }

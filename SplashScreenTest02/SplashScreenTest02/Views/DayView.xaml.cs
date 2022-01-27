@@ -18,6 +18,19 @@ namespace SplashScreenTest02.Views
         public Command SaveDayClickedCommand { get; }
         public Command SequenceIncreaseCommand { get; }
         public Command SaveThisDayCommand { get; }
+        public Command GoBackCommand { get; }
+   //     protected override bool OnBackButtonPressed()
+   //     {
+   //         if (BindingContext != null && BindingContext is DayViewVM)
+			//{
+   //             if (noteEditor.IsVisible)
+   //             {
+   //                 influenceCollectionView.IsVisible = true;
+   //                 SelectedInfluence.IsVisible = false;
+   //                 noteEditor.IsVisible = false;
+   //             }
+			//}
+   //     }
 
         public DayView()
         {
@@ -26,11 +39,12 @@ namespace SplashScreenTest02.Views
                                      //collectionViewInfluences.ItemsSource = vm.influenceList;
                                      //collectionViewInfluences.SelectedItem = vm.influenceClickedCommand;
 
-            InitializeComponent();
             MoodClickedCommand = new Command(MoodClicked);
             InfluenceClickedCommand = new Command(InfluenceClicked);
             //SequenceIncreaseCommand = new Command(SequenceIncrease);
             SaveThisDayCommand = new Command(SaveDayClicked);
+            GoBackCommand = new Command(GoBackClicked);
+            InitializeComponent();
         }
 
         //public static readonly BindableProperty TextProperty = BindableProperty.Create(
@@ -101,6 +115,7 @@ namespace SplashScreenTest02.Views
                 influenceCollectionView.IsVisible = false;
                 SelectedInfluence.IsVisible = true;
                 noteEditor.IsVisible = true;
+                GoBackButton.IsVisible = true;
             }
         }
 
@@ -117,8 +132,20 @@ namespace SplashScreenTest02.Views
 			    influenceCollectionView.IsVisible = false;
                 SelectedInfluence.IsVisible = true;
                 noteEditor.IsVisible = true;
+                GoBackButton.IsVisible = true;
 			}
         }
+
+        public void GoBackClicked(object obj)
+		{
+            if (noteEditor.IsVisible == true)
+			{
+                influenceCollectionView.IsVisible = true;
+                SelectedInfluence.IsVisible = false;
+                noteEditor.IsVisible = false;
+                GoBackButton.IsVisible = false;
+            }
+		}
 
         public async void SaveDayClicked(object obj)
         {
@@ -134,26 +161,26 @@ namespace SplashScreenTest02.Views
         //    vm.sequenceStep++;
         //}
 
-        public void ChangeElementsVisibility()
-        {
-            switch (vm.sequenceStep)    //SequenceStep++ ved valg af mood og influence. Tilbage til 0 ved gemt dag. Denne metode skulle kaldes ved ændringer i View.
-            {
-                case 0: //Intet valgt endnu
-                    moodCollectionView.IsVisible = true;
-                    influenceCollectionView.IsVisible = true;
-                    noteEditor.IsVisible = false;
-                    break;
-                case 1: //Mood || Influence valgt
-                    moodCollectionView.IsVisible = true;
-                    influenceCollectionView.IsVisible = true;
-                    noteEditor.IsVisible = false;
-                    break;
-                case 2: //Mood && Influence valgt
-                    moodCollectionView.IsVisible = true;
-                    influenceCollectionView.IsVisible = false;
-                    noteEditor.IsVisible = true;
-                    break;
-            }
-        }
+        //public void ChangeElementsVisibility()
+        //{
+        //    switch (vm.sequenceStep)    //SequenceStep++ ved valg af mood og influence. Tilbage til 0 ved gemt dag. Denne metode skulle kaldes ved ændringer i View.
+        //    {
+        //        case 0: //Intet valgt endnu
+        //            moodCollectionView.IsVisible = true;
+        //            influenceCollectionView.IsVisible = true;
+        //            noteEditor.IsVisible = false;
+        //            break;
+        //        case 1: //Mood || Influence valgt
+        //            moodCollectionView.IsVisible = true;
+        //            influenceCollectionView.IsVisible = true;
+        //            noteEditor.IsVisible = false;
+        //            break;
+        //        case 2: //Mood && Influence valgt
+        //            moodCollectionView.IsVisible = true;
+        //            influenceCollectionView.IsVisible = false;
+        //            noteEditor.IsVisible = true;
+        //            break;
+        //    }
+        //}
     }
 }

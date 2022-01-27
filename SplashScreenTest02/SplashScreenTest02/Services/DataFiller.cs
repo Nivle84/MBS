@@ -53,9 +53,9 @@ namespace SplashScreenTest02.Services
 			return influences;
 		}
 
-		public async Task<List<Day>> GetUsersDays(int userID)
+		public async Task<List<Day>> GetUsersDays()
 		{
-			var receivedJson = await ApiHelper.ApiGetter("users/" + userID.ToString() + "/days");
+			var receivedJson = await ApiHelper.GetDaysByUserID(Preferences.Get(Constants.StoredUserID, 0));
 
 			List<Day> days = new List<Day>();
 			days = JsonConvert.DeserializeObject<List<Day>>(receivedJson);

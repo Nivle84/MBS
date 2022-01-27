@@ -92,27 +92,27 @@ namespace MBStest03.ViewModels
 		public List<Mood> moodList { get; set; }
 		DataFiller myFiller { get; set; }
 		public ApiHelper apiHelper { get; }
-		public int sequenceStep
-		{
-			//Sekvensen:
-			//0		Ny-åbnet, ingenting valgt endnu
-			//1		Mood valgt
-			//2		Influence valgt
-			//3		Klar til at gemme, evt er en note skrevet
-			get { return sequenceStep; }
-			set	{ sequenceStep = value; }
-		}
-		public Image moodImagePath(Mood mood)
-		{
-			string imagePath = "mood" + $"{mood.MoodName}".ToLower() + ".png";
+		//public int sequenceStep
+		//{
+		//	//Sekvensen:
+		//	//0		Ny-åbnet, ingenting valgt endnu
+		//	//1		Mood valgt
+		//	//2		Influence valgt
+		//	//3		Klar til at gemme, evt er en note skrevet
+		//	get { return sequenceStep; }
+		//	set	{ sequenceStep = value; }
+		//}
+		//public Image moodImagePath(Mood mood)
+		//{
+		//	string imagePath = "mood" + $"{mood.MoodName}".ToLower() + ".png";
 
-			var image = new Image
-			{
-				Source = ImageSource.FromFile(imagePath)
-			};
+		//	var image = new Image
+		//	{
+		//		Source = ImageSource.FromFile(imagePath)
+		//	};
 
-			return image;
-		}
+		//	return image;
+		//}
 
 		//public ObservableCollection<Influence> influenceCollection { get; set; }
 		//public IEnumerable<Influence> influenceListToBind { get; set; }
@@ -129,8 +129,6 @@ namespace MBStest03.ViewModels
 			{
 				UserID = Preferences.Get(Constants.StoredUserID, 0)
 			};
-			//ThisDay.User = ThisUser;    //Kan jeg undgå at have HELE objektet og nøjes med ID??
-			//ThisDay.Date = DateTime.Now;
 			//goodMoodClickedCommand = new Command(GoodMoodClicked);
 			//okMoodClickedCommand = new Command(OkMoodClicked);
 			//badMoodClickedCommand = new Command(BadMoodClicked);
@@ -144,6 +142,19 @@ namespace MBStest03.ViewModels
 			apiHelper = new ApiHelper();
 		}
 
+		public DayViewVM(Day selectedDay)
+		{
+			myFiller = new DataFiller();
+			apiHelper = new ApiHelper();
+			influenceList = myFiller.GetInfluences();
+			moodList = myFiller.GetMoods();
+			ThisDay = selectedDay;
+			ThisMood = selectedDay.Mood;
+			ThisInfluence = selectedDay.Influence;
+			ThisNote = selectedDay.Note;
+			ThisUser.UserID =selectedDay.UserID;
+		}
+
 		public bool DayHasBeenSaved = false;
 
         internal async void SaveThisDay()
@@ -151,7 +162,7 @@ namespace MBStest03.ViewModels
 			ThisDay.UserID		= ThisUser.UserID;
 			ThisDay.MoodID		= ThisMood.MoodID;
 			ThisDay.InfluenceID = ThisInfluence.InfluenceID;
-			if (ThisNote.NoteString != String.Empty)
+			if (ThisNote.NoteString != null)
 			{
 				ThisDay.HasNote = true;
 				ThisDay.Note = ThisNote;
@@ -159,25 +170,18 @@ namespace MBStest03.ViewModels
 
 			var response = await apiHelper.ApiPoster("days/", ThisDay);
 			
-			switch (response.StatusCode)
+			if (response == System.Net.HttpStatusCode.OK)
 			{
-				case 200:
-					Toast.MakeText(Android.App.Application.Context, "Dag gemt!", ToastLength.Short).Show();
-					//sequenceStep = 0;
-					ThisDay = null;
-					DayHasBeenSaved = true;
-					break;
-			}
-			if (response == "Post ok!")
-            {
 				Toast.MakeText(Android.App.Application.Context, "Dag gemt!", ToastLength.Short).Show();
 				//sequenceStep = 0;
-				ThisDay = null;
+				ThisDay.Mood = null;
+				ThisDay.Influence = null;
+				ThisDay.Note = null;
 				DayHasBeenSaved = true;
-            }
+			}
 			else
 			{
-				Toast.MakeText(Android.App.Application.Context, response.ToString(), ToastLength.Short).Show();
+				Toast.MakeText(Android.App.Application.Context, "Der skete en fejl. Error: " + response.ToString(), ToastLength.Long).Show();
 				DayHasBeenSaved = false;
 			}
 		}

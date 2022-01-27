@@ -29,19 +29,19 @@
 		</Grid.ColumnDefinitions>
 		<!--<Label Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" HorizontalOptions="CenterAndExpand"
                 Text="{Binding ThisDayDV.Date, Source={x:Reference this}}" FontSize="Large"/>-->
-		<Label Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" HorizontalOptions="CenterAndExpand"
+		<Label Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" HorizontalOptions="CenterAndExpand" VerticalTextAlignment="End"
                Text="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:DayViewVM}}, Path=ShortDate}"
 			   FontSize="Large" TextColor="{StaticResource Primary}"/>
-		<Label Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" HorizontalOptions="CenterAndExpand"
+		<!--<Label Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" HorizontalOptions="CenterAndExpand"
                Text="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:DayViewVM}}, Path=ThisMood.MoodName}"
-               FontSize="Large"/>
+               FontSize="Large"/>-->
 
 		<CollectionView Grid.Row="3" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="5" HorizontalScrollBarVisibility="Never" SelectionMode="Single"
 						ItemsSource="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:DayViewVM}}, Path=moodList}"
 						SelectedItem="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:DayViewVM}}, Path=ThisMood, Mode=TwoWay}"
-                        x:Name="moodCollectionView"
-                        HorizontalOptions="FillAndExpand"
-                        >
+						x:Name="moodCollectionView"
+						HorizontalOptions="FillAndExpand"
+						>
 			<!--<CollectionView.GestureRecognizers>
 				<TapGestureRecognizer Command="{Binding MoodClickedCommand, Source={x:Reference this}}"
 									  CommandParameter="5"
@@ -169,12 +169,16 @@
                 IsSpellCheckEnabled="True" IsVisible="false" Text="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:DayViewVM}}, Path=ThisNote.NoteString, Mode=TwoWay}"
                 x:Name="noteEditor"/>
 		<Button Grid.Row="9" Grid.Column="3" Text="Gem Dag" Margin="0,0,0,0" BackgroundColor="{StaticResource Primary}"
-				Command="{Binding SaveThisDayCommand, Source={x:Reference this}}">
+				Command="{Binding Path=SaveThisDayCommand, Source={x:Reference this}}"
+				>
 			<!--<Button.GestureRecognizers>
-				<TapGestureRecognizer Command="{Binding SaveThisDayCommand, Source={x:Reference this}}" />
+				<TapGestureRecognizer Command="{Binding Path=SaveThisDayCommand, Source={x:Reference this}}" />
 			</Button.GestureRecognizers>-->
 		</Button>
-			
+		<Button Grid.Row="9" Grid.Column="1" Text="Gå tilbage" BackgroundColor="{StaticResource SecondaryAccent2}" IsVisible="False"
+				x:Name="GoBackButton"
+				Command="{Binding Path=GoBackCommand, Source={x:Reference this}}"/>
+
 	</Grid>
 	<!--https://almirvuk.blogspot.com/2019/07/lets-play-with-collectionview-layouts.html-->
 </Grid>

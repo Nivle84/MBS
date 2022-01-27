@@ -3,18 +3,99 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MBStest03.Views.HistoryPage"
 			 xmlns:view="clr-namespace:MBStest03.Views"
-			 xmlns:viewmodel="clr-namespace:SplashScreenTest02.ViewModels">
+			 xmlns:viewmodel="clr-namespace:SplashScreenTest02.ViewModels"
+			 xmlns:viewmodel2="clr-namespace:MBStest03.ViewModels"
+			 xmlns:services="clr-namespace:SplashScreenTest02.Services"
+			 x:Name="this">
+			 <!--x:DataType="viewmodel:HistoryViewModel"-->
 	<ContentPage.Resources>
-		<viewmodel:HistoryViewModel x:Key="hpVM"/>
+		<viewmodel:HistoryViewModel x:Key="hpVM" x:Name="hpVM_CB"/>
+		<viewmodel2:DayViewVM x:Key="dvVM" />
+		<services:DateTimeCultureConverter x:Key="dateTimeCultureConverter"/>
 	</ContentPage.Resources>
 	<ContentPage.Content>
-        <StackLayout>
+        <!--<StackLayout>
             <Label Text="Historik placeholder!"
                 VerticalOptions="CenterAndExpand"
                 HorizontalOptions="CenterAndExpand"/>
 			<Button Text="Gå til Min Å"
 					Command="{Binding GoToMyStreamCommand, Source={StaticResource hpVM}}"
 					BackgroundColor="YellowGreen"/>
-		</StackLayout>
+		</StackLayout>-->
+		<!--<CollectionView x:Name="HistoryCV"
+						ItemsLayout="VerticalList"
+						ItemsSource="{Binding Source={StaticResource hpVM}, Path=DaysSource}"
+						SelectionMode="Single"
+						IsVisible="True"
+						>-->
+		<CollectionView x:Name="HistoryCV"
+						ItemsLayout="VerticalList"
+						ItemsSource="{Binding Source={StaticResource hpVM}, Path=DaysSource}"
+						SelectedItem="{Binding Source={StaticResource dvVM}, Path=ThisDay}"
+						SelectionChangedCommand="{Binding Source={x:Reference this }, Path=OpenPopupCommand}"
+						
+						SelectionMode="Single"
+						IsVisible="True"
+						BackgroundColor="{StaticResource PrimaryBackground}"
+						VerticalScrollBarVisibility="Always"
+						>
+			<CollectionView.ItemTemplate>
+				<DataTemplate>
+					<Grid Padding="0,5,5,5">
+						<Grid.RowDefinitions>
+							<RowDefinition Height="40"/>
+						</Grid.RowDefinitions>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="*"/>
+							<ColumnDefinition Width="*"/>
+							<ColumnDefinition Width="*"/>
+							<ColumnDefinition Width="auto"/>
+						</Grid.ColumnDefinitions>
+						<VisualStateManager.VisualStateGroups>
+							<VisualStateGroup Name="CommonStates">
+								<VisualState Name="Normal">
+									
+								</VisualState>
+								<VisualState Name="Selected">
+									<VisualState.Setters>
+										<Setter Property="BackgroundColor" Value="{StaticResource PrimaryAccent1}"/>
+									</VisualState.Setters>
+								</VisualState>
+							</VisualStateGroup>
+						</VisualStateManager.VisualStateGroups>
+
+						<Label Text="{Binding Path=Date, Converter={StaticResource dateTimeCultureConverter}}"
+							   Grid.Row="0"
+							   Grid.Column="0"
+							   VerticalTextAlignment="Center"
+							   HorizontalOptions="Center"
+							   FontSize="Large"/>
+						<Label Text="{Binding Date, StringFormat='{0:d/MM/yy}'}"
+							   Grid.Row="0"
+							   Grid.Column="1"
+							   VerticalTextAlignment="Center"
+							   HorizontalTextAlignment="End"
+							   FontSize="Large"/>
+
+						<Image Source="historynoteprimaryaccent2.png"
+							   Grid.Row="0"
+							   Grid.Column="2"
+							   IsVisible="{Binding HasNote}"/>
+						<Image Source="{Binding Mood.MoodImagePath}"
+							   Grid.Row="0"
+							   Grid.Column="3"
+							   HorizontalOptions="Center"
+							   VerticalOptions="Center"/>
+					</Grid>
+					<!--<StackLayout Orientation="Horizontal"
+								 FlowDirection="LeftToRight"
+								 HeightRequest="50">
+						<Label Text="{Binding Date, StringFormat='{0:d/M/yy}'}"/>
+						<Image Source="{Binding Source=}"
+						<Image Source="{Binding Mood.MoodImagePath}"/>
+					</StackLayout>-->
+				</DataTemplate>
+			</CollectionView.ItemTemplate>
+		</CollectionView>
     </ContentPage.Content>
 </ContentPage>
