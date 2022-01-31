@@ -34,28 +34,6 @@
                 <ColumnDefinition Width="*"/>-->
                 <ColumnDefinition Width="20"/>
             </Grid.ColumnDefinitions>
-            <!--<BoxView BackgroundColor="Aquamarine" Grid.Column="1" Grid.Row="1"/>
-            <BoxView BackgroundColor="Aqua" Grid.Column="2" Grid.Row="1"/>
-            <BoxView BackgroundColor="Bisque" Grid.Column="3" Grid.Row="1"/>
-            <BoxView BackgroundColor="Aquamarine" Grid.Column="1" Grid.Row="2"/>
-            <BoxView BackgroundColor="Aqua" Grid.Column="2" Grid.Row="2"/>
-            <BoxView BackgroundColor="Bisque" Grid.Column="3" Grid.Row="2"/>
-            <BoxView BackgroundColor="Aquamarine" Grid.Column="1" Grid.Row="3"/>
-            <BoxView BackgroundColor="Aqua" Grid.Column="2" Grid.Row="3"/>
-            <BoxView BackgroundColor="Bisque" Grid.Column="3" Grid.Row="3"/>
-            <BoxView BackgroundColor="Aquamarine" Grid.Column="1" Grid.Row="4"/>
-            <BoxView BackgroundColor="Aqua" Grid.Column="2" Grid.Row="4"/>
-            <BoxView BackgroundColor="Bisque" Grid.Column="3" Grid.Row="4"/>
-            <BoxView BackgroundColor="Aquamarine" Grid.Column="1" Grid.Row="5"/>
-            <BoxView BackgroundColor="Aqua" Grid.Column="2" Grid.Row="5"/>
-            <BoxView BackgroundColor="Bisque" Grid.Column="3" Grid.Row="5"/>
-            <BoxView BackgroundColor="Aquamarine" Grid.Column="1" Grid.Row="6"/>
-            <BoxView BackgroundColor="Aqua" Grid.Column="2" Grid.Row="6"/>
-            <BoxView BackgroundColor="Bisque" Grid.Column="3" Grid.Row="6"/>
-            <BoxView BackgroundColor="Aquamarine" Grid.Column="1" Grid.Row="7"/>
-            <BoxView BackgroundColor="Aqua" Grid.Column="2" Grid.Row="7"/>
-            <BoxView BackgroundColor="Bisque" Grid.Column="3" Grid.Row="7"/>-->
-
 			<StackLayout Grid.Row="1" Grid.RowSpan="6" Grid.Column="1" Grid.ColumnSpan="3" BindingContext="{StaticResource lpVM_V}">
 				<Image x:Name="imgDisp"/>
 				<Label Text="Mange Bække Små" FontSize="38" HorizontalTextAlignment="Center"/>
@@ -64,6 +42,7 @@
 				<Entry HorizontalOptions="Fill" HorizontalTextAlignment="Center" Placeholder="Kodeord" IsPassword="True" Text="{Binding CurrentUser.UserPassword, Mode=OneWayToSource}"/>
 				<Button Text="Log ind" HorizontalOptions="Center" Command="{Binding LoginCommand}"/>
                 <Label Text="Opret Konto" TextDecorations="Underline" HorizontalOptions="Center" VerticalOptions="EndAndExpand">
+					<!--Jeg valgte at bruge en label i stedet for en knap mere, da jeg synes det virker bedre visuelt, og gør det knap så "tungt" at se på-->
                     <Label.GestureRecognizers>
 						<TapGestureRecognizer Command="{Binding GoToCreateUserCommand}"/>
 					</Label.GestureRecognizers>

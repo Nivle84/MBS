@@ -27,43 +27,36 @@
 			<ColumnDefinition Width="*"/>
 			<ColumnDefinition Width="20"/>
 		</Grid.ColumnDefinitions>
-		<!--<Label Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" HorizontalOptions="CenterAndExpand"
-                Text="{Binding ThisDayDV.Date, Source={x:Reference this}}" FontSize="Large"/>-->
+		<Label Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" HorizontalOptions="CenterAndExpand"
+                Text="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:DayViewVM}}, Path=ThisMood.MoodName, Mode=TwoWay}" FontSize="Large"/>
 		<Label Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" HorizontalOptions="CenterAndExpand" VerticalTextAlignment="End"
                Text="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:DayViewVM}}, Path=ShortDate}"
 			   FontSize="Large" TextColor="{StaticResource Primary}"/>
-		<!--<Label Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" HorizontalOptions="CenterAndExpand"
-               Text="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:DayViewVM}}, Path=ThisMood.MoodName}"
-               FontSize="Large"/>-->
-
+		<!--RelativeSource bruges ifm at finde en binding source som deler en relation til det pågældende objekt... jeg er ikke helt sikker på at jeg forstår det,
+			men f.eks. mood virker ikke ordentlig hvis jeg sætter en staticresource fra en deklareret VM i grid.resources.
+			Så det MÅ gøre et eller andet anderledes som får det til at virke.--> 
 		<CollectionView Grid.Row="3" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="5" HorizontalScrollBarVisibility="Never" SelectionMode="Single"
 						ItemsSource="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:DayViewVM}}, Path=moodList}"
 						SelectedItem="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:DayViewVM}}, Path=ThisMood, Mode=TwoWay}"
 						x:Name="moodCollectionView"
 						HorizontalOptions="FillAndExpand"
 						>
-			<!--<CollectionView.GestureRecognizers>
-				<TapGestureRecognizer Command="{Binding MoodClickedCommand, Source={x:Reference this}}"
-									  CommandParameter="5"
-									  />
-			</CollectionView.GestureRecognizers>-->
-            <CollectionView.ItemsLayout>
-                <GridItemsLayout Orientation="Horizontal" HorizontalItemSpacing="5"/>
+			<CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Horizontal" HorizontalItemSpacing="5" />
             </CollectionView.ItemsLayout>
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Frame CornerRadius="80"
-                           IsClippedToBounds="True"
-                           >
+                           IsClippedToBounds="True">
 						<Frame.GestureRecognizers>
 							<TapGestureRecognizer Command="{Binding MoodClickedCommand, Source={x:Reference this}}"
 												  CommandParameter="{Binding .}"/>
+							<!--Denne CommandParameter gør at "kalder-objektet" (et mood i det her tilfælde) sendes med som parameter-->
 						</Frame.GestureRecognizers>
                         
                         <Image Source="{Binding Path=MoodImagePath}"
-                               Scale="1.5"
-							   InputTransparent="True"
-                               />
+                               
+							   InputTransparent="True"/>
 						
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup Name="CommonStates">

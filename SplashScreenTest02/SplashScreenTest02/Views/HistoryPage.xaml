@@ -10,7 +10,7 @@
 			 <!--x:DataType="viewmodel:HistoryViewModel"-->
 	<ContentPage.Resources>
 		<viewmodel:HistoryViewModel x:Key="hpVM" x:Name="hpVM_CB"/>
-		<viewmodel2:DayViewVM x:Key="dvVM" />
+		<!--<viewmodel2:DayViewVM x:Key="dvVM" />-->
 		<services:DateTimeCultureConverter x:Key="dateTimeCultureConverter"/>
 	</ContentPage.Resources>
 	<ContentPage.Content>
@@ -32,8 +32,7 @@
 						ItemsLayout="VerticalList"
 						ItemsSource="{Binding Source={StaticResource hpVM}, Path=DaysSource}"
 						SelectedItem="{Binding Source={StaticResource dvVM}, Path=ThisDay}"
-						SelectionChangedCommand="{Binding Source={x:Reference this }, Path=OpenPopupCommand}"
-						
+						SelectionChangedCommand="{Binding Source={x:Reference this}, Path=OpenPopupCommand}"
 						SelectionMode="Single"
 						IsVisible="True"
 						BackgroundColor="{StaticResource PrimaryBackground}"
@@ -42,6 +41,10 @@
 			<CollectionView.ItemTemplate>
 				<DataTemplate>
 					<Grid Padding="0,5,5,5">
+						<Grid.GestureRecognizers>
+							<TapGestureRecognizer Command="{Binding Source={x:Reference this}, Path=OpenPopupCommand}"
+												  CommandParameter="{Binding .}"/>
+						</Grid.GestureRecognizers>
 						<Grid.RowDefinitions>
 							<RowDefinition Height="40"/>
 						</Grid.RowDefinitions>
@@ -54,7 +57,7 @@
 						<VisualStateManager.VisualStateGroups>
 							<VisualStateGroup Name="CommonStates">
 								<VisualState Name="Normal">
-									
+
 								</VisualState>
 								<VisualState Name="Selected">
 									<VisualState.Setters>
@@ -87,13 +90,6 @@
 							   HorizontalOptions="Center"
 							   VerticalOptions="Center"/>
 					</Grid>
-					<!--<StackLayout Orientation="Horizontal"
-								 FlowDirection="LeftToRight"
-								 HeightRequest="50">
-						<Label Text="{Binding Date, StringFormat='{0:d/M/yy}'}"/>
-						<Image Source="{Binding Source=}"
-						<Image Source="{Binding Mood.MoodImagePath}"/>
-					</StackLayout>-->
 				</DataTemplate>
 			</CollectionView.ItemTemplate>
 		</CollectionView>

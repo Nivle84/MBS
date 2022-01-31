@@ -13,6 +13,7 @@ using System.Reflection;
 using System.Drawing;
 using Android.Widget;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace MBStest03.ViewModels
 {
@@ -77,64 +78,34 @@ namespace MBStest03.ViewModels
 		{
 			get
 			{
-				var kultur = CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("da-DK");
-				var date = ThisDay.Date.ToString("dddd dd/MM/yy", kultur).ToUpperInvariant();
+				var culture = CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("da-DK");
+				var date = ThisDay.Date.ToString("dddd dd/MM/yy", culture).ToUpperInvariant();
 				return date;
 			}
 		}
-		//public Command goodMoodClickedCommand { get; }
-		//public Command okMoodClickedCommand { get; }
-		//public Command badMoodClickedCommand { get; }
-		//public Command moodClickedCommand { get; }
-		//public Command influenceClickedCommand { get; }
-		public Command SaveThisDayCommand { get; }
+		//public Command SaveThisDayCommand { get; }
 		public IEnumerable<Influence> influenceList { get; set; }
 		public List<Mood> moodList { get; set; }
 		DataFiller myFiller { get; set; }
 		public ApiHelper apiHelper { get; }
-		//public int sequenceStep
-		//{
-		//	//Sekvensen:
-		//	//0		Ny-åbnet, ingenting valgt endnu
-		//	//1		Mood valgt
-		//	//2		Influence valgt
-		//	//3		Klar til at gemme, evt er en note skrevet
-		//	get { return sequenceStep; }
-		//	set	{ sequenceStep = value; }
-		//}
-		//public Image moodImagePath(Mood mood)
-		//{
-		//	string imagePath = "mood" + $"{mood.MoodName}".ToLower() + ".png";
+		int dayViewVMNoParamCallTimes = 0;
 
-		//	var image = new Image
-		//	{
-		//		Source = ImageSource.FromFile(imagePath)
-		//	};
-
-		//	return image;
-		//}
-
-		//public ObservableCollection<Influence> influenceCollection { get; set; }
-		//public IEnumerable<Influence> influenceListToBind { get; set; }
 		public DayViewVM()
 		{
+			dayViewVMNoParamCallTimes++;
+			Debug.WriteLine($"DayViewVM() called {dayViewVMNoParamCallTimes} times.");
 			ThisMood = new Mood();
 			ThisInfluence = new Influence();
 			ThisNote = new Note();
 			ThisDay = new Day()
 			{
-				Date = DateTime.Now.Date
-			};
-			ThisUser = new User()
-			{
+				Date = DateTime.Now.Date,
 				UserID = Preferences.Get(Constants.StoredUserID, 0)
 			};
-			//goodMoodClickedCommand = new Command(GoodMoodClicked);
-			//okMoodClickedCommand = new Command(OkMoodClicked);
-			//badMoodClickedCommand = new Command(BadMoodClicked);
-			//moodClickedCommand = new Command(MoodClicked);
-			//influenceClickedCommand = new Command(InfluenceClicked);
-			//SaveThisDayCommand = new Command(SaveThisDay);
+			//ThisUser = new User()
+			//{
+			//	UserID = Preferences.Get(Constants.StoredUserID, 0)
+			//};
 
 			myFiller = new DataFiller();
 			influenceList = myFiller.GetInfluences();
@@ -142,38 +113,45 @@ namespace MBStest03.ViewModels
 			apiHelper = new ApiHelper();
 		}
 
+		int dayViewVMParamCallTimes = 0;
 		public DayViewVM(Day selectedDay)
 		{
+			dayViewVMParamCallTimes++;
+			Debug.WriteLine($"DayViewVM(Day selectedDay) called {dayViewVMParamCallTimes} times.");
 			myFiller = new DataFiller();
 			apiHelper = new ApiHelper();
+			//ThisDay = new Day();
+			//ThisMood = new Mood();
+			//ThisInfluence = new Influence();
+			//ThisNote = new Note();
 			influenceList = myFiller.GetInfluences();
 			moodList = myFiller.GetMoods();
 			ThisDay = selectedDay;
 			ThisMood = selectedDay.Mood;
 			ThisInfluence = selectedDay.Influence;
 			ThisNote = selectedDay.Note;
-			ThisUser.UserID =selectedDay.UserID;
+			//ThisUser.UserID = selectedDay.UserID;
+			Debug.WriteLine("DayViewVM(Day selectedDay) constructor end.");
 		}
 
 		public bool DayHasBeenSaved = false;
 
-        internal async void SaveThisDay()
+		internal async void SaveThisDay()
         {
-			ThisDay.UserID		= ThisUser.UserID;
+			ThisDay.UserID		= ThisUser.UserID;	//Denne fungerer ikke ordentligt i popupvinduet. Går bare ud af metoden.
 			ThisDay.MoodID		= ThisMood.MoodID;
 			ThisDay.InfluenceID = ThisInfluence.InfluenceID;
-			if (ThisNote.NoteString != null)
+			if (!String.IsNullOrEmpty(ThisNote.NoteString))
 			{
 				ThisDay.HasNote = true;
-				ThisDay.Note = ThisNote;
-			}
+				ThisDay.Note = ThisNote;	//Dette er det eneste "child object" der postes med, da det er
+			}								//det eneste som skal oprettes selvstændigt i sin egen tabel i DB.
 
 			var response = await apiHelper.ApiPoster("days/", ThisDay);
 			
 			if (response == System.Net.HttpStatusCode.OK)
 			{
 				Toast.MakeText(Android.App.Application.Context, "Dag gemt!", ToastLength.Short).Show();
-				//sequenceStep = 0;
 				ThisDay.Mood = null;
 				ThisDay.Influence = null;
 				ThisDay.Note = null;
@@ -185,47 +163,5 @@ namespace MBStest03.ViewModels
 				DayHasBeenSaved = false;
 			}
 		}
-
-        //public void MoodClicked(object obj)
-        //{
-        //	ThisMood = moodList.FirstOrDefault(m => m.MoodID.ToString() == obj.ToString()); //Kan åbenbart ikke sammenligne ints. Virker lidt fjollet med ToString(), men det virker ¯\_(ツ)_/¯
-        //}
-
-        //public void InfluenceClicked(object obj)
-        //{
-        //	//Command og metode formentlig overflødig grundet måden CollectionView.SelectedItem fungerer.
-        //	//Kan måske bruges ifm at skulle holde styr på hvor i processen af at registere/ændre en dag man er.
-
-        //	ThisInfluence = influenceList.Cast<Influence>().SingleOrDefault(i => i.InfluenceName == obj.ToString());
-        //}
-        //public void GoodMoodClicked(object obj)
-        //{
-        //	//var click = obj as ImageButton;
-        //	//var cP = click.CommandParameter.ToString();
-        //	var click = obj.ToString();
-
-        //	ThisMood = moodList.Find(m => m.MoodName == "Good");
-        //	//Hvordan gør jeg det her? Vil gerne associere de tre imagebuttons med deres respektive mood, som så kan udledes gennem obj parameteren, og føres igennem
-        //	//en switch statement som så får udvalgt og sendt mood'et videre i det rigtige format. Eller som minimum sendt 1-3 med som tilsvarer de forskellige moods.
-        //	//Kunne jo sagtens lave tre forskellige commands, men det virker lidt fjollet og overholder ikke DRY princippet.
-        //}
-        //public void OkMoodClicked(object obj)
-        //{
-        //	ThisMood = moodList.Find(m => m.MoodName == "Ok");
-        //}
-        //public void BadMoodClicked(object obj)
-        //{
-        //	ThisMood = moodList.Find(m => m.MoodName == "Bad");
-        //}
-
-        //private string moodName = ThisDay.Mood.MoodName;
-
-        //public event PropertyChangedEventHandler PropertyChanged;
-
-        //private void OnPropertyChanged([CallerMemberName] string propertyname = null)
-        //{
-        //    if (PropertyChanged != null)
-        //        PropertyChanged(this, new PropertyChangedEventArgs(propertyname));
-        //}
     }
 }

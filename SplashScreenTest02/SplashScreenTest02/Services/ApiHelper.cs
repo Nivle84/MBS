@@ -17,8 +17,8 @@ namespace SplashScreenTest02.Services
 		{
 			get
 			{
-				//client = client ?? new HttpClient		//Virker naturligvis ikke da HttpClient'en bliver disposed efter brug.
-				client = new HttpClient
+				client = client ?? new HttpClient       //Virker naturligvis ikke da HttpClient'en bliver disposed efter brug.
+														//client = new HttpClient
 				(
 					new HttpClientHandler()
 					{
@@ -93,11 +93,12 @@ namespace SplashScreenTest02.Services
 		{
 			var json = JsonConvert.SerializeObject(objToPost, Formatting.Indented);
 			var httpContentToPost = new StringContent(json, Encoding.UTF8, "application/json");
+			var httpResponse = new HttpResponseMessage();
 			using (Client)
 			{
 				try
 				{
-					var httpResponse = await Client.PostAsync(baseUri + address, httpContentToPost);
+					httpResponse = await Client.PostAsync(baseUri + address, httpContentToPost);
 					return httpResponse.StatusCode;
 					
 					//if (httpResponse.IsSuccessStatusCode)
@@ -108,7 +109,7 @@ namespace SplashScreenTest02.Services
 				{
 				}
 			}
-			return HttpStatusCode.InternalServerError;
+			return httpResponse.StatusCode;
 		}
 	}
 }

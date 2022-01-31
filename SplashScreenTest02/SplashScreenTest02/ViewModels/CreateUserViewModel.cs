@@ -42,40 +42,25 @@ namespace MBStest03.ViewModels
 			{
 				switch (await apiHelper.DoesUserExist(CurrentUser.UserEmail))	//Tjek om brugeren findes i forvejen
 				{
-					case true:
+					case true:	//Brugeren findes i forvejen
 						Toast.MakeText(Android.App.Application.Context, "Bruger findes allerede!", ToastLength.Short).Show();
 						break;
 					
-					case false:
-						CurrentUser.UserPassword = BC.HashPassword(CurrentUser.UserPassword);   //Hash kodeord med salt.
-						var apiResponse = await apiHelper.ApiPoster("users/", CurrentUser);
-						switch (apiResponse)
+					case false:	//Brugeren findes ikke i forvejen
+						CurrentUser.UserPassword = BC.HashPassword(CurrentUser.UserPassword);				//Hash kodeord med salt.
+						var apiResponseStatusCode = await apiHelper.ApiPoster("users/", CurrentUser);		//Post bruger til API.
+						switch (apiResponseStatusCode)
 						{
 							case HttpStatusCode.OK:
 								Toast.MakeText(Android.App.Application.Context, "Bruger oprettet!", ToastLength.Long).Show();
 								await Shell.Current.GoToAsync(nameof(LoginPage));
 								break;
 							default:
-								Toast.MakeText(Android.App.Application.Context, "Der skete en fejl. Prøv igen.", ToastLength.Short).Show();
+								Toast.MakeText(Android.App.Application.Context, "Der skete en fejl. Fejlkode: " + apiResponseStatusCode, ToastLength.Short).Show();
 								break;
 						}
 						break;
 				}
-
-				//if (!await apiHelper.DoesUserExist(CurrentUser.UserEmail))			        //Tjek om bruger findes i forvejen.
-				//{
-				//	CurrentUser.UserPassword = BC.HashPassword(CurrentUser.UserPassword);   //Hash kodeord med salt.
-				//	var apiResponse = await apiHelper.ApiPoster("users", CurrentUser);
-				//	if (apiResponse == "Post ok!")
-				//	{
-				//		Toast.MakeText(Android.App.Application.Context, "Bruger oprettet!", ToastLength.Long).Show();
-				//		await Shell.Current.GoToAsync(nameof(LoginPage));
-				//	}
-				//	else
-				//		Toast.MakeText(Android.App.Application.Context, "Der skete en fejl. Prøv igen.", ToastLength.Short).Show();
-				//}
-				//else
-				//	Toast.MakeText(Android.App.Application.Context, "Bruger findes allerede!", ToastLength.Short).Show();
 			}
 			else
 				Toast.MakeText(Android.App.Application.Context, "Kodeord matcher ikke! Prøv igen.", ToastLength.Short).Show();

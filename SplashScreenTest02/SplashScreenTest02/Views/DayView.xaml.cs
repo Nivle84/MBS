@@ -2,6 +2,7 @@
 using MBStest01.Models;
 using MBStest03.ViewModels;
 using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -19,112 +20,48 @@ namespace SplashScreenTest02.Views
         public Command SequenceIncreaseCommand { get; }
         public Command SaveThisDayCommand { get; }
         public Command GoBackCommand { get; }
-   //     protected override bool OnBackButtonPressed()
-   //     {
-   //         if (BindingContext != null && BindingContext is DayViewVM)
-			//{
-   //             if (noteEditor.IsVisible)
-   //             {
-   //                 influenceCollectionView.IsVisible = true;
-   //                 SelectedInfluence.IsVisible = false;
-   //                 noteEditor.IsVisible = false;
-   //             }
-			//}
-   //     }
 
         public DayView()
         {
+            Debug.WriteLine("DayView() called.");
             vm = new DayViewVM();
             this.BindingContext = vm;// new DayViewVM();
-                                     //collectionViewInfluences.ItemsSource = vm.influenceList;
-                                     //collectionViewInfluences.SelectedItem = vm.influenceClickedCommand;
 
             MoodClickedCommand = new Command(MoodClicked);
             InfluenceClickedCommand = new Command(InfluenceClicked);
-            //SequenceIncreaseCommand = new Command(SequenceIncrease);
             SaveThisDayCommand = new Command(SaveDayClicked);
             GoBackCommand = new Command(GoBackClicked);
             InitializeComponent();
         }
 
-        //public static readonly BindableProperty TextProperty = BindableProperty.Create(
-        //	nameof(Text),
-        //	typeof(string),
-        //	typeof(DayView),
-        //	propertyChanging: (bindable, oldValue, newValue) =>
-        //	{
-        //		var control = bindable as Label;
-        //		var changingFrom = oldValue as string;
-        //		var changingTo = newValue as string;
-        //	});
-        //public string Text
-        //{
-        //	get { return (string)GetValue(TextProperty); }
-        //	set { SetValue(TextProperty, value); }
-        //}
+        public DayView(DayViewVM dayViewVM)
+		{
+            Debug.WriteLine("DayView(DayViewVM dayViewVM) called.");
+            vm = dayViewVM;
+            this.BindingContext= vm;
+            MoodClickedCommand = new Command(MoodClicked);
+            InfluenceClickedCommand = new Command(InfluenceClicked);
+            SaveThisDayCommand = new Command(SaveDayClicked);
+            GoBackCommand = new Command(GoBackClicked);
+            InitializeComponent();
+        }
 
-        //public static readonly BindableProperty ThisDayDVProperty = BindableProperty.Create(nameof(ThisDayDV), typeof(Day), typeof(DayView)
-        //				, propertyChanging: (bindable, oldValue, newValue) =>
-        //				{
-        //					var control = bindable as Label;
-        //					var changingFrom = oldValue as string;
-        //					var changingTo = newValue as string;
-        //				});
-        //public Day ThisDayDV
-        //{
-        //	get
-        //	{ return (Day)GetValue(ThisDayDVProperty); }
-        //	set { SetValue(ThisDayDVProperty, value); }
-        //}
-
-        //public static readonly BindableProperty ThisMoodDVProperty = BindableProperty.Create(nameof(ThisMoodDV), typeof(Mood), typeof(DayView));
-        //public Mood ThisMoodDV
-        //{
-        //	get { return (Mood)GetValue(ThisMoodDVProperty); }
-        //	set { SetValue(ThisMoodDVProperty, value); }
-        //}
-
-        //public static readonly BindableProperty ThisInfluenceDVProperty = BindableProperty.Create(nameof(ThisInfluenceDV), typeof(Influence), typeof(DayView));
-        //public Influence ThisInfluenceDV
-        //{
-        //	get { return (Influence)GetValue(ThisInfluenceDVProperty); }
-        //	set { SetValue(ThisInfluenceDVProperty, value); }
-        //}
-
-        //public static readonly BindableProperty ThisNoteDVProperty = BindableProperty.Create(nameof(ThisNoteDV), typeof(Note), typeof(DayView));
-        //public Note ThisNoteDV
-        //{
-        //	get { return (Note)GetValue(ThisNoteDVProperty); }
-        //	set { SetValue(ThisNoteDVProperty, value); }
-        //}
-
-        //public static readonly BindableProperty ThisUserDVProperty = BindableProperty.Create(nameof(ThisUserDV), typeof(User), typeof(DayView));
-        //public User ThisUserDV
-        //{
-        //	get { return (User)GetValue(ThisUserDVProperty); }
-        //	set { SetValue(ThisUserDVProperty, value); }
-        //}
-
-        public void MoodClicked(object obj)
+        public void MoodClicked(object obj) //Parameteren stammer fra CommandParameter fra view'et.
         {
-            //vm.ThisMood = vm.moodList.FirstOrDefault(m => m.MoodID.ToString() == obj.ToString()); //Kan åbenbart ikke sammenligne ints. Virker lidt fjollet med ToString(), men det virker ¯\_(ツ)_/¯
+            Debug.WriteLine("MoodClicked() called.");
             vm.ThisMood = (Mood)obj;
 
-            if (vm.ThisInfluence.InfluenceName != null)
-            {
-                influenceCollectionView.IsVisible = false;
-                SelectedInfluence.IsVisible = true;
-                noteEditor.IsVisible = true;
-                GoBackButton.IsVisible = true;
+            if (vm.ThisInfluence.InfluenceName != null)     //Visse elementer af view'et skjules.
+            {                                               //Var dette implementeret mere "korrekt", havde de
+                influenceCollectionView.IsVisible = false;  //forskellige elementer været deres egne respektive views,
+                SelectedInfluence.IsVisible = true;         //således at de kunne skjules og "unloades" fra hukommelsen.
+                noteEditor.IsVisible = true;                //I og med at programmet ikke er større end det er,
+                GoBackButton.IsVisible = true;              //synes jeg dog at det er acceptabelt.
             }
         }
 
         public void InfluenceClicked(object obj)
         {
-            //Command og metode formentlig overflødig grundet måden CollectionView.SelectedItem fungerer.
-            //Kan måske bruges ifm at skulle holde styr på hvor i processen af at registere/ændre en dag man er.
-
-            //vm.ThisInfluence = vm.influenceList.Cast<Influence>().SingleOrDefault(i => i.InfluenceName == obj.ToString());
             vm.ThisInfluence = (Influence)obj;
 
             if (vm.ThisMood.MoodName != null)
@@ -155,32 +92,5 @@ namespace SplashScreenTest02.Views
                 await Shell.Current.GoToAsync("///MyStreamPage");
             }
         }
-
-        //public void SequenceIncrease(object obj)
-        //{
-        //    vm.sequenceStep++;
-        //}
-
-        //public void ChangeElementsVisibility()
-        //{
-        //    switch (vm.sequenceStep)    //SequenceStep++ ved valg af mood og influence. Tilbage til 0 ved gemt dag. Denne metode skulle kaldes ved ændringer i View.
-        //    {
-        //        case 0: //Intet valgt endnu
-        //            moodCollectionView.IsVisible = true;
-        //            influenceCollectionView.IsVisible = true;
-        //            noteEditor.IsVisible = false;
-        //            break;
-        //        case 1: //Mood || Influence valgt
-        //            moodCollectionView.IsVisible = true;
-        //            influenceCollectionView.IsVisible = true;
-        //            noteEditor.IsVisible = false;
-        //            break;
-        //        case 2: //Mood && Influence valgt
-        //            moodCollectionView.IsVisible = true;
-        //            influenceCollectionView.IsVisible = false;
-        //            noteEditor.IsVisible = true;
-        //            break;
-        //    }
-        //}
     }
 }
