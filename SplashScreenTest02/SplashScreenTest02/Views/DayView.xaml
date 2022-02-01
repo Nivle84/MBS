@@ -29,10 +29,11 @@
 			<ColumnDefinition Width="20"/>
 		</Grid.ColumnDefinitions>
 		<Label Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" HorizontalOptions="CenterAndExpand"
-                Text="{Binding Path=ThisMood.MoodName, Mode=OneWay}" FontSize="Large"/>
+               Text="{Binding Path=ThisMood.MoodName, Mode=OneWay}" FontSize="Large"/>
 		<Label Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" HorizontalOptions="CenterAndExpand" VerticalTextAlignment="End"
                Text="{Binding Path=ShortDate}"
-			   FontSize="Large" TextColor="{StaticResource Primary}"/>
+			   FontSize="Large"
+			   TextColor="{StaticResource Primary}"/>
 		<!--RelativeSource bruges ifm at finde en binding source som deler en relation til det pågældende objekt... jeg er ikke helt sikker på at jeg forstår det,
 			men f.eks. mood virker ikke ordentlig hvis jeg sætter en staticresource fra en deklareret VM i grid.resources.
 			Så det MÅ gøre et eller andet anderledes som får det til at virke.--> 
@@ -40,6 +41,7 @@
 						ItemsSource="{Binding Path=moodList}"
 						SelectedItem="{Binding Path=ThisMood, Mode=TwoWay}"
 						HorizontalOptions="FillAndExpand"
+						x:Name="collectionviewMoodList"
 						>
 			<CollectionView.ItemsLayout>
                 <GridItemsLayout Orientation="Horizontal" HorizontalItemSpacing="5" />
@@ -55,7 +57,7 @@
 						</Frame.GestureRecognizers>
                         
                         <Image Source="{Binding Path=MoodImagePath}"
-                               
+                               Scale="1.6"
 							   InputTransparent="True"/>
 						
                         <VisualStateManager.VisualStateGroups>

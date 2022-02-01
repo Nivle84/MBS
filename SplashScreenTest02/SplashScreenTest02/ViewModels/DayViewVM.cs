@@ -1,19 +1,14 @@
-﻿using MBStest01.Models;
+﻿using Android.Widget;
+using MBStest01.Models;
+using SplashScreenTest02.Services;
 using SplashScreenTest02.ViewModels;
 using System;
-using Xamarin.Essentials;
-using SplashScreenTest02.Services;
 using System.Collections.Generic;
-using Xamarin.Forms;
+using System.Collections.Specialized;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Reflection;
-using System.Drawing;
-using Android.Widget;
-using System.Threading.Tasks;
-using System.Diagnostics;
+using Xamarin.Essentials;
 
 namespace MBStest03.ViewModels
 {
@@ -74,7 +69,7 @@ namespace MBStest03.ViewModels
 			}
 		}
 
-		public string ShortDate 
+		public string ShortDate
 		{
 			get
 			{
@@ -85,7 +80,7 @@ namespace MBStest03.ViewModels
 		}
 		//public Command SaveThisDayCommand { get; }
 		public IEnumerable<Influence> influenceList { get; set; }
-		public List<Mood> moodList { get; set; }
+		public IEnumerable<Mood> moodList { get; set; }
 		DataFiller myFiller { get; set; }
 		public ApiHelper apiHelper { get; }
 		int dayViewVMNoParamCallTimes = 0;
@@ -127,8 +122,8 @@ namespace MBStest03.ViewModels
 			influenceList = myFiller.GetInfluences();
 			moodList = myFiller.GetMoods();
 			ThisDay = selectedDay;
-			ThisMood = selectedDay.Mood;
-			ThisInfluence = selectedDay.Influence;
+			ThisMood = moodList.Single(m => m.MoodID == selectedDay.MoodID); //selectedDay.Mood;
+			ThisInfluence = influenceList.Single(i => i.InfluenceID == selectedDay.InfluenceID); //selectedDay.Influence;
 			ThisNote = selectedDay.Note;
 			//ThisUser.UserID = selectedDay.UserID;
 			Debug.WriteLine("DayViewVM(Day selectedDay) constructor end.");
@@ -137,18 +132,18 @@ namespace MBStest03.ViewModels
 		public bool DayHasBeenSaved = false;
 
 		internal async void SaveThisDay()
-        {
+		{
 			//ThisDay.UserID		= ThisUser.UserID;	//Denne fungerer ikke ordentligt i popupvinduet. Går bare ud af metoden.
-			ThisDay.MoodID		= ThisMood.MoodID;
+			ThisDay.MoodID = ThisMood.MoodID;
 			ThisDay.InfluenceID = ThisInfluence.InfluenceID;
 			if (!String.IsNullOrEmpty(ThisNote.NoteString))
 			{
 				ThisDay.HasNote = true;
-				ThisDay.Note = ThisNote;	//Dette er det eneste "child object" der postes med, da det er
-			}								//det eneste som skal oprettes selvstændigt i sin egen tabel i DB.
+				ThisDay.Note = ThisNote;    //Dette er det eneste "child object" der postes med, da det er
+			}                               //det eneste som skal oprettes selvstændigt i sin egen tabel i DB.
 
 			var response = await apiHelper.ApiPoster("days/", ThisDay);
-			
+
 			if (response == System.Net.HttpStatusCode.OK)
 			{
 				Toast.MakeText(Android.App.Application.Context, "Dag gemt!", ToastLength.Short).Show();
@@ -164,6 +159,16 @@ namespace MBStest03.ViewModels
 			}
 		}
 
-		public observableobject
-    }
+		public IObservable<Mood> observableSelectedMood { get; set; }
+		private void SelectedMood_SelectionChanged(object sender, NotifyCollectionChangedEventArgs eArgs)
+		{
+			
+		}
+
+		void UpdateSelectedMood()
+		{
+			
+		}
+
+	}
 }
