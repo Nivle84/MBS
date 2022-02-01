@@ -17,7 +17,7 @@ namespace SplashScreenTest02.Services
 		{
 			get
 			{
-				client = client ?? new HttpClient       //Virker naturligvis ikke da HttpClient'en bliver disposed efter brug.
+				client = client ?? new HttpClient       //Virker naturligvis ikke da HttpClient'en bliver disposed efter brug. Eller hvad, giver det mening?
 														//client = new HttpClient
 				(
 					new HttpClientHandler()

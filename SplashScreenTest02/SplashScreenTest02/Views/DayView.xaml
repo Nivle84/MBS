@@ -2,9 +2,10 @@
 <Grid xmlns="http://xamarin.com/schemas/2014/forms"
 	  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 	  x:Class="SplashScreenTest02.Views.DayView"
-	  xmlns:viewmodel="clr-namespace:MBStest03.ViewModels"
-	  xmlns:view="clr-namespace:SplashScreenTest02.Views"
 	  x:Name="this">
+	<!--<Grid.Resources>
+		<viewmodel:DayViewVM x:Key="dayViewVM"/>
+	</Grid.Resources>-->
 
 	<Grid BackgroundColor="{StaticResource PrimaryBackground}" ColumnSpacing="2" RowSpacing="10">
 		<Grid.RowDefinitions>
@@ -28,17 +29,16 @@
 			<ColumnDefinition Width="20"/>
 		</Grid.ColumnDefinitions>
 		<Label Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" HorizontalOptions="CenterAndExpand"
-                Text="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:DayViewVM}}, Path=ThisMood.MoodName, Mode=TwoWay}" FontSize="Large"/>
+                Text="{Binding Path=ThisMood.MoodName, Mode=OneWay}" FontSize="Large"/>
 		<Label Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" HorizontalOptions="CenterAndExpand" VerticalTextAlignment="End"
-               Text="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:DayViewVM}}, Path=ShortDate}"
+               Text="{Binding Path=ShortDate}"
 			   FontSize="Large" TextColor="{StaticResource Primary}"/>
 		<!--RelativeSource bruges ifm at finde en binding source som deler en relation til det pågældende objekt... jeg er ikke helt sikker på at jeg forstår det,
 			men f.eks. mood virker ikke ordentlig hvis jeg sætter en staticresource fra en deklareret VM i grid.resources.
 			Så det MÅ gøre et eller andet anderledes som får det til at virke.--> 
 		<CollectionView Grid.Row="3" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="5" HorizontalScrollBarVisibility="Never" SelectionMode="Single"
-						ItemsSource="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:DayViewVM}}, Path=moodList}"
-						SelectedItem="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:DayViewVM}}, Path=ThisMood, Mode=TwoWay}"
-						x:Name="moodCollectionView"
+						ItemsSource="{Binding Path=moodList}"
+						SelectedItem="{Binding Path=ThisMood, Mode=TwoWay}"
 						HorizontalOptions="FillAndExpand"
 						>
 			<CollectionView.ItemsLayout>
@@ -76,8 +76,8 @@
 		</CollectionView>
 
 		<CollectionView Grid.Row="5" Grid.RowSpan="4" Grid.Column="1" Grid.ColumnSpan="3" SelectionMode="Single" IsVisible="true" 
-						ItemsSource="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:DayViewVM}}, Path=influenceList}"
-						SelectedItem="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:DayViewVM}}, Path=ThisInfluence, Mode=TwoWay}"
+						ItemsSource="{Binding Path=influenceList}"
+						SelectedItem="{Binding Path=ThisInfluence, Mode=TwoWay}"
                         x:Name="influenceCollectionView">
 			<CollectionView.ItemsLayout>
 				<GridItemsLayout Orientation="Vertical" Span="2"/>
@@ -149,7 +149,7 @@
 			</CollectionView.ItemTemplate>
 		</CollectionView>
 		<Label Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="3" BackgroundColor="{StaticResource PrimaryAccent1}" TextColor="{StaticResource PrimaryText}"
-			   Text="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:DayViewVM}}, Path=ThisInfluence.InfluenceName}"
+			   Text="{Binding Path=ThisInfluence.InfluenceName}"
 			   FontSize="32" FontAttributes="Bold" FontFamily="MbsFont"
 			   VerticalTextAlignment="Center"
 			   VerticalOptions="FillAndExpand"
@@ -159,7 +159,7 @@
 			   IsVisible="false"
 			   />
 		<Editor Grid.Row="6" Grid.Column="1" Grid.RowSpan="3" Grid.ColumnSpan="3" BackgroundColor="{StaticResource PrimaryAccent1}" Placeholder="Indtast evt. en note til dagen."
-                IsSpellCheckEnabled="True" IsVisible="false" Text="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:DayViewVM}}, Path=ThisNote.NoteString, Mode=TwoWay}"
+                IsSpellCheckEnabled="True" IsVisible="false" Text="{Binding Path=ThisNote.NoteString, Mode=TwoWay}"
                 x:Name="noteEditor"/>
 		<Button Grid.Row="9" Grid.Column="3" Text="Gem Dag" Margin="0,0,0,0" BackgroundColor="{StaticResource Primary}"
 				Command="{Binding Path=SaveThisDayCommand, Source={x:Reference this}}"

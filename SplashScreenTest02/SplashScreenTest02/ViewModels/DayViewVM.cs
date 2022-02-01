@@ -19,16 +19,16 @@ namespace MBStest03.ViewModels
 {
 	public class DayViewVM : BaseViewModel
 	{
-		private User _user;
-		public User ThisUser
-		{
-			get { return _user; }
-			set
-			{
-				_user = value;
-				//ThisDay.User = ThisUser;
-			}
-		}
+		//private User _user;
+		//public User ThisUser
+		//{
+		//	get { return _user; }
+		//	set
+		//	{
+		//		_user = value;
+		//		//ThisDay.User = ThisUser;
+		//	}
+		//}
 
 		private Day _day;
 		public Day ThisDay
@@ -93,7 +93,7 @@ namespace MBStest03.ViewModels
 		public DayViewVM()
 		{
 			dayViewVMNoParamCallTimes++;
-			Debug.WriteLine($"DayViewVM() called {dayViewVMNoParamCallTimes} times.");
+			Debug.WriteLine($"DayViewVM() called {dayViewVMNoParamCallTimes} times from {ToString()}.");
 			ThisMood = new Mood();
 			ThisInfluence = new Influence();
 			ThisNote = new Note();
@@ -138,7 +138,7 @@ namespace MBStest03.ViewModels
 
 		internal async void SaveThisDay()
         {
-			ThisDay.UserID		= ThisUser.UserID;	//Denne fungerer ikke ordentligt i popupvinduet. Går bare ud af metoden.
+			//ThisDay.UserID		= ThisUser.UserID;	//Denne fungerer ikke ordentligt i popupvinduet. Går bare ud af metoden.
 			ThisDay.MoodID		= ThisMood.MoodID;
 			ThisDay.InfluenceID = ThisInfluence.InfluenceID;
 			if (!String.IsNullOrEmpty(ThisNote.NoteString))
@@ -163,5 +163,7 @@ namespace MBStest03.ViewModels
 				DayHasBeenSaved = false;
 			}
 		}
+
+		public observableobject
     }
 }

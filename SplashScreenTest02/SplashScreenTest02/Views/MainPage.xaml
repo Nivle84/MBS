@@ -2,11 +2,10 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MBStest03.Views.MainPage"
-             xmlns:viewmodel="clr-namespace:MBStest03.ViewModels"
 			 xmlns:view="clr-namespace:SplashScreenTest02.Views">
-	<ContentPage.Resources>
+	<!--<ContentPage.Resources>
 		<viewmodel:DayViewVM x:Key="dvVM"/>
-	</ContentPage.Resources>
+	</ContentPage.Resources>-->
 
 	<!--Det her virker meget uintuitivt, men jeg tror det giver mening.
 		I selve view'et (som vi har fra template'en DayView) har vi i dens code-behind alle vores properties.

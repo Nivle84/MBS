@@ -15,12 +15,12 @@
 	</pages:PopupPage.Resources>-->
 	
 	<pages:PopupPage.Content>
-		<Frame BackgroundColor="YellowGreen"
+		<!--<Frame BackgroundColor="YellowGreen"
 			   x:Name="popupFrame_CB"
 			   >
-			<!--<views2:DayView x:Name="popupDayView_CB" />-->
-			<!--BindingContext="{Binding Source={x:Reference this}, Path=dayViewVM}" />-->
-		</Frame>
+			--><!--<views2:DayView x:Name="popupDayView_CB" />-->
+			<!--BindingContext="{Binding Source={x:Reference this}, Path=dayViewVM}" />--><!--
+		</Frame>-->
 	</pages:PopupPage.Content>
 	
 </pages:PopupPage>

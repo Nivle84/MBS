@@ -45,7 +45,7 @@
 			<ShellContent ContentTemplate="{DataTemplate local2:MyStreamPage}" Route="MyStreamPage" />
 		</Tab>
 		<Tab Title="Historik" Icon="iconhistory.png">
-			<ShellContent ContentTemplate="{DataTemplate local2:HistoryPage}"/>
+			<ShellContent ContentTemplate="{DataTemplate local2:HistoryPage}" Route="HistoryPage"/>
 		</Tab>
 		<!--<ShellContent Title="Registrér" Icon="iconregister.png" ContentTemplate="{DataTemplate local2:MainPage}" />
 		<ShellContent Title="Min Å" Icon="iconmystream.png" ContentTemplate="{DataTemplate local2:MyStreamPage}"/>

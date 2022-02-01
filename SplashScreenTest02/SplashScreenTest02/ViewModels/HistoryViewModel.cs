@@ -15,6 +15,15 @@ namespace SplashScreenTest02.ViewModels
 			get { return _daysSource; }
 			set { _daysSource = value; OnPropertyChanged(); }
 		}
+
+		private Day _thisDay;
+
+		public Day ThisDay
+		{
+			get { return _thisDay; }
+			set { _thisDay = value; }
+		}
+
 		public DataFiller MyFiller { get; set; }
 		public HistoryViewModel()
 		{

@@ -54,10 +54,10 @@ namespace SplashScreenTest02.Views
             if (vm.ThisInfluence.InfluenceName != null)     //Visse elementer af view'et skjules.
             {                                               //Var dette implementeret mere "korrekt", havde de
                 influenceCollectionView.IsVisible = false;  //forskellige elementer været deres egne respektive views,
-                SelectedInfluence.IsVisible = true;         //således at de kunne skjules og "unloades" fra hukommelsen.
+                SelectedInfluence.IsVisible = true;         //således at de ikke bare skjules men "unloades" fra hukommelsen.
                 noteEditor.IsVisible = true;                //I og med at programmet ikke er større end det er,
-                GoBackButton.IsVisible = true;              //synes jeg dog at det er acceptabelt.
-            }
+                GoBackButton.IsVisible = true;              //synes jeg dog at det er acceptabelt
+            }                                               //(load-tid stadig inden for kravspec).
         }
 
         public void InfluenceClicked(object obj)
@@ -86,10 +86,19 @@ namespace SplashScreenTest02.Views
 
         public async void SaveDayClicked(object obj)
         {
-            vm.SaveThisDay();
+			try
+			{
+                vm.SaveThisDay();
+			}
+            catch (Exception ex)
+			{
+
+            }
             if (vm.DayHasBeenSaved)
             {
                 await Shell.Current.GoToAsync("///MyStreamPage");
+                //TODO
+                //Det her fungerer ikke. DayHasBeenSaved bliver af uvisse årsager ikke set i første omgang.
             }
         }
     }
