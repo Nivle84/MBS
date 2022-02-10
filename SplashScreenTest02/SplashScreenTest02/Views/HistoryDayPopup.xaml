@@ -8,19 +8,23 @@
 			 xmlns:views2="clr-namespace:SplashScreenTest02.Views"
 				 xmlns:viewmodel="clr-namespace:MBStest03.ViewModels"
 				 x:Name="this"
+				 Padding="50,200,50,200"
+				 HasKeyboardOffset="False"
 			 >
 	<!--<pages:PopupPage.Resources>
 		<views2:DayView x:Key="popupDayView" x:Name="popupDayView_CB"/>
 		--><!--<viewmodel:DayViewVM x:Key="popupDayViewVM"/>--><!--
 	</pages:PopupPage.Resources>-->
 	
-	<pages:PopupPage.Content>
-		<!--<Frame BackgroundColor="YellowGreen"
+	<!--<pages:PopupPage.Content>
+		
+		<Frame BackgroundColor="YellowGreen"
 			   x:Name="popupFrame_CB"
+			   Padding="100,50,100,50"
 			   >
-			--><!--<views2:DayView x:Name="popupDayView_CB" />-->
-			<!--BindingContext="{Binding Source={x:Reference this}, Path=dayViewVM}" />--><!--
-		</Frame>-->
-	</pages:PopupPage.Content>
+			<views2:DayView x:Name="popupDayView_CB"
+			BindingContext="{Binding Source={x:Reference this}, Path=dayViewVM}" />
+		</Frame>
+	</pages:PopupPage.Content>-->
 	
 </pages:PopupPage>

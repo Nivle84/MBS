@@ -30,7 +30,17 @@ namespace SplashScreenTest02.Views
 			dayViewVM = new DayViewVM(selectedDay);	//Lader til at blive kaldt og constructet fint nok.
 			Debug.WriteLine("HistoryDayPopup constructor called.");
 			DayView popupDayView = new DayView(dayViewVM);
+			//popupDayView.VerticalOptions = LayoutOptions.Center;
+			//popupDayView.HeightRequest = 800;
+
 			this.Content = popupDayView;
+			this.Content.VerticalOptions = LayoutOptions.EndAndExpand;
+			this.HasSystemPadding = true;
+			
+			//this.SystemPaddingSides = 50;
+			//this.Padding = 50;
+			//this.Content.HeightRequest = 800;
+			//this.HeightRequest = 800;
 			//popupFrame_CB.Content = popupDayView;	//Der går noget galt her. Den hopper ud.
 			//popupDayView_CB.BindingContext = new DayViewVM(selectedDay);
 			Debug.WriteLine("popupDayView.BindingContext set.");

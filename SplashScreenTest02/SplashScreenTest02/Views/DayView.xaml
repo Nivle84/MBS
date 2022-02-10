@@ -7,18 +7,21 @@
 		<viewmodel:DayViewVM x:Key="dayViewVM"/>
 	</Grid.Resources>-->
 
-	<Grid BackgroundColor="{StaticResource PrimaryBackground}" ColumnSpacing="2" RowSpacing="10">
+	<Grid BackgroundColor="{StaticResource PrimaryBackground}"
+		  ColumnSpacing="2"
+		  RowSpacing="10"
+		  x:Name="dvMainGrid">
 		<Grid.RowDefinitions>
 			<RowDefinition Height="20"/>
-			<RowDefinition Height="*"/>
-			<RowDefinition Height="*"/>
-			<RowDefinition Height="*"/>
-			<RowDefinition Height="*"/>
-			<RowDefinition Height="*"/>
-			<RowDefinition Height="*"/>
-			<RowDefinition Height="*"/>
-			<RowDefinition Height="*"/>
-			<RowDefinition Height="*"/>
+			<RowDefinition Height="{Binding Path=rowHeight, Source={x:Reference this}}" x:Name="row1"/>
+			<RowDefinition Height="{Binding Path=rowHeight, Source={x:Reference this}}" x:Name="row2"/>
+			<RowDefinition Height="{Binding Path=rowHeight, Source={x:Reference this}}" x:Name="row3"/>
+			<RowDefinition Height="{Binding Path=rowHeight, Source={x:Reference this}}" x:Name="row4"/>
+			<RowDefinition Height="{Binding Path=rowHeight, Source={x:Reference this}}" x:Name="row5"/>
+			<RowDefinition Height="{Binding Path=rowHeight, Source={x:Reference this}}" x:Name="row6"/>
+			<RowDefinition Height="{Binding Path=rowHeight, Source={x:Reference this}}" x:Name="row7"/>
+			<RowDefinition Height="{Binding Path=rowHeight, Source={x:Reference this}}" x:Name="row8"/>
+			<RowDefinition Height="{Binding Path=rowHeight, Source={x:Reference this}}" x:Name="row9"/>
 			<RowDefinition Height="20"/>
 		</Grid.RowDefinitions>
 		<Grid.ColumnDefinitions>
@@ -28,51 +31,50 @@
 			<ColumnDefinition Width="*"/>
 			<ColumnDefinition Width="20"/>
 		</Grid.ColumnDefinitions>
-		<Label Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" HorizontalOptions="CenterAndExpand"
-               Text="{Binding Path=ThisMood.MoodName, Mode=OneWay}" FontSize="Large"/>
+		<!--<Label Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" HorizontalOptions="CenterAndExpand"
+               Text="{Binding Path=ThisDay.DayID, Mode=OneWay}" FontSize="Large"/>-->
 		<Label Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" HorizontalOptions="CenterAndExpand" VerticalTextAlignment="End"
                Text="{Binding Path=ShortDate}"
 			   FontSize="Large"
 			   TextColor="{StaticResource Primary}"/>
-		<!--RelativeSource bruges ifm at finde en binding source som deler en relation til det pågældende objekt... jeg er ikke helt sikker på at jeg forstår det,
-			men f.eks. mood virker ikke ordentlig hvis jeg sætter en staticresource fra en deklareret VM i grid.resources.
-			Så det MÅ gøre et eller andet anderledes som får det til at virke.--> 
-		<CollectionView Grid.Row="3" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="5" HorizontalScrollBarVisibility="Never" SelectionMode="Single"
+		<CollectionView Grid.Row="3" Grid.RowSpan="2" Grid.Column="0"
+						Grid.ColumnSpan="5" HorizontalScrollBarVisibility="Never" SelectionMode="Single"
 						ItemsSource="{Binding Path=moodList}"
 						SelectedItem="{Binding Path=ThisMood, Mode=TwoWay}"
-						HorizontalOptions="FillAndExpand"
+						HorizontalOptions="Fill"
 						x:Name="collectionviewMoodList"
 						>
 			<CollectionView.ItemsLayout>
-                <GridItemsLayout Orientation="Horizontal" HorizontalItemSpacing="5" />
+                <GridItemsLayout Orientation="Horizontal" HorizontalItemSpacing="5" SnapPointsAlignment="Center" />
             </CollectionView.ItemsLayout>
             <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Frame CornerRadius="80"
+				<DataTemplate>
+					<Frame CornerRadius="80"
                            IsClippedToBounds="True">
-						<Frame.GestureRecognizers>
-							<TapGestureRecognizer Command="{Binding MoodClickedCommand, Source={x:Reference this}}"
+							<Frame.GestureRecognizers>
+								<TapGestureRecognizer Command="{Binding MoodClickedCommand, Source={x:Reference this}}"
 												  CommandParameter="{Binding .}"/>
-							<!--Denne CommandParameter gør at "kalder-objektet" (et mood i det her tilfælde) sendes med som parameter-->
-						</Frame.GestureRecognizers>
-                        
-                        <Image Source="{Binding Path=MoodImagePath}"
-                               Scale="1.6"
-							   InputTransparent="True"/>
-						
-                        <VisualStateManager.VisualStateGroups>
-                            <VisualStateGroup Name="CommonStates">
-								<VisualState Name="Normal">
-								</VisualState>
-                                <VisualState Name="Selected">
-                                    <VisualState.Setters>
-                                        <Setter Property="BackgroundColor" Value="{StaticResource PrimaryAccent1}"/>
-                                    </VisualState.Setters>
-                                </VisualState>
-                            </VisualStateGroup>
-                        </VisualStateManager.VisualStateGroups>
-                    </Frame>
-                </DataTemplate>
+								<!--Denne CommandParameter gør at "kalder-objektet" (et mood i det her tilfælde) sendes med som parameter-->
+							</Frame.GestureRecognizers>
+
+							<Image Source="{Binding Path=MoodImagePath}"
+                               Scale="1.5"
+							   InputTransparent="True"
+							   x:Name="collectionviewMoodImage"
+							   />
+							<VisualStateManager.VisualStateGroups>
+								<VisualStateGroup Name="CommonStates">
+									<VisualState Name="Normal">
+									</VisualState>
+									<VisualState Name="Selected">
+										<VisualState.Setters>
+											<Setter Property="BackgroundColor" Value="{StaticResource PrimaryAccent1}"/>
+										</VisualState.Setters>
+									</VisualState>
+								</VisualStateGroup>
+							</VisualStateManager.VisualStateGroups>
+						</Frame>
+				</DataTemplate>
 				</CollectionView.ItemTemplate>
 			
 		</CollectionView>
@@ -93,7 +95,7 @@
 						</Grid.GestureRecognizers>
 						<Grid.RowDefinitions>
                             <RowDefinition Height="1"/>
-                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="{Binding Path=influenceRowHeight, Source={x:Reference this}}"/>
                             <RowDefinition Height="1"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
@@ -165,6 +167,7 @@
                 x:Name="noteEditor"/>
 		<Button Grid.Row="9" Grid.Column="3" Text="Gem Dag" Margin="0,0,0,0" BackgroundColor="{StaticResource Primary}"
 				Command="{Binding Path=SaveThisDayCommand, Source={x:Reference this}}"
+				x:Name="SaveDayButton"
 				>
 			<!--<Button.GestureRecognizers>
 				<TapGestureRecognizer Command="{Binding Path=SaveThisDayCommand, Source={x:Reference this}}" />

@@ -8,6 +8,7 @@ using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
+using System.Net;
 using Xamarin.Essentials;
 
 namespace MBStest03.ViewModels
@@ -115,10 +116,6 @@ namespace MBStest03.ViewModels
 			Debug.WriteLine($"DayViewVM(Day selectedDay) called {dayViewVMParamCallTimes} times.");
 			myFiller = new DataFiller();
 			apiHelper = new ApiHelper();
-			//ThisDay = new Day();
-			//ThisMood = new Mood();
-			//ThisInfluence = new Influence();
-			//ThisNote = new Note();
 			influenceList = myFiller.GetInfluences();
 			moodList = myFiller.GetMoods();
 			ThisDay = selectedDay;
@@ -133,22 +130,17 @@ namespace MBStest03.ViewModels
 
 		internal async void SaveThisDay()
 		{
-			//ThisDay.UserID		= ThisUser.UserID;	//Denne fungerer ikke ordentligt i popupvinduet. Går bare ud af metoden.
-			ThisDay.MoodID = ThisMood.MoodID;
-			ThisDay.InfluenceID = ThisInfluence.InfluenceID;
-			if (!String.IsNullOrEmpty(ThisNote.NoteString))
-			{
-				ThisDay.HasNote = true;
-				ThisDay.Note = ThisNote;    //Dette er det eneste "child object" der postes med, da det er
-			}                               //det eneste som skal oprettes selvstændigt i sin egen tabel i DB.
+			ThisDay = PrepareDay(ThisDay);
 
-			var response = await apiHelper.ApiPoster("days/", ThisDay);
+			var response = new HttpStatusCode();
+			if (ThisDay.DayID != 0)
+				response = await apiHelper.ApiPutter("days/" + ThisDay.DayID.ToString(), ThisDay);
+			else
+				response = await apiHelper.ApiPoster("days/", ThisDay);
 
-			if (response == System.Net.HttpStatusCode.OK)
+			if (response == HttpStatusCode.OK || response == HttpStatusCode.NoContent)
 			{
 				Toast.MakeText(Android.App.Application.Context, "Dag gemt!", ToastLength.Short).Show();
-				ThisDay.Mood = null;
-				ThisDay.Influence = null;
 				ThisDay.Note = null;
 				DayHasBeenSaved = true;
 			}
@@ -159,16 +151,21 @@ namespace MBStest03.ViewModels
 			}
 		}
 
-		public IObservable<Mood> observableSelectedMood { get; set; }
-		private void SelectedMood_SelectionChanged(object sender, NotifyCollectionChangedEventArgs eArgs)
-		{
-			
-		}
+		private Day PrepareDay(Day dayToPrepare)
+		{	//Child objekter sættes for en sikkerheds skyld til null. Lidt overflødigt.
+			dayToPrepare.Influence = null;
+			dayToPrepare.Mood = null;
+			dayToPrepare.User = null;
 
-		void UpdateSelectedMood()
-		{
-			
-		}
+			dayToPrepare.InfluenceID = ThisInfluence.InfluenceID;
+			dayToPrepare.MoodID = ThisMood.MoodID;
+			if (!string.IsNullOrEmpty(ThisNote.NoteString))
+			{
+				dayToPrepare.HasNote = true;
+				dayToPrepare.Note = ThisNote;   //Dette er det eneste "child object" der postes med, da det er
+			}                                   //det eneste som skal oprettes selvstændigt i sin egen tabel i DB.
 
+			return dayToPrepare;
+		}
 	}
 }

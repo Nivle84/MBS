@@ -74,7 +74,7 @@
 							   VerticalTextAlignment="Center"
 							   HorizontalOptions="Center"
 							   FontSize="Large"/>
-						<Label Text="{Binding Date, StringFormat='{0:d/MM/yy}'}"
+						<Label Text="{Binding Date, StringFormat='{0:dd/MM/yy}'}"
 							   Grid.Row="0"
 							   Grid.Column="1"
 							   VerticalTextAlignment="Center"

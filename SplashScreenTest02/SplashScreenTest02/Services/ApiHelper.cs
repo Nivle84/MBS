@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace SplashScreenTest02.Services
 {
@@ -107,6 +108,27 @@ namespace SplashScreenTest02.Services
 				}
 				catch (Exception ex)
 				{
+				}
+			}
+			return httpResponse.StatusCode;
+		}
+
+		public async Task<HttpStatusCode> ApiPutter(string address, object objToPut)
+		{
+			var json = JsonConvert.SerializeObject(objToPut, Formatting.Indented);
+			var httpContentToPut = new StringContent(json, Encoding.UTF8, "application/json");
+			var httpResponse = new HttpResponseMessage();
+
+			using (Client)
+			{
+				try
+				{
+					httpResponse = await Client.PutAsync(baseUri + address, httpContentToPut);
+					return httpResponse.StatusCode;
+				}
+				catch(Exception ex)
+				{
+
 				}
 			}
 			return httpResponse.StatusCode;
