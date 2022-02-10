@@ -33,10 +33,11 @@
 		</Grid.ColumnDefinitions>
 		<!--<Label Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" HorizontalOptions="CenterAndExpand"
                Text="{Binding Path=ThisDay.DayID, Mode=OneWay}" FontSize="Large"/>-->
-		<Label Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" HorizontalOptions="CenterAndExpand" VerticalTextAlignment="End"
+		<Label Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" HorizontalOptions="CenterAndExpand" VerticalTextAlignment="Center"
                Text="{Binding Path=ShortDate}"
 			   FontSize="Large"
-			   TextColor="{StaticResource Primary}"/>
+			   TextColor="{StaticResource Primary}"
+			   x:Name="labelShortDate"/>
 		<CollectionView Grid.Row="3" Grid.RowSpan="2" Grid.Column="0"
 						Grid.ColumnSpan="5" HorizontalScrollBarVisibility="Never" SelectionMode="Single"
 						ItemsSource="{Binding Path=moodList}"
@@ -58,7 +59,7 @@
 							</Frame.GestureRecognizers>
 
 							<Image Source="{Binding Path=MoodImagePath}"
-                               Scale="1.5"
+                               Scale="{Binding Path=moodImageScale, Source={x:Reference this}}"
 							   InputTransparent="True"
 							   x:Name="collectionviewMoodImage"
 							   />
@@ -165,7 +166,7 @@
 		<Editor Grid.Row="6" Grid.Column="1" Grid.RowSpan="3" Grid.ColumnSpan="3" BackgroundColor="{StaticResource PrimaryAccent1}" Placeholder="Indtast evt. en note til dagen."
                 IsSpellCheckEnabled="True" IsVisible="false" Text="{Binding Path=ThisNote.NoteString, Mode=TwoWay}"
                 x:Name="noteEditor"/>
-		<Button Grid.Row="9" Grid.Column="3" Text="Gem Dag" Margin="0,0,0,0" BackgroundColor="{StaticResource Primary}"
+		<Button Grid.Row="9" Grid.Column="3" Text="Gem" Margin="0,0,0,0" BackgroundColor="{StaticResource Primary}"
 				Command="{Binding Path=SaveThisDayCommand, Source={x:Reference this}}"
 				x:Name="SaveDayButton"
 				>

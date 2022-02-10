@@ -22,6 +22,7 @@ namespace SplashScreenTest02.Views
         public Command GoBackCommand { get; }
 		public GridLength rowHeight { get; set; }
         public GridLength influenceRowHeight { get; set; }
+		public double moodImageScale { get; set; }
 		public DayView()
         {
             rowHeight = GridLength.Star;
@@ -30,6 +31,8 @@ namespace SplashScreenTest02.Views
             Debug.WriteLine("DayView() called.");
             vm = new DayViewVM();
             this.BindingContext = vm;// new DayViewVM();
+
+            moodImageScale = 1.5;
 
    //         Label shortdateLabel = new Label()
    //         {
@@ -52,11 +55,14 @@ namespace SplashScreenTest02.Views
 		{
 			//dvMainGrid.HeightRequest = 800;
 			rowHeight = GridLength.Star;
-            influenceRowHeight = 20;
+            influenceRowHeight = 17;
+            //Image collectionviewMoodImage_CB = (Image)collectionviewMoodList.FindByName("collectionviewMoodImage");
+            //collectionviewMoodImage_CB.Scale = 1;
+            moodImageScale = 3;
 
             Debug.WriteLine("DayView(DayViewVM dayViewVM) called.");
             vm = dayViewVM;
-            this.BindingContext= vm;
+            this.BindingContext = vm;
 			//row1.Height = 
    //         row2.Height = GridLength.Auto;
    //         row3.Height = GridLength.Auto;
@@ -128,6 +134,8 @@ namespace SplashScreenTest02.Views
 				BackgroundColor = Color.HotPink
 			};
 
+            row9.Height = GridLength.Auto;
+
             //Column, Column + ColumnSpan, Row, Row + RowSpan
             //Det er til starten af kolonne/række nummer whatever, og ikke span over X kolonner/rækker.
             //dvMainGrid.Children.Add(testBox, 0, 5, 6, 7);
@@ -139,19 +147,24 @@ namespace SplashScreenTest02.Views
             //dvMainGrid.Children.Add(new BoxView() { BackgroundColor = Color.SteelBlue, Opacity = 50 },            0, 5, 6, 7);
             //dvMainGrid.Children.Add(new BoxView() { BackgroundColor = Color.Firebrick, Opacity = 50 },            0, 5, 7, 8);
             //dvMainGrid.Children.Add(new BoxView() { BackgroundColor = Color.Tomato, Opacity = 50 },               0, 5, 8, 9);
+            //Label infLabels_CB = (Label)influenceCollectionView.FindByName("infLabels");
+            //infLabels_CB.
 
             Label dayIDLabel = new Label()
             {
                 Text = vm.ThisDay.DayID.ToString(),
-                FontSize = 12
+                HorizontalTextAlignment = TextAlignment.Center,
+                FontSize = 18
             };
+            labelShortDate.FontSize = 14;
+            dvMainGrid.Children.Add(labelShortDate,          0, 5, 0, 1);
 			dvMainGrid.Children.Add(collectionviewMoodList,  0, 5, 1, 2);
-			dvMainGrid.Children.Add(influenceCollectionView, 1, 4, 2, 4);
+			dvMainGrid.Children.Add(influenceCollectionView, 1, 4, 2, 5);
 			dvMainGrid.Children.Add(SelectedInfluence,       1, 4, 2, 3);
-			dvMainGrid.Children.Add(noteEditor,              1, 4, 3, 4);
-			dvMainGrid.Children.Add(SaveDayButton,           3, 4, 4, 5);
-			dvMainGrid.Children.Add(GoBackButton,            1, 2, 4, 5);
-            dvMainGrid.Children.Add(dayIDLabel,              2, 3, 4, 5);
+			dvMainGrid.Children.Add(noteEditor,              1, 4, 3, 5);
+			dvMainGrid.Children.Add(SaveDayButton,           3, 4, 5, 6);
+			dvMainGrid.Children.Add(GoBackButton,            1, 2, 5, 6);
+            dvMainGrid.Children.Add(dayIDLabel,              2, 3, 5, 6);
 
 		}
 
