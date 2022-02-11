@@ -55,9 +55,9 @@ namespace SplashScreenTest02.Droid
 		public void OnAnimationStart(Animator animation)
 		{
 			PreLaunch preLaunch = new PreLaunch();
-			Bundle bundle = preLaunch.GatherBundle();
+			//Bundle bundle = preLaunch.GatherBundle();
 			mainAct = new Intent(this, typeof(MainActivity));
-			mainAct.PutExtra("preLaunchBundle", bundle);
+			//mainAct.PutExtra("preLaunchBundle", bundle);
 			animation.Cancel(); //Man når desværre ikke at se den fine loadingskærm hvis cancel sker hernede.
 		}
 

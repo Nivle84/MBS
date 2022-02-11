@@ -3,17 +3,32 @@ using MBStest03.ViewModels;
 using SplashScreenTest02.Services;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using Xamarin.Forms;
 
 namespace SplashScreenTest02.ViewModels
 {
 	public class HistoryViewModel : BaseViewModel
 	{
-		public IEnumerable<Day> _daysSource;
-		public IEnumerable<Day> DaysSource
+		private IList<Day> _daysSource;
+		public IList<Day> DaysSource
 		{
-			get { return _daysSource; }
-			set { _daysSource = value; OnPropertyChanged(); }
+			get 
+			{
+				return _daysSource;
+			}
+			set
+			{
+				if (value != null)
+				{
+					foreach (var day in value)
+					{
+						day.Mood.MoodImagePath = "mood" + $"{day.Mood.MoodName}".ToLower() + ".png";
+					}
+				}
+				_daysSource = value;
+				OnPropertyChanged();
+			}
 		}
 
 		private Day _thisDay;
@@ -34,12 +49,14 @@ namespace SplashScreenTest02.ViewModels
 		public async void FillDaysList()
 		{
 			DaysSource = await MyFiller.GetUsersDays();
-			foreach (var day in DaysSource)
-			{
-				//Det her er grimt og rodet, men det virker.
-				day.Mood.MoodImagePath = "mood" + $"{day.Mood.MoodName}".ToLower() + ".png";
-				//Debug.WriteLine("DaysSource MoodName: " + day.Mood.MoodName);
-			}
 		}
+
+		//public void EditDay(Day dayToEdit)
+		//{
+		//	foreach (var day in DaysSource.Where(d => d.DayID == dayToEdit.DayID))
+		//	{
+		//		dayToEdit = day;
+		//	}
+		//}
 	}
 }

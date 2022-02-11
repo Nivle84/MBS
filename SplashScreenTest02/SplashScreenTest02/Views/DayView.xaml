@@ -38,11 +38,18 @@
 			   FontSize="Large"
 			   TextColor="{StaticResource Primary}"
 			   x:Name="labelShortDate"/>
-		<CollectionView Grid.Row="3" Grid.RowSpan="2" Grid.Column="0"
-						Grid.ColumnSpan="5" HorizontalScrollBarVisibility="Never" SelectionMode="Single"
+		
+		<StackLayout Grid.Row="3" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="5"
+					 HorizontalOptions="CenterAndExpand"
+					 FlowDirection="MatchParent"
+					 
+					 Orientation="Horizontal">
+			
+		
+		<CollectionView HorizontalScrollBarVisibility="Never" SelectionMode="Single"
 						ItemsSource="{Binding Path=moodList}"
 						SelectedItem="{Binding Path=ThisMood, Mode=TwoWay}"
-						HorizontalOptions="Fill"
+						
 						x:Name="collectionviewMoodList"
 						>
 			<CollectionView.ItemsLayout>
@@ -79,7 +86,7 @@
 				</CollectionView.ItemTemplate>
 			
 		</CollectionView>
-
+		</StackLayout>
 		<CollectionView Grid.Row="5" Grid.RowSpan="4" Grid.Column="1" Grid.ColumnSpan="3" SelectionMode="Single" IsVisible="true" 
 						ItemsSource="{Binding Path=influenceList}"
 						SelectedItem="{Binding Path=ThisInfluence, Mode=TwoWay}"
@@ -174,7 +181,7 @@
 				<TapGestureRecognizer Command="{Binding Path=SaveThisDayCommand, Source={x:Reference this}}" />
 			</Button.GestureRecognizers>-->
 		</Button>
-		<Button Grid.Row="9" Grid.Column="1" Text="Gå tilbage" BackgroundColor="{StaticResource SecondaryAccent2}" IsVisible="False"
+		<Button Grid.Row="9" Grid.Column="1" Text="Tilbage" BackgroundColor="{StaticResource SecondaryAccent2}" IsVisible="False"
 				x:Name="GoBackButton"
 				Command="{Binding Path=GoBackCommand, Source={x:Reference this}}"/>
 

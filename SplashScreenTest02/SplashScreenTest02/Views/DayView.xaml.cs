@@ -1,6 +1,7 @@
 ﻿using Android.Widget;
 using MBStest01.Models;
 using MBStest03.ViewModels;
+using SplashScreenTest02.ViewModels;
 using System;
 using System.Diagnostics;
 using System.Linq;
@@ -154,7 +155,8 @@ namespace SplashScreenTest02.Views
             {
                 Text = vm.ThisDay.DayID.ToString(),
                 HorizontalTextAlignment = TextAlignment.Center,
-                FontSize = 18
+                FontSize = 20,
+                TextColor = Color.Red
             };
             labelShortDate.FontSize = 14;
             dvMainGrid.Children.Add(labelShortDate,          0, 5, 0, 1);
@@ -206,12 +208,13 @@ namespace SplashScreenTest02.Views
             }
 		}
 
-        private async void SaveDayClicked(object obj)
+		public HistoryViewModel historyVM { get; set; }
+		private async void SaveDayClicked(object obj)
         {
-
 			try
 			{
                 vm.SaveThisDay();
+                //historyVM.EditDay();
 			}
             catch (Exception ex)
 			{

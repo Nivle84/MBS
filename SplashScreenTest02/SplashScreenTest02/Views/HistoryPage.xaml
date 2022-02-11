@@ -29,7 +29,7 @@
 						IsVisible="True"
 						>-->
 		<CollectionView BindingContext="{StaticResource hpVM}"
-			x:Name="HistoryCV"
+						x:Name="HistoryCV"
 						ItemsLayout="VerticalList"
 						ItemsSource="{Binding Path=DaysSource}"
 						SelectedItem="{Binding Path=ThisDay}"

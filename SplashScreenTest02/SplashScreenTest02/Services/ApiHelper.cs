@@ -122,7 +122,7 @@ namespace SplashScreenTest02.Services
 			using (Client)
 			{
 				try
-				{
+				{	//Synes ikke den kommer længer end her til. TODO!!
 					httpResponse = await Client.PutAsync(baseUri + address, httpContentToPut);
 					return httpResponse.StatusCode;
 				}
@@ -131,6 +131,12 @@ namespace SplashScreenTest02.Services
 
 				}
 			}
+			return httpResponse.StatusCode;
+		}
+
+		public async Task<HttpStatusCode> ApiDeleter(string address)
+		{
+			var httpResponse = await Client.DeleteAsync(baseUri + address);
 			return httpResponse.StatusCode;
 		}
 	}

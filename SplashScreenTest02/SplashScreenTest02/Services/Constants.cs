@@ -9,5 +9,7 @@ namespace SplashScreenTest02.Services
 		public const string StoredUserID = "UID";
 		public const string StoredMoods = "SM";
 		public const string StoredInfluences = "SI";
+		public const string EditedDay = "EDay";
+		public const string DeletedDayID = "DDayID";
 	}
 }

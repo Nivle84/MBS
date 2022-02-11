@@ -1,5 +1,6 @@
 ﻿using Android.Widget;
 using MBStest01.Models;
+using Newtonsoft.Json;
 using SplashScreenTest02.Services;
 using SplashScreenTest02.ViewModels;
 using System;
@@ -130,11 +131,16 @@ namespace MBStest03.ViewModels
 
 		internal async void SaveThisDay()
 		{
+			var json = JsonConvert.SerializeObject(ThisDay, Formatting.Indented);
 			ThisDay = PrepareDay(ThisDay);
 
 			var response = new HttpStatusCode();
 			if (ThisDay.DayID != 0)
+			{
+				Preferences.Set(Constants.EditedDay, json);
 				response = await apiHelper.ApiPutter("days/" + ThisDay.DayID.ToString(), ThisDay);
+			}
+
 			else
 				response = await apiHelper.ApiPoster("days/", ThisDay);
 
@@ -166,6 +172,26 @@ namespace MBStest03.ViewModels
 			}                                   //det eneste som skal oprettes selvstændigt i sin egen tabel i DB.
 
 			return dayToPrepare;
+		}
+
+		public async void DeleteDay(Day dayToDelete)
+		{
+			var responseStatusCode = new HttpStatusCode();
+			try
+			{
+				responseStatusCode = await apiHelper.ApiDeleter("days/" + dayToDelete.DayID.ToString());
+			}
+			catch (Exception ex)
+			{
+				Toast.MakeText(Android.App.Application.Context, "Der skete en fejl. Error: " + ex.Message.ToString(), ToastLength.Long);
+			}
+
+			if (responseStatusCode == HttpStatusCode.NoContent)
+				Toast.MakeText(Android.App.Application.Context, "Dag slettet!", ToastLength.Long);
+			else
+				Toast.MakeText(Android.App.Application.Context, "Der skete en fejl! Http error: " + responseStatusCode.ToString(), ToastLength.Long);
+
+			Xamarin.Essentials.Preferences.Set(Constants.DeletedDayID, dayToDelete.DayID.ToString());
 		}
 	}
 }
