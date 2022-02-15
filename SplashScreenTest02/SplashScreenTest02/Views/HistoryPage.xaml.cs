@@ -32,8 +32,9 @@ namespace MBStest03.Views
         private async void OpenPopupClicked(object obj)
 		{
             //dayViewVM = new DayViewVM((Day)obj);
+            hpVM_CB.dayObjFromView = obj;
             //await PopupNavigation.PushAsync(new HistoryDayPopup(dayViewVM));
-            await PopupNavigation.PushAsync(new HistoryDayPopup((Day)obj));
+            await PopupNavigation.PushAsync(hpVM_CB.historyDayPopup);
 
             Debug.WriteLine("OpenPopupClicked() called!");
 		}

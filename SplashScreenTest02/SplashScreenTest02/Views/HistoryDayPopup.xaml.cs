@@ -3,11 +3,7 @@ using MBStest03.ViewModels;
 using SplashScreenTest02.Services;
 using SplashScreenTest02.ViewModels;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -31,10 +27,11 @@ namespace SplashScreenTest02.Views
 		//	//Debug.WriteLine(this.BindingContext.ToString());
 		//}
 
-		public HistoryDayPopup(Day selectedDay)
+		public HistoryDayPopup(Day selectedDay, HistoryViewModel hpVM)
 		{
 			dayToEdit = selectedDay;
-			dayViewVM = new DayViewVM(dayToEdit);	//Lader til at blive kaldt og constructet fint nok.
+			dayViewVM = new DayViewVM(dayToEdit);   //Lader til at blive kaldt og constructet fint nok.
+			historyVM = hpVM;
 			Debug.WriteLine("HistoryDayPopup constructor called.");
 			popupDayView = new DayView(dayViewVM);
 			//popupDayView.VerticalOptions = LayoutOptions.Center;
@@ -64,31 +61,33 @@ namespace SplashScreenTest02.Views
 
 		protected override void OnDisappearing()
 		{
-			//historyVM.EditDay(dayToEdit);
-			//foreach (var day in historyVM.DaysSource.Where(d => d.DayID == dayToEdit.DayID))
-			//{
-			//	dayToEdit = day;
-			//}
-			//Der tjekkes her om en dag er blevet slettet eller ændret.
 			//Det her blev godt nok en snørklet og grim implementering... -_-
-			//Men fordi jeg ikke var mere forudseende må det være som det er.
+			//Men fordi jeg ikke var mere forudseende må det være fyldestgørende.
 			try
 			{
-				Day dayToInsert = Newtonsoft.Json.JsonConvert.DeserializeObject<Day>(Xamarin.Essentials.Preferences.Get(Constants.EditedDay, null));
+				//Den dag som er blevet redigeret og set'et i DayViewVM hentes.
+				Day editedDay = Newtonsoft.Json.JsonConvert.DeserializeObject<Day>(Xamarin.Essentials.Preferences.Get(Constants.EditedDay, null));
+				//Det samme gør sig gældende for ID'et af dagen som (potentielt) er blevet slettet.
+				Day deletedDay = Newtonsoft.Json.JsonConvert.DeserializeObject<Day>(Xamarin.Essentials.Preferences.Get(Constants.DeletedDay, null));
 
-				if (Xamarin.Essentials.Preferences.Get(Constants.DeletedDayID, 0) != 0)
-					historyVM.DaysSource.Remove(dayToEdit);
-				else if (dayToInsert != null)
+				//Hvis dagen som er blevet åbnet i popup'en er den samme som den dag der er blevet slettet, fjernes den fra historiklisten
+				if (dayToEdit.DayID == deletedDay.DayID)
+					historyVM.DaysSource.Remove(deletedDay);
+				//Hvis der er blevet gemt en redigeret dag i Preferences, og den dag som er blevet åbnet i popup'en har det samme ID som den dag der er blevet redigeret,
+				//erstattes den givne dag i listen.
+				else if (editedDay != null && dayToEdit.DayID == editedDay.DayID)
 				{
-					foreach (var day in historyVM.DaysSource.Where(d => d.DayID == dayToInsert.DayID))
-					{
-						dayToInsert = day;
-					}
+					int dayIndex = historyVM.DaysSource.FindIndex(d => d.DayID == editedDay.DayID);
+
+					if (dayIndex != -1)
+						historyVM.DaysSource[dayIndex] = editedDay;
 				}
+				//Den redigerede dag nulstilles for en sikkerheds skyld, så der ikke opstår fejl.
+				editedDay = null;
 			}
 			catch (Exception ex)
 			{
-
+				Debug.WriteLine(ex.Message);
 			}
 			base.OnDisappearing();
 		}

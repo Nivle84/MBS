@@ -1,6 +1,8 @@
 ﻿using MBStest01.Models;
 using MBStest03.ViewModels;
+using Rg.Plugins.Popup.Services;
 using SplashScreenTest02.Services;
+using SplashScreenTest02.Views;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -10,10 +12,10 @@ namespace SplashScreenTest02.ViewModels
 {
 	public class HistoryViewModel : BaseViewModel
 	{
-		private IList<Day> _daysSource;
-		public IList<Day> DaysSource
+		private List<Day> _daysSource;
+		public List<Day> DaysSource
 		{
-			get 
+			get
 			{
 				return _daysSource;
 			}
@@ -39,11 +41,15 @@ namespace SplashScreenTest02.ViewModels
 			set { _thisDay = value; }
 		}
 
+		public HistoryDayPopup historyDayPopup {get; set;}
+		public object dayObjFromView { get; set; }
 		public DataFiller MyFiller { get; set; }
 		public HistoryViewModel()
 		{
 			MyFiller = new DataFiller();
 			FillDaysList();
+			//dayObjFromView
+			//Skal finde en måde at instantiere popup'en her og overføre instansen til popup kaldet.
 		}
 
 		public async void FillDaysList()
@@ -51,12 +57,12 @@ namespace SplashScreenTest02.ViewModels
 			DaysSource = await MyFiller.GetUsersDays();
 		}
 
-		//public void EditDay(Day dayToEdit)
-		//{
-		//	foreach (var day in DaysSource.Where(d => d.DayID == dayToEdit.DayID))
-		//	{
-		//		dayToEdit = day;
-		//	}
-		//}
+		public async void OpenPopupClicked(object obj)
+		{
+
+			historyDayPopup = new HistoryDayPopup((Day)obj, this);
+			await PopupNavigation.PushAsync(historyDayPopup);
+
+		}
 	}
 }

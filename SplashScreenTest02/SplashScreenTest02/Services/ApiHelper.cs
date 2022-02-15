@@ -101,10 +101,6 @@ namespace SplashScreenTest02.Services
 				{
 					httpResponse = await Client.PostAsync(baseUri + address, httpContentToPost);
 					return httpResponse.StatusCode;
-					
-					//if (httpResponse.IsSuccessStatusCode)
-					//	return
-					//		"Post ok!";
 				}
 				catch (Exception ex)
 				{
@@ -122,7 +118,7 @@ namespace SplashScreenTest02.Services
 			using (Client)
 			{
 				try
-				{	//Synes ikke den kommer længer end her til. TODO!!
+				{
 					httpResponse = await Client.PutAsync(baseUri + address, httpContentToPut);
 					return httpResponse.StatusCode;
 				}

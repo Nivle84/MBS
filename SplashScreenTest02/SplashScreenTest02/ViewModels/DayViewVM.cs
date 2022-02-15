@@ -187,11 +187,14 @@ namespace MBStest03.ViewModels
 			}
 
 			if (responseStatusCode == HttpStatusCode.NoContent)
+			{
+				Xamarin.Essentials.Preferences.Set(Constants.DeletedDay, Newtonsoft.Json.JsonConvert.SerializeObject(dayToDelete, Formatting.Indented));
 				Toast.MakeText(Android.App.Application.Context, "Dag slettet!", ToastLength.Long);
+
+			}
 			else
 				Toast.MakeText(Android.App.Application.Context, "Der skete en fejl! Http error: " + responseStatusCode.ToString(), ToastLength.Long);
 
-			Xamarin.Essentials.Preferences.Set(Constants.DeletedDayID, dayToDelete.DayID.ToString());
 		}
 	}
 }

@@ -41,7 +41,7 @@ namespace SplashScreenTest02.Services
 
 		private static Task GetInfluencesAsync()
 		{
-			return Task.Run(async () =>
+			return Task.Run(async () =>		//Anonym metode
 			{
 				storedInfluences = Preferences.Get(Constants.StoredInfluences, String.Empty);
 				if (storedInfluences == "")
