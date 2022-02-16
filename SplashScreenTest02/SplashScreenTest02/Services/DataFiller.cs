@@ -3,6 +3,7 @@ using MBStest03.Helpers;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
@@ -53,12 +54,12 @@ namespace SplashScreenTest02.Services
 			return influences;
 		}
 
-		public async Task<List<Day>> GetUsersDays()
+		public async Task<ObservableCollection<Day>> GetUsersDays()
 		{
 			var receivedJson = await ApiHelper.GetDaysByUserID(Preferences.Get(Constants.StoredUserID, 0));
 
-			List<Day> days = new List<Day>();
-			days = JsonConvert.DeserializeObject<List<Day>>(receivedJson);
+			ObservableCollection<Day> days = new ObservableCollection<Day>();
+			days = JsonConvert.DeserializeObject<ObservableCollection<Day>>(receivedJson);
 			return days;
 		}
 	}

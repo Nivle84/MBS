@@ -2,6 +2,7 @@
 using MBStest03.ViewModels;
 using Rg.Plugins.Popup.Contracts;
 using Rg.Plugins.Popup.Services;
+using SplashScreenTest02.Services;
 using SplashScreenTest02.ViewModels;
 using SplashScreenTest02.Views;
 using System;
@@ -14,34 +15,49 @@ namespace MBStest03.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class HistoryPage : ContentPage
     {
-        //public Command GoToMyStreamCommand { get; }
-        //public Command OpenPopupCommand { get; }
-        //public DayViewVM dayViewVM;
-        public HistoryPage()
+		//public Command GoToMyStreamCommand { get; }
+		//public Command OpenPopupCommand { get; }
+		//public DayViewVM dayViewVM;
+		public Day NewDay { get; set; }
+		public HistoryPage()
         {
 
             //GoToMyStreamCommand = new Command(GoToMyStream);
             //HistoryCV.ItemsSource = hpVM_CB.DaysSource;
             //HistoryCV.ItemTemplate = hpVM_CB.DayTemplate;
             Label labelCV = new Label();
+			
             InitializeComponent();
             //OpenPopupCommand = new Command(OpenPopupClicked);
         }
 
-        //https://devlinduldulao.pro/xamarin-forms-101-how-to-create-a-popup-form-in-xamarin-forms/
-  //      private async void OpenPopupClicked(object obj)
-		//{
-  //          //dayViewVM = new DayViewVM((Day)obj);
-  //          hpVM_CB.dayObjFromView = obj;
-  //          //await PopupNavigation.PushAsync(new HistoryDayPopup(dayViewVM));
-  //          await PopupNavigation.PushAsync(hpVM_CB.historyDayPopup);
+		protected override void OnAppearing()
+		{
+			var json = Xamarin.Essentials.Preferences.Get(Constants.EditedDay, null);
+			if (json != null)
+			{
+				NewDay = Newtonsoft.Json.JsonConvert.DeserializeObject<Day>(json);
+				if (NewDay != null && NewDay.DayID == 0)
+					hpVM_CB.DaysSource.Add(NewDay);
 
-  //          Debug.WriteLine("OpenPopupClicked() called!");
+			}
+			base.OnAppearing();
+		}
+
+		//https://devlinduldulao.pro/xamarin-forms-101-how-to-create-a-popup-form-in-xamarin-forms/
+		//      private async void OpenPopupClicked(object obj)
+		//{
+		//          //dayViewVM = new DayViewVM((Day)obj);
+		//          hpVM_CB.dayObjFromView = obj;
+		//          //await PopupNavigation.PushAsync(new HistoryDayPopup(dayViewVM));
+		//          await PopupNavigation.PushAsync(hpVM_CB.historyDayPopup);
+
+		//          Debug.WriteLine("OpenPopupClicked() called!");
 		//}
 
 		//private void HistoryCV_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
 		//{
-  //          hpVM_CB.DaysSource = hpVM_CB.DaysSource;
+		//          hpVM_CB.DaysSource = hpVM_CB.DaysSource;
 		//}
 
 		//ImageSource historyNote = "historynote.png";

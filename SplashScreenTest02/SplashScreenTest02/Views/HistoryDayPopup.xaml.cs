@@ -18,6 +18,8 @@ namespace SplashScreenTest02.Views
 		public DayView popupDayView { get; set; }
 		public Day selectedDay { get; set; }
 		public Command DeleteDayCommand { get; set; }
+		public Day EditedDay { get; set; }
+		public Day DeletedDay { get; set; }
 		//public HistoryDayPopup(DayViewVM dayViewVMFromHistoryPage)
 		//{
 		//	dayViewVM = dayViewVMFromHistoryPage;
@@ -63,37 +65,48 @@ namespace SplashScreenTest02.Views
 		{
 			//Det her blev godt nok en snørklet og grim implementering... -_-
 			//Men fordi jeg ikke var mere forudseende må det være fyldestgørende.
+			//Og det er vist ikke sådan helt rigtig tilladt ifm MVVM, men jeg synes godt
+			//at kunne forsvare det da det har med view'et at gøre...
 			try
 			{
 				//Den dag som er blevet redigeret og set'et i DayViewVM hentes.
-				Day editedDay = Newtonsoft.Json.JsonConvert.DeserializeObject<Day>(Xamarin.Essentials.Preferences.Get(Constants.EditedDay, null));
+				var jsonEditedDay = Xamarin.Essentials.Preferences.Get(Constants.EditedDay, null);
+				if (jsonEditedDay != null)
+					EditedDay = Newtonsoft.Json.JsonConvert.DeserializeObject<Day>(jsonEditedDay);
 				//Det samme gør sig gældende for ID'et af dagen som (potentielt) er blevet slettet.
-				Day deletedDay = Newtonsoft.Json.JsonConvert.DeserializeObject<Day>(Xamarin.Essentials.Preferences.Get(Constants.DeletedDay, null));
+
+				var jsonDeletedDay = Xamarin.Essentials.Preferences.Get(Constants.DeletedDay, null);
+				if (jsonDeletedDay != null)
+					DeletedDay = Newtonsoft.Json.JsonConvert.DeserializeObject<Day>(jsonDeletedDay);
 
 				//Hvis dagen som er blevet åbnet i popup'en er den samme som den dag der er blevet slettet, fjernes den fra historiklisten
 				//TODO Jeg synes det her burde virke, men dagen bliver stadig ikke fjernet fra view'et.
 				//Skal den set'es igen for at NotifyOnPropertyChanged bliver kaldt?
-				if (selectedDay.DayID == deletedDay.DayID)
+				if (selectedDay.DayID == DeletedDay.DayID)
 				{
-					deletedDay = historyVM.DaysSource.Find(d => d.DayID == deletedDay.DayID);
-					historyVM.DaysSource.Remove(deletedDay);
+					//deletedDay = historyVM.DaysSource.Find(d => d.DayID == deletedDay.DayID);
+					int dayIndex = historyVM.DaysSource.IndexOf(selectedDay);
+					historyVM.DaysSource.Remove(selectedDay);
 				}
 				//Hvis der er blevet gemt en redigeret dag i Preferences, og den dag som er blevet åbnet i popup'en har det samme ID som den dag der er blevet redigeret,
 				//erstattes den givne dag i listen.
-				else if (editedDay != null && selectedDay.DayID == editedDay.DayID)
+				else if (EditedDay != null && selectedDay.DayID == EditedDay.DayID)
 				{
-					int dayIndex = historyVM.DaysSource.FindIndex(d => d.DayID == editedDay.DayID);
+					//int dayIndex = historyVM.DaysSource.FindIndex(d => d.DayID == editedDay.DayID);
+					int dayIndex = historyVM.DaysSource.IndexOf(selectedDay);
 
 					if (dayIndex != -1)
-						historyVM.DaysSource[dayIndex] = editedDay;
+						historyVM.DaysSource[dayIndex] = EditedDay;
 				}
 				//Den redigerede dag nulstilles for en sikkerheds skyld, så der ikke opstår fejl.
-				editedDay = null;
+				Xamarin.Essentials.Preferences.Set(Constants.EditedDay, null);
+				EditedDay = null;
 			}
 			catch (Exception ex)
 			{
 				Debug.WriteLine(ex.Message);
 			}
+
 			base.OnDisappearing();
 		}
 

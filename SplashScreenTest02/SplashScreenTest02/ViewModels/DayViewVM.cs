@@ -1,6 +1,7 @@
 ﻿using Android.Widget;
 using MBStest01.Models;
 using Newtonsoft.Json;
+using Rg.Plugins.Popup.Services;
 using SplashScreenTest02.Services;
 using SplashScreenTest02.ViewModels;
 using System;
@@ -128,23 +129,32 @@ namespace MBStest03.ViewModels
 		}
 
 		public bool DayHasBeenSaved = false;
-
+		public HistoryViewModel hpVM { get; set; }
 		internal async void SaveThisDay()
 		{
-			var json = JsonConvert.SerializeObject(ThisDay, Formatting.Indented);
-			ThisDay = PrepareDay(ThisDay);
+			ThisDay.Mood = ThisMood;
+			ThisDay.MoodID = ThisMood.MoodID;
 
+			ThisDay.Influence = ThisInfluence;
+			ThisDay.InfluenceID = ThisInfluence.InfluenceID;
+
+			ThisDay.Note = ThisNote;
+
+			var json = JsonConvert.SerializeObject(ThisDay, Formatting.Indented);
+			Preferences.Set(Constants.EditedDay, json);
+			
+			ThisDay = PrepareDay(ThisDay);
 			var response = new HttpStatusCode();
+
 			if (ThisDay.DayID != 0)
 			{
-				Preferences.Set(Constants.EditedDay, json);
 				response = await apiHelper.ApiPutter("days/" + ThisDay.DayID.ToString(), ThisDay);
 			}
 
 			else
 				response = await apiHelper.ApiPoster("days/", ThisDay);
 
-			if (response == HttpStatusCode.OK || response == HttpStatusCode.NoContent)
+			if (response == HttpStatusCode.Created || response == HttpStatusCode.NoContent)
 			{
 				Toast.MakeText(Android.App.Application.Context, "Dag gemt!", ToastLength.Short).Show();
 				ThisDay.Note = null;
@@ -154,6 +164,17 @@ namespace MBStest03.ViewModels
 			{
 				Toast.MakeText(Android.App.Application.Context, "Der skete en fejl. Error: " + response.ToString(), ToastLength.Long).Show();
 				DayHasBeenSaved = false;
+			}
+
+			try
+			{
+				//Er stadig ikke helt sikker på om det er good practice at
+				//forvente en exception.
+				await PopupNavigation.PopAsync();
+			}
+			catch (Exception ex)
+			{
+				Debug.WriteLine(ex.Message.ToString());
 			}
 		}
 
@@ -195,6 +216,7 @@ namespace MBStest03.ViewModels
 			else
 				Toast.MakeText(Android.App.Application.Context, "Der skete en fejl! Http error: " + responseStatusCode.ToString(), ToastLength.Long);
 
+			await PopupNavigation.PopAsync();
 		}
 	}
 }

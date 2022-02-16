@@ -208,11 +208,12 @@ namespace SplashScreenTest02.Views
             }
 		}
 
-		public HistoryViewModel historyVM { get; set; }
+		//public HistoryViewModel historyVM { get; set; }
 		private async void SaveDayClicked(object obj)
         {
 			try
 			{
+                
                 vm.SaveThisDay();
                 //historyVM.EditDay();
 			}
