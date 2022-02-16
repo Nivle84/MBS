@@ -33,7 +33,7 @@
 						ItemsLayout="VerticalList"
 						ItemsSource="{Binding Path=DaysSource}"
 						SelectedItem="{Binding Path=ThisDay}"
-						SelectionChangedCommand="{Binding Source={x:Reference this}, Path=OpenPopupCommand}"
+						SelectionChangedCommand="{Binding Path=OpenPopupCommand}"
 						SelectionMode="Single"
 						IsVisible="True"
 						BackgroundColor="{StaticResource PrimaryBackground}"
@@ -43,7 +43,7 @@
 				<DataTemplate>
 					<Grid Padding="0,5,5,5">
 						<Grid.GestureRecognizers>
-							<TapGestureRecognizer Command="{Binding Source={x:Reference this}, Path=OpenPopupCommand}"
+							<TapGestureRecognizer Command="{Binding Path=OpenPopupCommand, Source={StaticResource hpVM}}"
 												  CommandParameter="{Binding .}"/>
 						</Grid.GestureRecognizers>
 						<Grid.RowDefinitions>

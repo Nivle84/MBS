@@ -16,7 +16,7 @@ namespace SplashScreenTest02.Views
 		public DayViewVM dayViewVM;
 		public HistoryViewModel historyVM { get; set; }
 		public DayView popupDayView { get; set; }
-		public Day dayToEdit { get; set; }
+		public Day selectedDay { get; set; }
 		public Command DeleteDayCommand { get; set; }
 		//public HistoryDayPopup(DayViewVM dayViewVMFromHistoryPage)
 		//{
@@ -27,10 +27,10 @@ namespace SplashScreenTest02.Views
 		//	//Debug.WriteLine(this.BindingContext.ToString());
 		//}
 
-		public HistoryDayPopup(Day selectedDay, HistoryViewModel hpVM)
+		public HistoryDayPopup(Day dayFromHistoryPage, HistoryViewModel hpVM)
 		{
-			dayToEdit = selectedDay;
-			dayViewVM = new DayViewVM(dayToEdit);   //Lader til at blive kaldt og constructet fint nok.
+			selectedDay = dayFromHistoryPage;
+			dayViewVM = new DayViewVM(selectedDay);   //Lader til at blive kaldt og constructet fint nok.
 			historyVM = hpVM;
 			Debug.WriteLine("HistoryDayPopup constructor called.");
 			popupDayView = new DayView(dayViewVM);
@@ -71,11 +71,16 @@ namespace SplashScreenTest02.Views
 				Day deletedDay = Newtonsoft.Json.JsonConvert.DeserializeObject<Day>(Xamarin.Essentials.Preferences.Get(Constants.DeletedDay, null));
 
 				//Hvis dagen som er blevet åbnet i popup'en er den samme som den dag der er blevet slettet, fjernes den fra historiklisten
-				if (dayToEdit.DayID == deletedDay.DayID)
+				//TODO Jeg synes det her burde virke, men dagen bliver stadig ikke fjernet fra view'et.
+				//Skal den set'es igen for at NotifyOnPropertyChanged bliver kaldt?
+				if (selectedDay.DayID == deletedDay.DayID)
+				{
+					deletedDay = historyVM.DaysSource.Find(d => d.DayID == deletedDay.DayID);
 					historyVM.DaysSource.Remove(deletedDay);
+				}
 				//Hvis der er blevet gemt en redigeret dag i Preferences, og den dag som er blevet åbnet i popup'en har det samme ID som den dag der er blevet redigeret,
 				//erstattes den givne dag i listen.
-				else if (editedDay != null && dayToEdit.DayID == editedDay.DayID)
+				else if (editedDay != null && selectedDay.DayID == editedDay.DayID)
 				{
 					int dayIndex = historyVM.DaysSource.FindIndex(d => d.DayID == editedDay.DayID);
 
@@ -104,7 +109,7 @@ namespace SplashScreenTest02.Views
 
 		public async void DeleteDay(object obj)
 		{
-			dayViewVM.DeleteDay(dayToEdit);
+			dayViewVM.DeleteDay(selectedDay);
 		}
 
 		public async void EditDay(object obj)

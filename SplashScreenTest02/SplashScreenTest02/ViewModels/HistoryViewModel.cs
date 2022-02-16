@@ -4,6 +4,7 @@ using Rg.Plugins.Popup.Services;
 using SplashScreenTest02.Services;
 using SplashScreenTest02.Views;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using Xamarin.Forms;
@@ -12,8 +13,8 @@ namespace SplashScreenTest02.ViewModels
 {
 	public class HistoryViewModel : BaseViewModel
 	{
-		private List<Day> _daysSource;
-		public List<Day> DaysSource
+		private ObservableCollection<Day> _daysSource;
+		public ObservableCollection<Day> DaysSource
 		{
 			get
 			{
@@ -42,13 +43,14 @@ namespace SplashScreenTest02.ViewModels
 		}
 
 		public HistoryDayPopup historyDayPopup {get; set;}
-		public object dayObjFromView { get; set; }
+		//public object dayObjFromView { get; set; }
 		public DataFiller MyFiller { get; set; }
+		public Command OpenPopupCommand { get; set; }
 		public HistoryViewModel()
 		{
 			MyFiller = new DataFiller();
 			FillDaysList();
-			//dayObjFromView
+			OpenPopupCommand = new Command(OpenPopupClicked);
 			//Skal finde en måde at instantiere popup'en her og overføre instansen til popup kaldet.
 		}
 

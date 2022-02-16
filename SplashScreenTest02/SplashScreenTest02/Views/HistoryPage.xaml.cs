@@ -15,7 +15,7 @@ namespace MBStest03.Views
     public partial class HistoryPage : ContentPage
     {
         //public Command GoToMyStreamCommand { get; }
-        public Command OpenPopupCommand { get; }
+        //public Command OpenPopupCommand { get; }
         //public DayViewVM dayViewVM;
         public HistoryPage()
         {
@@ -25,19 +25,20 @@ namespace MBStest03.Views
             //HistoryCV.ItemTemplate = hpVM_CB.DayTemplate;
             Label labelCV = new Label();
             InitializeComponent();
-            OpenPopupCommand = new Command(OpenPopupClicked);
+            //OpenPopupCommand = new Command(OpenPopupClicked);
         }
 
         //https://devlinduldulao.pro/xamarin-forms-101-how-to-create-a-popup-form-in-xamarin-forms/
-        private async void OpenPopupClicked(object obj)
-		{
-            //dayViewVM = new DayViewVM((Day)obj);
-            hpVM_CB.dayObjFromView = obj;
-            //await PopupNavigation.PushAsync(new HistoryDayPopup(dayViewVM));
-            await PopupNavigation.PushAsync(hpVM_CB.historyDayPopup);
+  //      private async void OpenPopupClicked(object obj)
+		//{
+  //          //dayViewVM = new DayViewVM((Day)obj);
+  //          hpVM_CB.dayObjFromView = obj;
+  //          //await PopupNavigation.PushAsync(new HistoryDayPopup(dayViewVM));
+  //          await PopupNavigation.PushAsync(hpVM_CB.historyDayPopup);
 
-            Debug.WriteLine("OpenPopupClicked() called!");
-		}
+  //          Debug.WriteLine("OpenPopupClicked() called!");
+		//}
+
 		//private void HistoryCV_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
 		//{
   //          hpVM_CB.DaysSource = hpVM_CB.DaysSource;
