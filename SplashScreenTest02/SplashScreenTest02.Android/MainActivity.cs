@@ -8,6 +8,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using SplashScreenTest02.Views;
 using MBStest03.ViewModels;
+using Syncfusion.SfChart.XForms.Droid;
 
 namespace SplashScreenTest02.Droid
 {
@@ -26,6 +27,7 @@ namespace SplashScreenTest02.Droid
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
+            new SfChartRenderer();
 
             LoadApplication(new App());
         }

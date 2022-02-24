@@ -24,12 +24,11 @@ namespace SplashScreenTest02.Services
 		public List<Mood> GetMoods()
 		{
 			var receivedJson = Preferences.Get(Constants.StoredMoods, string.Empty);
-			//await ApiHelper.ApiGetter("moods");
 
 			List<Mood> moods = new List<Mood>();
 			moods = JsonConvert.DeserializeObject<List<Mood>>(receivedJson);
-            //Bryder mig ikke om denne her hardcoded implementering... Men kan godt forsvare den fordi der med al sandsynlighed ikke kommer flere moods til.
 
+            //Bryder mig ikke om denne her hardcoded implementering... Men kan godt forsvare den fordi der med al sandsynlighed ikke kommer flere moods til.
             foreach (var mood in moods)
             {
 				mood.MoodImagePath = "mood" + $"{mood.MoodName}".ToLower() + ".png";
