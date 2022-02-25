@@ -52,7 +52,10 @@
     <EmbeddedResource Update="Views\MoodView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\MyStreamPage.xaml">
+    <EmbeddedResource Update="Views\MyStream\MyStreamInfluencesView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\MyStream\MyStreamPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
   </ItemGroup>
