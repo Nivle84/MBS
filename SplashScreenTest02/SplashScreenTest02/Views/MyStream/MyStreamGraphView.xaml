@@ -2,10 +2,17 @@
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SplashScreenTest02.Views.MyStreamGraphView"
-			 xmlns:chart="clr-namespace:Syncfusion.SfChart.XForms;assembly=Syncfusion.SfChart.XForms">
+			 xmlns:chart="clr-namespace:Syncfusion.SfChart.XForms;assembly=Syncfusion.SfChart.XForms"
+			 xmlns:viewmodel="clr-namespace:SplashScreenTest02.ViewModels">
+	<ContentView.Resources>
+		<!--<viewmodel:MyStreamGraphViewModel x:Key="msgVM"/>-->
+	</ContentView.Resources>
 	<ContentView.Content>
-		<chart:SfChart x:Name="sfChartMyStream">
+		<!--<chart:SfChart x:Name="sfChartMyStream">
 			
-		</chart:SfChart>
+		</chart:SfChart>-->
+		<StackLayout BindingContext="{Binding Source=msgVM}">
+			<Label Text="{Binding Path=LabelTest}"/>
+		</StackLayout>
 	</ContentView.Content>
 </ContentView>

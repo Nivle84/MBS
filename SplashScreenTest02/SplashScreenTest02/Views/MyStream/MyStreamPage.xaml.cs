@@ -16,6 +16,8 @@ namespace MBStest03.Views
         public MyStreamPage()
         {
             InitializeComponent();
+
+
         }
     }
 }

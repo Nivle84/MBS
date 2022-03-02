@@ -135,5 +135,21 @@ namespace SplashScreenTest02.Services
 			var httpResponse = await Client.DeleteAsync(baseUri + address);
 			return httpResponse.StatusCode;
 		}
+
+		public async Task<string> GetGraphDays()
+		{
+			using (Client)
+			{
+				var httpResponse = await Client.GetAsync(baseUri + "days/usergraphdays/" + Constants.StoredUserID);
+
+				switch (httpResponse.StatusCode)
+				{
+					case HttpStatusCode.OK:
+						return await httpResponse.Content.ReadAsStringAsync();
+					default:
+						return "Error: " + httpResponse.StatusCode.ToString();
+				}
+			}
+		}
 	}
 }

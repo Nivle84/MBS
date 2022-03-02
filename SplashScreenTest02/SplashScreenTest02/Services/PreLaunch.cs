@@ -36,8 +36,9 @@ namespace SplashScreenTest02.Services
 		//private readonly UserState userState;// = new UserState();
 		public static string storedInfluences;
 		public static string storedMoods;
+		public static string storedDays;
 		public static ApiHelper apiHelper = new ApiHelper();
-		public User currentUser;// = new User();
+		//public User currentUser;// = new User();
 
 		private static Task GetInfluencesAsync()
 		{
@@ -87,12 +88,12 @@ namespace SplashScreenTest02.Services
 		public PreLaunch()
 		{
 			//userState = new UserState();
-			currentUser = new User()
-			{
-				UserID = 0,
-				UserEmail = string.Empty,
-				UserPassword = string.Empty
-			};
+			//currentUser = new User()
+			//{
+			//	UserID = 0,
+			//	UserEmail = string.Empty,
+			//	UserPassword = string.Empty
+			//};
 			Task mooTask = GetMoodsAsync();
 			Task infTask = GetInfluencesAsync();
 			//Task useTask = GetLoggedInUser();
@@ -101,14 +102,14 @@ namespace SplashScreenTest02.Services
 			Task.WaitAll(mooTask, infTask);
 		}
 
-		public Bundle GatherBundle()	//Endte egentlig med at være overflødig, da jeg læser alt fra fra Preferences alligevel.
-		{
-			Bundle launchBundle = new Bundle();
-			launchBundle.PutString(Constants.StoredMoods, storedMoods);
-			launchBundle.PutString(Constants.StoredInfluences, storedInfluences);
-			if (currentUser.UserID != 0)
-				launchBundle.PutInt(Constants.StoredUserID, currentUser.UserID);
-			return launchBundle;
-		}
+		//public Bundle GatherBundle()	//Endte egentlig med at være overflødig, da jeg læser alt fra fra Preferences alligevel.
+		//{
+		//	Bundle launchBundle = new Bundle();
+		//	launchBundle.PutString(Constants.StoredMoods, storedMoods);
+		//	launchBundle.PutString(Constants.StoredInfluences, storedInfluences);
+		//	if (currentUser.UserID != 0)
+		//		launchBundle.PutInt(Constants.StoredUserID, currentUser.UserID);
+		//	return launchBundle;
+		//}
 	}
 }

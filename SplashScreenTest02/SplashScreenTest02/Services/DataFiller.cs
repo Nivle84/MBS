@@ -1,6 +1,7 @@
 ﻿using MBStest01.Models;
 using MBStest03.Helpers;
 using Newtonsoft.Json;
+using SplashScreenTest02.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -60,6 +61,22 @@ namespace SplashScreenTest02.Services
 			ObservableCollection<Day> days = new ObservableCollection<Day>();
 			days = JsonConvert.DeserializeObject<ObservableCollection<Day>>(receivedJson);
 			return days;
+		}
+
+		public async Task<ObservableCollection<GraphDay>> FillGraphDays()
+		{
+			var recivedJson = await ApiHelper.GetGraphDays();
+
+			ObservableCollection<GraphDay> graphDays = new ObservableCollection<GraphDay>();
+			try
+			{
+				graphDays = JsonConvert.DeserializeObject<ObservableCollection<GraphDay>>(recivedJson);
+			}
+			catch (Exception ex)
+			{
+
+			}
+			return graphDays;
 		}
 	}
 }
