@@ -6,11 +6,12 @@ using System.Text;
 
 namespace SplashScreenTest02.ViewModels
 {
-	internal class MyStreamInfluencesViewModel : BaseViewModel
+	public class MyStreamInfluencesViewModel : BaseViewModel
 	{
+		public string TestText { get; set; }
 		public MyStreamInfluencesViewModel(ObservableCollection<Influence> greatestInfluences)
 		{
-
+			TestText = "Test tekst fra MyStreamInfluencesViewModel";
 		}
 	}
 }

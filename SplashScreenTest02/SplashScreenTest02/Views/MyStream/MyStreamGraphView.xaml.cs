@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SplashScreenTest02.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,8 +13,10 @@ namespace SplashScreenTest02.Views
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class MyStreamGraphView : ContentView
 	{
+		public MyStreamGraphViewModel thisBindingContext { get; set; }
 		public MyStreamGraphView()
 		{
+			thisBindingContext = (MyStreamGraphViewModel)this.BindingContext;	//null
 			InitializeComponent();
 		}
 	}

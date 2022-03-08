@@ -3,14 +3,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MBStest03.Views.MyStreamPage"
 			 xmlns:viewmodel="clr-namespace:SplashScreenTest02.ViewModels"
-			 xmlns:view="clr-namespace:SplashScreenTest02.Views">
+			 xmlns:view1="clr-namespace:SplashScreenTest02.Views.MyStream"
+			 xmlns:view2="clr-namespace:SplashScreenTest02.Views">
 	<ContentPage.Resources>
-		<viewmodel:MyStreamViewModel x:Key="msVM"/>
-		<view:MyStreamGraphView x:Key="msgV"/>
+		<viewmodel:MyStreamViewModel x:Key="msVM" x:Name="msVM_CB"/>
+		<view2:MyStreamGraphView x:Key="msgV" x:Name="msgV_CB"/>
+		<view1:MyStreamInfluencesView x:Key="msiV" x:Name="msiV_CB"/>
 	</ContentPage.Resources>
 	<ContentPage.Content>
-		
-        <!--<StackLayout>
+		<!--<Label Text="Vås" FontSize="Large"/>-->
+		<!--<StackLayout>
             <Label Text="Min Å placeholder!"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
@@ -35,12 +37,17 @@
 				<ColumnDefinition Width="*"/>
 				<ColumnDefinition Width="20"/>
 			</Grid.ColumnDefinitions>
-			<Frame BindingContext="{Binding Path=MsGraphVM}"
-				   Content="{StaticResource msgV}"
-				   Grid.Row="3"
-				   Grid.Column="1"
-				   Grid.RowSpan="4"
-				   Grid.ColumnSpan="3"/>
+			<ContentView x:Name="msGraphView"
+						 Grid.Row="3"
+						 Grid.Column="1"
+						 Grid.RowSpan="4"
+						 Grid.ColumnSpan="3"/>
+			<ContentView Content="{StaticResource msiV}"
+						 x:Name="msInfluencesView"
+						 Grid.Row="7"
+						 Grid.Column="1"
+						 Grid.RowSpan="2"
+						 Grid.ColumnSpan="3"/>
 		</Grid>
 	</ContentPage.Content>
 </ContentPage>

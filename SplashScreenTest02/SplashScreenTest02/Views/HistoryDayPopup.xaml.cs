@@ -82,7 +82,7 @@ namespace SplashScreenTest02.Views
 				//Hvis dagen som er blevet åbnet i popup'en er den samme som den dag der er blevet slettet, fjernes den fra historiklisten
 				//TODO Jeg synes det her burde virke, men dagen bliver stadig ikke fjernet fra view'et.
 				//Skal den set'es igen for at NotifyOnPropertyChanged bliver kaldt?
-				if (selectedDay.DayID == DeletedDay.DayID)
+				if (DeletedDay != null && selectedDay.DayID == DeletedDay.DayID)
 				{
 					//deletedDay = historyVM.DaysSource.Find(d => d.DayID == deletedDay.DayID);
 					int dayIndex = historyVM.DaysSource.IndexOf(selectedDay);

@@ -1,10 +1,15 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="SplashScreenTest02.Views.MyStream.MyStreamInfluencesView">
-  <ContentView.Content>
-      <StackLayout>
-          <Label Text="Hello Xamarin.Forms!" />
-      </StackLayout>
-  </ContentView.Content>
+             x:Class="SplashScreenTest02.Views.MyStream.MyStreamInfluencesView"
+			 xmlns:viewmodel="clr-namespace:SplashScreenTest02.ViewModels">
+	<!--<ContentView.Resources>
+		<viewmodel:MyStreamViewModel x:Key="msVM" x:Name="msVM_CB"/>
+	</ContentView.Resources>-->
+	<ContentView.Content>
+      <!--<StackLayout BindingContext="{Binding Source={x:Reference msVM_CB}, Path=MsInfVM}">
+          <Label FontSize="Large" Text="{Binding Path=TestText}"/>
+      </StackLayout>-->
+		<Label Text="MyStreamInfluencesView XAML" FontSize="Large"/>
+	</ContentView.Content>
 </ContentView>

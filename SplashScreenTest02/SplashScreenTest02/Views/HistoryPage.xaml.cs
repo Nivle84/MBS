@@ -7,6 +7,7 @@ using SplashScreenTest02.ViewModels;
 using SplashScreenTest02.Views;
 using System;
 using System.Diagnostics;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -33,13 +34,16 @@ namespace MBStest03.Views
 
 		protected override void OnAppearing()	//Tiltænkt til efter popupvinduet lukkes
 		{
-			var json = Xamarin.Essentials.Preferences.Get(Constants.EditedDay, null);
-			if (json != null)
+			if (hpVM_CB.DaysSource != null)	//Sikrer at koden kun kører hvis viewmodel har været initialiseret.
 			{
-				NewDay = Newtonsoft.Json.JsonConvert.DeserializeObject<Day>(json);
-				if (NewDay != null && NewDay.DayID == 0)	//Der sikres at der findes data i NewDay, samt at det ikke blot er et tomt objekt,
-					hpVM_CB.DaysSource.Add(NewDay);			//som så tilføjes til den ObservableCollection som udgør historiksiden.
-
+				var json = Xamarin.Essentials.Preferences.Get(Constants.EditedDay, null);
+				if (json != null)
+				{
+					NewDay = Newtonsoft.Json.JsonConvert.DeserializeObject<Day>(json);
+					if (NewDay != null && NewDay.DayID == 0)	//Der sikres at der findes data i NewDay, samt at det ikke blot er et tomt objekt,
+						hpVM_CB.DaysSource.Add(NewDay);			//som så tilføjes til den ObservableCollection som udgør historiksiden.
+				}
+				Preferences.Set(Constants.EditedDay, null);
 			}
 			base.OnAppearing();
 		}

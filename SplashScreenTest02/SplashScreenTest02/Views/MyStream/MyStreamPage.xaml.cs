@@ -15,7 +15,12 @@ namespace MBStest03.Views
     {
         public MyStreamPage()
         {
+            //msGraphView
             InitializeComponent();
+            msGraphView.Content = msgV_CB;
+            msGraphView.BindingContext = msVM_CB.MsGraphVM;
+            msInfluencesView.BindingContext = msVM_CB.MsInfVM;
+
 
 
         }

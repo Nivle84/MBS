@@ -7,6 +7,8 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Linq;
+using Xamarin.Essentials;
+using System.Reflection;
 
 namespace SplashScreenTest02.Services
 {
@@ -18,18 +20,27 @@ namespace SplashScreenTest02.Services
 		{
 			get
 			{
-				client = client ?? new HttpClient       //Virker naturligvis ikke da HttpClient'en bliver disposed efter brug. Eller hvad, giver det mening?
+				try
+				{
+
+					client = client ?? new HttpClient       //Virker naturligvis ikke da HttpClient'en bliver disposed efter brug. Eller hvad, giver det mening?
 														//client = new HttpClient
-				(
+					(
 					new HttpClientHandler()
 					{
 						ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; }	//Ignorerer SSL og siger at alt er godt.
 					},
 					false
-				)
+					)
+					{
+						BaseAddress = baseUri
+					};
+					return client;
+				}
+				catch (Exception ex)
 				{
-					BaseAddress = baseUri
-				};
+					Debug.WriteLine(ex.Message);
+				}
 				return client;
 			}
 		}
@@ -140,15 +151,25 @@ namespace SplashScreenTest02.Services
 		{
 			using (Client)
 			{
-				var httpResponse = await Client.GetAsync(baseUri + "days/usergraphdays/" + Constants.StoredUserID);
-
-				switch (httpResponse.StatusCode)
+				//Debug.WriteLine(Preferences.Get(Constants.StoredUserID, 0).ToString());
+				try
 				{
-					case HttpStatusCode.OK:
-						return await httpResponse.Content.ReadAsStringAsync();
-					default:
-						return "Error: " + httpResponse.StatusCode.ToString();
+					var httpResponse = await Client.GetAsync(baseUri + "days/usergraphdays/1"); //+ Preferences.Get(Constants.StoredUserID, 0).ToString());
+
+
+					switch (httpResponse.StatusCode)
+					{
+						case HttpStatusCode.OK:
+							return await httpResponse.Content.ReadAsStringAsync();
+						default:
+							return "Error: " + httpResponse.StatusCode.ToString();
+					}
 				}
+				catch (Exception ex)
+				{
+					Debug.WriteLine(ex.Message);
+				}
+			return null;
 			}
 		}
 	}
