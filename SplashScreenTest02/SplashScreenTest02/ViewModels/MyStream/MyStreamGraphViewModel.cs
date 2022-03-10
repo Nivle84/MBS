@@ -12,42 +12,49 @@ namespace SplashScreenTest02.ViewModels
 {
 	public class MyStreamGraphViewModel : BaseViewModel
 	{
-		public Label LabelTest { get; set; }
-		public string YANlabelTest { get; set; }
+		public string YANTestText { get; set; }
 		public ObservableCollection<GraphDay> daysForChart { get; set; }
 		public ObservableCollection<ChartDataPoint> pointsForChart { get; set; }
 		public SfChart daysChart = new SfChart();
-		public ColumnSeries daysSeries { get; set; }
+		public ColumnSeries daysColumnSeries { get; set; }
+		public LineSeries daysLineSeries { get; set; }
 		//public ObservableCollection<chartmodel>
 		public MyStreamGraphViewModel(ObservableCollection<GraphDay> graphDaysCollection)
 		{
 			Debug.WriteLine("Start of MyStreamGraphViewModel ctor.");
-			Debug.WriteLine("Parameter graphDaysCollection.Count = " + graphDaysCollection.Count);
+			if (graphDaysCollection.Count > 0)
+				Debug.WriteLine("Parameter graphDaysCollection.Count = " + graphDaysCollection.Count);
+
+			//ChartDataPoint testData = new ChartDataPoint(DateTime.Now, 3);
+
+			pointsForChart = new ObservableCollection<ChartDataPoint>();
 			CreateChartDataPoints(graphDaysCollection);
 
-			daysForChart = graphDaysCollection;
+			//daysForChart = graphDaysCollection;
 
-			CategoryAxis primaryAxis = new CategoryAxis();
-			primaryAxis.Title.Text = "Date";
-			primaryAxis.Name = "Date";
-			NumericalAxis secondaryAxis = new NumericalAxis();
-			secondaryAxis.Title.Text = "Mood";
+			//CategoryAxis primaryAxis = new CategoryAxis();
+			//primaryAxis.Title.Text = "Date";
+			//primaryAxis.Name = "Date";
+			//NumericalAxis secondaryAxis = new NumericalAxis();
+			//secondaryAxis.Title.Text = "Mood";
 
-			//daysChart.PrimaryAxis = new CategoryAxis();
-			//daysChart.SecondaryAxis = new NumericalAxis();
+			////daysChart.PrimaryAxis = new CategoryAxis();
+			////daysChart.SecondaryAxis = new NumericalAxis();
 
-			daysChart.PrimaryAxis = primaryAxis;
-			daysChart.SecondaryAxis = secondaryAxis;
+			//daysChart.PrimaryAxis = primaryAxis;
+			//daysChart.SecondaryAxis = secondaryAxis;
 
-			daysSeries = new ColumnSeries();
-			//daysSeries.ItemsSource = pointsForChart;
-			//daysChart.Series.Add(daysSeries);
+			//daysColumnSeries = new ColumnSeries();
+			//daysLineSeries = new LineSeries();
+			//daysColumnSeries.ItemsSource = pointsForChart;
+			//daysLineSeries.ItemsSource = pointsForChart;
+			//daysChart.Series.Add(daysLineSeries);
 
 
 			//daysForChart = graphDaysCollection;
 			//LabelTest.Text = "Test tekst fra MyStreamGraphViewModel";
-			YANlabelTest = "Test tekst fra MyStreamGraphViewModel";
-
+			//YANTestText = "Test tekst fra MyStreamGraphViewModel";
+			YANTestText = pointsForChart[0].XValue.ToString();
 		}
 
 		public void CreateChartDataPoints(ObservableCollection<GraphDay> dataPointsSource)
@@ -55,7 +62,7 @@ namespace SplashScreenTest02.ViewModels
 			foreach (GraphDay graphDay in dataPointsSource)
 			{
 				Debug.WriteLine("CreateChartDataPoints GraphDay.Date: " + graphDay.Date.ToShortDateString());
-				pointsForChart.Add(new ChartDataPoint(graphDay.Date, graphDay.MoodID));
+				pointsForChart.Add(new ChartDataPoint(graphDay.Date, (double)graphDay.MoodID));
 			}
 		}
 		//public MyStreamGraphViewModel()

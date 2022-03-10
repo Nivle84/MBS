@@ -9,6 +9,7 @@ using Xamarin.Essentials;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace SplashScreenTest02.ViewModels
 {
@@ -17,7 +18,8 @@ namespace SplashScreenTest02.ViewModels
 	{
 		public MyStreamGraphViewModel MsGraphVM { get; set; }
 		public MyStreamInfluencesViewModel MsInfVM { get; set; }
-		public ObservableCollection<GraphDay> GraphDays { get; set; }
+		public ObservableCollection<GraphDay> GraphDays = new ObservableCollection<GraphDay>();
+		public List<GraphDay> GraphDaysTestList { get; set; }
 		public ObservableCollection<Influence> GreatestInfluences { get; set; }
 		public Influence GoodInfluence { get; set; }
 		public Influence BadInfluence { get; set; }
@@ -33,9 +35,72 @@ namespace SplashScreenTest02.ViewModels
 			Debug.WriteLine("MyStreamViewModel() ctor.");
 			//apiHelper = new ApiHelper();
 			MyFiller = new DataFiller();
-			GraphDays = new ObservableCollection<GraphDay>();
-			GreatestInfluences = new ObservableCollection<Influence>();
-			AnalyseDays();
+			//GraphDays = new ObservableCollection<GraphDay>();
+			GreatestInfluences = new ObservableCollection<Influence>()//;
+			{
+				new Influence()
+				{
+					InfluenceID = 1,
+					InfluenceName = "Family"
+				},
+				new Influence()
+				{
+					InfluenceID = 3,
+					InfluenceName = "Friends"
+				}
+			};
+
+			//GraphDays = new ObservableCollection<GraphDay>();
+			#region GraphDays test data
+			/*
+			{
+				new GraphDay()
+				{
+					Date = DateTime.Now,
+					InfluenceID = 1,
+					MoodID = 1
+				},
+				new GraphDay()
+				{
+					Date = new DateTime(2022, 03, 08),
+					InfluenceID = 2,
+					MoodID = 1
+				},
+				new GraphDay()
+				{
+					Date = new DateTime(2022, 03, 07),
+					InfluenceID = 6,
+					MoodID = 3
+				},
+				new GraphDay()
+				{
+					Date = new DateTime(2022, 03, 06),
+					InfluenceID = 9,
+					MoodID = 2
+				},
+				new GraphDay()
+				{
+					Date = new DateTime(2022, 03, 03),
+					InfluenceID = 4,
+					MoodID = 1
+				},
+				new GraphDay()
+				{
+					Date = new DateTime(2022, 03, 01),
+					InfluenceID = 4,
+					MoodID = 3
+				},
+				new GraphDay()
+				{
+					Date = new DateTime(2022, 02, 27),
+					InfluenceID = 11,
+					MoodID = 1
+				}
+			};
+			*/
+			#endregion
+			//bool getDaysSucces;
+			AnalyseDays();      //TODO - Der er et eller andet helt galt her. Den henter ikke noget.
 
 			//for (int i = 1; i < 3; i++)
 			//{
@@ -53,13 +118,24 @@ namespace SplashScreenTest02.ViewModels
 
 		}
 
-
 		//Skab to lister af gode og dårlige dage
 		//Tæl hver Influence, tilføj de to Influence objekter til ObsColl
 		public async void AnalyseDays()
 		{
-			GraphDays = await MyFiller.FillGraphDays();
+			//GraphDaysTestList = new List<GraphDay>();
+			Task GetGraphDaysTask = Task.Run(async () => GraphDays = await MyFiller.FillGraphDays());
+			GetGraphDaysTask.Wait();
+
+			//GraphDaysTestList = await MyFiller.FillGraphDays();
+			//GraphDays = new ObservableCollection<GraphDay>();
+			//GraphDays = await MyFiller.FillGraphDays();
 			//DetermineGreatestInfluences();
+
+			//if (GraphDaysTestList.Count > 0)
+			//	return true;
+			//else
+			//	return false;
+
 		}
 
 		public async void DetermineGreatestInfluences()

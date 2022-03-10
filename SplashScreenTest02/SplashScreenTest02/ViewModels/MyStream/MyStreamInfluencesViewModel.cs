@@ -9,8 +9,11 @@ namespace SplashScreenTest02.ViewModels
 	public class MyStreamInfluencesViewModel : BaseViewModel
 	{
 		public string TestText { get; set; }
+		public string YANTestText { get; set; }
 		public MyStreamInfluencesViewModel(ObservableCollection<Influence> greatestInfluences)
 		{
+			ObservableCollection<Influence> testInfluences = greatestInfluences;
+			YANTestText = testInfluences[0].InfluenceName;
 			TestText = "Test tekst fra MyStreamInfluencesViewModel";
 		}
 	}

@@ -5,49 +5,28 @@
 			 xmlns:chart="clr-namespace:Syncfusion.SfChart.XForms;assembly=Syncfusion.SfChart.XForms"
 			 xmlns:viewmodel="clr-namespace:SplashScreenTest02.ViewModels"
 			 x:Name="this">
-	<ContentView.Resources>
-		<!--<viewmodel:MyStreamGraphViewModel x:Key="msgVM"/>-->
-		<!--<viewmodel:MyStreamViewModel x:Key="msVM" x:Name="msVM_CB"/>-->
-		
-	</ContentView.Resources>
 	<ContentView.Content>
-		<!--<StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" BindingContext="{Binding Source={x:Reference msVM_CB}, Path=MsGraphVM}">-->
-			<!--<Label Text="{Binding Source={x:Reference msVM_CB}, Path=MsGraphVM.YANlabelTest}" FontSize="Large"/>
-			<Label Text="msgV XAML Test Tekst. Chart bør ses herunder." FontSize="Large"/>-->
-			<!--<chart:SfChart x:Name="sfChartMyStream">
-				--><!--BindingContext="{Binding Source={x:Reference msVM_CB}, Path=MsGraphVM.daysChart}">--><!--
+		<StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" >
+			<!--<Label Text="{Binding Path=YANTestText}" FontSize="Medium" TextColor="HotPink"/>-->
+			<!--<Label Text="msgV XAML Test Tekst. Chart bør ses herunder." FontSize="Medium"/>-->
+			<chart:SfChart x:Name="sfChartMyStream" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"
+						   BackgroundColor="{StaticResource PrimaryBackground}">
 				<chart:SfChart.PrimaryAxis>
 					<chart:CategoryAxis />
 				</chart:SfChart.PrimaryAxis>
 				<chart:SfChart.SecondaryAxis>
 					<chart:NumericalAxis Minimum="1" Maximum="3"/>
 				</chart:SfChart.SecondaryAxis>
-				
-				<chart:SfChart.Series >
-					<chart:LineSeries ItemsSource="{Binding daysForChart}"
-									  XBindingPath="Date"
-									  YBindingPath="MoodID"
-									  Label="Mood over time."/>
-					
+				<!--https://help.syncfusion.com/xamarin/charts/appearance-->
+				<chart:SfChart.Series>
+					<chart:SplineSeries ItemsSource="{Binding Path=pointsForChart}"
+										Color="{StaticResource PrimaryAccent2}"
+										XBindingPath="XValue"
+										YBindingPath="YValue"
+										Label="Mood over time.">
+					</chart:SplineSeries>
 				</chart:SfChart.Series>
-
-				--><!--Det nedenstående virker i hvert fald, der vises et tomt layout for en graf-->
-				<!--<chart:SfChart.PrimaryAxis>
-					<chart:CategoryAxis>
-						
-					</chart:CategoryAxis>
-				</chart:SfChart.PrimaryAxis>
-				<chart:SfChart.SecondaryAxis>
-					<chart:NumericalAxis>
-
-					</chart:NumericalAxis>
-				</chart:SfChart.SecondaryAxis>--><!--
-			</chart:SfChart>-->
-		<!--</StackLayout>-->
-		<StackLayout BindingContext="">
-			<Label	
-					FontSize="Large"
-					Text="{Binding Path=thisBindingContext.YANlabelTest}"/>
+			</chart:SfChart>
 		</StackLayout>
 	</ContentView.Content>
 </ContentView>

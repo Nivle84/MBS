@@ -17,7 +17,7 @@
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
         </StackLayout>-->
-		<Grid BindingContext="{StaticResource msVM}">
+		<Grid BindingContext="{StaticResource msVM}" BackgroundColor="{StaticResource PrimaryBackground}">
 			<Grid.RowDefinitions>
 				<RowDefinition Height="20"/>
 				<RowDefinition Height="*"/>
@@ -37,7 +37,11 @@
 				<ColumnDefinition Width="*"/>
 				<ColumnDefinition Width="20"/>
 			</Grid.ColumnDefinitions>
-			<ContentView x:Name="msGraphView"
+			<!--Denne implementering lader til at være "decoupled" af en art.
+				Altså er det ikke en resource som XAML er "klar over" og kan se.-->
+			<ContentView Content="{StaticResource msgV}"
+						 BindingContext="{Binding Source=msVM.MsGraphVM}"
+						 x:Name="msGraphView"
 						 Grid.Row="3"
 						 Grid.Column="1"
 						 Grid.RowSpan="4"
@@ -48,6 +52,7 @@
 						 Grid.Column="1"
 						 Grid.RowSpan="2"
 						 Grid.ColumnSpan="3"/>
+						 <!--BindingContext="{Binding Source=msVM.MsInfVM}"-->
 		</Grid>
 	</ContentPage.Content>
 </ContentPage>

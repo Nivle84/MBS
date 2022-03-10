@@ -7,9 +7,10 @@
 		<viewmodel:MyStreamViewModel x:Key="msVM" x:Name="msVM_CB"/>
 	</ContentView.Resources>-->
 	<ContentView.Content>
-      <!--<StackLayout BindingContext="{Binding Source={x:Reference msVM_CB}, Path=MsInfVM}">
-          <Label FontSize="Large" Text="{Binding Path=TestText}"/>
-      </StackLayout>-->
-		<Label Text="MyStreamInfluencesView XAML" FontSize="Large"/>
+      <StackLayout>
+			<!--<Label FontSize="Large" Text="{Binding Path=TestText}" TextColor="HotPink"/>-->
+			<Label Text="{Binding Path=YANTestText}" FontSize="Large" TextColor="HotPink"/>
+			<Label Text="MyStreamInfluencesView XAML" FontSize="Large"/>
+      </StackLayout>
 	</ContentView.Content>
 </ContentView>

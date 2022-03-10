@@ -44,7 +44,7 @@ namespace SplashScreenTest02.Services
 			//await ApiHelper.ApiGetter("influences");
 
 			List<Influence> influences = new List<Influence>();
-			influences = JsonConvert.DeserializeObject<List<Influence>>(receivedJson);
+			influences = JsonConvert.DeserializeObject<List<Influence>>(receivedJson);	//Fejler naturligvis hvis receivedJson == null (ingen kontakt til API).
 
             foreach (var influence in influences)
             {
@@ -65,17 +65,12 @@ namespace SplashScreenTest02.Services
 
 		public async Task<ObservableCollection<GraphDay>> FillGraphDays()
 		{
-			var recivedJson = await ApiHelper.GetGraphDays();
-
+			var receivedJson = await ApiHelper.GetGraphDays(Preferences.Get(Constants.StoredUserID, 0));
+		
+			//ObservableCollection<GraphDay> graphDays = new ObservableCollection<GraphDay>();
 			ObservableCollection<GraphDay> graphDays = new ObservableCollection<GraphDay>();
-			try
-			{
-				graphDays = JsonConvert.DeserializeObject<ObservableCollection<GraphDay>>(recivedJson);
-			}
-			catch (Exception ex)
-			{
-
-			}
+			graphDays = JsonConvert.DeserializeObject<ObservableCollection<GraphDay>>(receivedJson);
+			//graphDays = JsonConvert.DeserializeObject<ObservableCollection<GraphDay>>(receivedJson);
 			return graphDays;
 		}
 	}

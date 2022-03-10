@@ -15,6 +15,7 @@ namespace SplashScreenTest02.Services
 	public class ApiHelper
 	{
 		private Uri baseUri = new Uri(string.Format("https://10.0.2.2:44314/api/", string.Empty));
+		//private Uri baseUri = new Uri(string.Format("https://localhost:44314/api/", string.Empty));
 		private HttpClient client;
 		private HttpClient Client
 		{
@@ -147,15 +148,18 @@ namespace SplashScreenTest02.Services
 			return httpResponse.StatusCode;
 		}
 
-		public async Task<string> GetGraphDays()
+		public async Task<string> GetGraphDays(int userID)
 		{
 			using (Client)
 			{
 				//Debug.WriteLine(Preferences.Get(Constants.StoredUserID, 0).ToString());
+				Debug.WriteLine("		Start of ApiHelper.GetGraphDays()");
 				try
 				{
-					var httpResponse = await Client.GetAsync(baseUri + "days/usergraphdays/1"); //+ Preferences.Get(Constants.StoredUserID, 0).ToString());
-
+					//https://localhost:44314/api/days/usergraphdays/1
+					var httpResponse = await Client.GetAsync(baseUri + "days/usergraphdays/" + userID);// + Preferences.Get(Constants.StoredUserID, 0).ToString());
+					Debug.WriteLine("		GetGraphDays() response.StatusCode is: " + httpResponse.StatusCode);
+					Debug.WriteLine(httpResponse.Content.ToString());
 
 					switch (httpResponse.StatusCode)
 					{
@@ -167,9 +171,10 @@ namespace SplashScreenTest02.Services
 				}
 				catch (Exception ex)
 				{
+					Debug.WriteLine("		EXCEPTION CAUGHT in GetGraphDays()!!");
 					Debug.WriteLine(ex.Message);
 				}
-			return null;
+			return string.Empty;
 			}
 		}
 	}

@@ -13,10 +13,9 @@ namespace SplashScreenTest02.Views
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class MyStreamGraphView : ContentView
 	{
-		public MyStreamGraphViewModel thisBindingContext { get; set; }
 		public MyStreamGraphView()
 		{
-			thisBindingContext = (MyStreamGraphViewModel)this.BindingContext;	//null
+			//thisBindingContext = (MyStreamGraphViewModel)this.BindingContext;	//null
 			InitializeComponent();
 		}
 	}

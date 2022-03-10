@@ -3,20 +3,35 @@ using Newtonsoft.Json;
 using SplashScreenTest02.Models;
 using SplashScreenTest02.Services;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace ExperimentsTester
 {
-	internal class Program
+	public class Program
 	{
 		//public ObservableCollection<GraphDay> GraphDays { get; set; }
 		public static ObservableCollection<GraphDay> GraphDays { get; set; }// = new ObservableCollection<GraphDay>();
+		public static List<GraphDay> TestList { get; set; }
 
 		static void Main(string[] args)
 		{
-			GraphDays = new ObservableCollection<GraphDay>();
-			AnalyseDays();
+			//GraphDays = new ObservableCollection<GraphDay>();
+			//AnalyseDays();
+			GetThoseDamnGraphDays();
+		}
+
+		public static async Task<List<GraphDay>> GetThoseDamnGraphDays()
+		{
+			DataFiller anotherFiller = new DataFiller();
+			List<GraphDay> newlist = new List<GraphDay>();
+
+			Task testTask = Task.Run(async () => newlist = await anotherFiller.FillGraphDays());
+			testTask.Wait();
+			//newlist = await anotherFiller.FillGraphDays();
+			return newlist;
 		}
 
 		public static async void AnalyseDays()
