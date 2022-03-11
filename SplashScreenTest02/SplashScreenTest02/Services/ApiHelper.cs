@@ -14,8 +14,8 @@ namespace SplashScreenTest02.Services
 {
 	public class ApiHelper
 	{
-		private Uri baseUri = new Uri(string.Format("https://10.0.2.2:44314/api/", string.Empty));
-		//private Uri baseUri = new Uri(string.Format("https://localhost:44314/api/", string.Empty));
+		//private Uri baseUri = new Uri(string.Format("https://10.0.2.2:44314/api/", string.Empty));
+		private Uri baseUri = new Uri(string.Format("https://localhost:44314/api/", string.Empty));
 		private HttpClient client;
 		private HttpClient Client
 		{
@@ -169,7 +169,7 @@ namespace SplashScreenTest02.Services
 							return "Error: " + httpResponse.StatusCode.ToString();
 					}
 				}
-				catch (Exception ex)
+				catch (HttpRequestException ex)
 				{
 					Debug.WriteLine("		EXCEPTION CAUGHT in GetGraphDays()!!");
 					Debug.WriteLine(ex.Message);

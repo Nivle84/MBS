@@ -12,26 +12,40 @@ namespace ExperimentsTester
 {
 	public class Program
 	{
-		//public ObservableCollection<GraphDay> GraphDays { get; set; }
 		public static ObservableCollection<GraphDay> GraphDays { get; set; }// = new ObservableCollection<GraphDay>();
-		public static List<GraphDay> TestList { get; set; }
+		//public static List<GraphDay> TestList { get; set; }
+		public static DataFiller anotherFiller = new DataFiller();
+		public static ApiHelper apiHelper = new ApiHelper();
 
 		static void Main(string[] args)
 		{
 			//GraphDays = new ObservableCollection<GraphDay>();
-			//AnalyseDays();
+			//var moods = anotherFiller.GetUsersDays();
+			//var testDays = TestGet();
 			GetThoseDamnGraphDays();
+			AnalyseDays();
+
 		}
 
-		public static async Task<List<GraphDay>> GetThoseDamnGraphDays()
+		public static async Task<string> TestGet()
 		{
-			DataFiller anotherFiller = new DataFiller();
-			List<GraphDay> newlist = new List<GraphDay>();
+			return await apiHelper.GetDaysByUserID(1);
+		}
 
-			Task testTask = Task.Run(async () => newlist = await anotherFiller.FillGraphDays());
+		public static async Task<ObservableCollection<GraphDay>> GetThoseDamnGraphDays()
+		{
+			//List<GraphDay> newlist = new List<GraphDay>();
+			//GraphDays = new ObservableCollection<GraphDay>();
+
+
+			Task testTask = Task.Run(async () => GraphDays = await anotherFiller.FillGraphDays());
 			testTask.Wait();
 			//newlist = await anotherFiller.FillGraphDays();
-			return newlist;
+			//return newlist;
+
+			//GraphDays = await anotherFiller.FillGraphDays();
+
+			return GraphDays;
 		}
 
 		public static async void AnalyseDays()
@@ -41,9 +55,9 @@ namespace ExperimentsTester
 
 			//GraphDays = await fill.FillGraphDays();
 
-			var json = "[{\"moodID\":2,\"influenceID\":8,\"date\":\"2022-03-02T00:00:00\"},{\"moodID\":1,\"influenceID\":8,\"date\":\"2022-02-16T00:00:00\"},{\"moodID\":2,\"influenceID\":8,\"date\":\"2022-02-16T00:00:00\"},{\"moodID\":3,\"influenceID\":3,\"date\":\"2022-02-01T00:00:00\"},{\"moodID\":1,\"influenceID\":1,\"date\":\"2022-01-27T00:00:00\"},{\"moodID\":3,\"influenceID\":7,\"date\":\"2022-01-25T00:00:00\"},{\"moodID\":2,\"influenceID\":6,\"date\":\"2022-01-21T09:19:12.4499\"}]";
+			//var json = "[{\"moodID\":2,\"influenceID\":8,\"date\":\"2022-03-02T00:00:00\"},{\"moodID\":1,\"influenceID\":8,\"date\":\"2022-02-16T00:00:00\"},{\"moodID\":2,\"influenceID\":8,\"date\":\"2022-02-16T00:00:00\"},{\"moodID\":3,\"influenceID\":3,\"date\":\"2022-02-01T00:00:00\"},{\"moodID\":1,\"influenceID\":1,\"date\":\"2022-01-27T00:00:00\"},{\"moodID\":3,\"influenceID\":7,\"date\":\"2022-01-25T00:00:00\"},{\"moodID\":2,\"influenceID\":6,\"date\":\"2022-01-21T09:19:12.4499\"}]";
 
-			GraphDays = JsonConvert.DeserializeObject<ObservableCollection<GraphDay>>(json);
+			//GraphDays = JsonConvert.DeserializeObject<ObservableCollection<GraphDay>>(json);
 
 			var sortedDaysByMood = GraphDays
 				.GroupBy(d => d.MoodID)
@@ -59,6 +73,17 @@ namespace ExperimentsTester
 
 			Influence BestInfluence = new Influence();
 			Influence WorstInfluence = new Influence();
+			int[] goodInfluences;
+			int[] badInfluences;
+
+			var testInfluences = sortedDaysByMood.Select(group => group.Select(d => d.InfluenceID)).ToArray();
+			int[] selectInfluencesTest;
+
+			for (int i = 0; i <= 12; i++)
+			{
+				selectInfluencesTest = testInfluences.Where(m => m.Contains(i)).ToArray();
+
+			}
 
 			foreach (var moodKey in sortedDaysByMood)
 			{
