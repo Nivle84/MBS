@@ -56,7 +56,7 @@ namespace SplashScreenTest02.Services
 
 		public async Task<ObservableCollection<Day>> GetUsersDays()
 		{
-			var receivedJson = await ApiHelper.GetDaysByUserID(1);//Preferences.Get(Constants.StoredUserID, 0));
+			var receivedJson = await ApiHelper.GetDaysByUserID(Preferences.Get(Constants.StoredUserID, 0));
 
 			ObservableCollection<Day> days = new ObservableCollection<Day>();
 			days = JsonConvert.DeserializeObject<ObservableCollection<Day>>(receivedJson);

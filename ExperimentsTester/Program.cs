@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using BC = BCrypt.Net.BCrypt;
 
 namespace ExperimentsTester
 {
@@ -26,6 +27,43 @@ namespace ExperimentsTester
 			AnalyseDays();
 			//Task createData = Task.Run(async () => await CreateDummyData(1, DateTime.Now));
 			//CreateDummyData(1, DateTime.Now);
+			//HashTest();
+		}
+
+		public static string hashedInput;
+		public static string generatedSalt;
+		public static string storedHashedSaltedPassword = "$2a$11$vh/zMzo0AIQa4shGfuQxHeEDCp0tu5MEd/fJ/93p2X5/xd5wtG5.W";	//"testpass"
+		public static bool passwordIsVerified = false;
+
+		public static void HashTest()
+		{
+			User testUser01 = new User()
+			{
+				UserEmail = "test@mail.dk",
+				//UserPassword = "testpass"
+				UserPassword = "testpass"
+			};
+
+
+
+			while (testUser01.UserPassword != String.Empty)
+			{
+				Console.WriteLine("Input password to verify.");
+				testUser01.UserPassword = Console.ReadLine();
+
+				generatedSalt = BCrypt.Net.BCrypt.GenerateSalt();
+				hashedInput = BCrypt.Net.BCrypt.HashPassword(testUser01.UserPassword, generatedSalt);
+
+				Console.WriteLine("Generated salt      = " + generatedSalt);
+				Console.WriteLine("Hashed input        = " + hashedInput);
+				Console.WriteLine("Stored hash-salt PW = " + storedHashedSaltedPassword);
+
+				passwordIsVerified = BCrypt.Net.BCrypt.Verify(testUser01.UserPassword, storedHashedSaltedPassword);
+				Console.WriteLine("Password is verified: " + passwordIsVerified + "\n");
+			}
+
+			//saltPW   = $2a$11$q7uT/lIhxeo5JymULevnC.
+			//hashedPW = $2a$11$q7uT/lIhxeo5JymULevnC.wmzpnVSsI/HhzJRwzsXqGwszfaUN5vy
 		}
 
 		public static async Task<bool> CreateDummyData(int userID, DateTime startDate)
@@ -57,6 +95,12 @@ namespace ExperimentsTester
 				dummyDayList.Add(dummyDay);
 			}
 
+			dummyDayList.Sort((x, y) => DateTime.Compare(x.Date, y.Date));
+
+			foreach (var item in dummyDayList)
+			{
+				Console.WriteLine(item.Date);
+			}
 			var json = JsonConvert.SerializeObject(dummyDayList, Formatting.None);
 			Console.WriteLine(json);
 
@@ -92,9 +136,9 @@ namespace ExperimentsTester
 
 			//GraphDays = await fill.FillGraphDays();
 
-			var json = "[{\"moodID\":2,\"influenceID\":8,\"date\":\"2022-04-24T10:50:13.1323132\"},{\"moodID\":1,\"influenceID\":2,\"date\":\"2022-04-23T10:50:13.1323132\"},{\"moodID\":3,\"influenceID\":8,\"date\":\"2022-04-22T10:50:13.1323132\"},{\"moodID\":3,\"influenceID\":4,\"date\":\"2022-04-21T10:50:13.1323132\"},{\"moodID\":3,\"influenceID\":10,\"date\":\"2022-04-20T10:50:13.1323132\"},{\"moodID\":3,\"influenceID\":9,\"date\":\"2022-04-19T10:50:13.1323132\"},{\"moodID\":3,\"influenceID\":8,\"date\":\"2022-04-18T10:50:13.1323132\"},{\"moodID\":3,\"influenceID\":10,\"date\":\"2022-04-17T10:50:13.1323132\"},{\"moodID\":3,\"influenceID\":2,\"date\":\"2022-04-16T10:50:13.1323132\"},{\"moodID\":1,\"influenceID\":6,\"date\":\"2022-04-15T10:50:13.1323132\"},{\"moodID\":3,\"influenceID\":2,\"date\":\"2022-04-14T10:50:13.1323132\"},{\"moodID\":3,\"influenceID\":7,\"date\":\"2022-04-13T10:50:13.1323132\"},{\"moodID\":3,\"influenceID\":11,\"date\":\"2022-04-12T10:50:13.1323132\"},{\"moodID\":2,\"influenceID\":3,\"date\":\"2022-04-11T10:50:13.1323132\"},{\"moodID\":3,\"influenceID\":10,\"date\":\"2022-04-10T10:50:13.1323132\"},{\"moodID\":1,\"influenceID\":12,\"date\":\"2022-04-09T10:50:13.1323132\"},{\"moodID\":3,\"influenceID\":7,\"date\":\"2022-04-08T10:50:13.1323132\"},{\"moodID\":1,\"influenceID\":6,\"date\":\"2022-04-07T10:50:13.1323132\"},{\"moodID\":1,\"influenceID\":10,\"date\":\"2022-04-06T10:50:13.1323132\"},{\"moodID\":1,\"influenceID\":6,\"date\":\"2022-04-05T10:50:13.1323132\"},{\"moodID\":1,\"influenceID\":3,\"date\":\"2022-04-04T10:50:13.1323132\"},{\"moodID\":3,\"influenceID\":1,\"date\":\"2022-04-03T10:50:13.1323132\"},{\"moodID\":3,\"influenceID\":10,\"date\":\"2022-04-02T10:50:13.1323132\"},{\"moodID\":3,\"influenceID\":2,\"date\":\"2022-04-01T10:50:13.1323132\"},{\"moodID\":2,\"influenceID\":2,\"date\":\"2022-03-31T10:50:13.1323132\"},{\"moodID\":1,\"influenceID\":9,\"date\":\"2022-03-30T10:50:13.1323132\"},{\"moodID\":1,\"influenceID\":11,\"date\":\"2022-03-29T10:50:13.1323132\"},{\"moodID\":1,\"influenceID\":6,\"date\":\"2022-03-28T10:50:13.1323132\"},{\"moodID\":3,\"influenceID\":8,\"date\":\"2022-03-27T10:50:13.1323132\"},{\"moodID\":1,\"influenceID\":5,\"date\":\"2022-03-26T10:50:13.1323132\"}]"
+			var json = "[{\"moodID\":2,\"influenceID\":8,\"date\":\"2022-04-24T10:50:13.1323132\"},{\"moodID\":1,\"influenceID\":2,\"date\":\"2022-04-23T10:50:13.1323132\"},{\"moodID\":3,\"influenceID\":8,\"date\":\"2022-04-22T10:50:13.1323132\"},{\"moodID\":3,\"influenceID\":4,\"date\":\"2022-04-21T10:50:13.1323132\"},{\"moodID\":3,\"influenceID\":10,\"date\":\"2022-04-20T10:50:13.1323132\"},{\"moodID\":3,\"influenceID\":9,\"date\":\"2022-04-19T10:50:13.1323132\"},{\"moodID\":3,\"influenceID\":8,\"date\":\"2022-04-18T10:50:13.1323132\"},{\"moodID\":3,\"influenceID\":10,\"date\":\"2022-04-17T10:50:13.1323132\"},{\"moodID\":3,\"influenceID\":2,\"date\":\"2022-04-16T10:50:13.1323132\"},{\"moodID\":1,\"influenceID\":6,\"date\":\"2022-04-15T10:50:13.1323132\"},{\"moodID\":3,\"influenceID\":2,\"date\":\"2022-04-14T10:50:13.1323132\"},{\"moodID\":3,\"influenceID\":7,\"date\":\"2022-04-13T10:50:13.1323132\"},{\"moodID\":3,\"influenceID\":11,\"date\":\"2022-04-12T10:50:13.1323132\"},{\"moodID\":2,\"influenceID\":3,\"date\":\"2022-04-11T10:50:13.1323132\"},{\"moodID\":3,\"influenceID\":10,\"date\":\"2022-04-10T10:50:13.1323132\"},{\"moodID\":1,\"influenceID\":12,\"date\":\"2022-04-09T10:50:13.1323132\"},{\"moodID\":3,\"influenceID\":7,\"date\":\"2022-04-08T10:50:13.1323132\"},{\"moodID\":1,\"influenceID\":6,\"date\":\"2022-04-07T10:50:13.1323132\"},{\"moodID\":1,\"influenceID\":10,\"date\":\"2022-04-06T10:50:13.1323132\"},{\"moodID\":1,\"influenceID\":6,\"date\":\"2022-04-05T10:50:13.1323132\"},{\"moodID\":1,\"influenceID\":3,\"date\":\"2022-04-04T10:50:13.1323132\"},{\"moodID\":3,\"influenceID\":1,\"date\":\"2022-04-03T10:50:13.1323132\"},{\"moodID\":3,\"influenceID\":10,\"date\":\"2022-04-02T10:50:13.1323132\"},{\"moodID\":3,\"influenceID\":2,\"date\":\"2022-04-01T10:50:13.1323132\"},{\"moodID\":2,\"influenceID\":2,\"date\":\"2022-03-31T10:50:13.1323132\"},{\"moodID\":1,\"influenceID\":9,\"date\":\"2022-03-30T10:50:13.1323132\"},{\"moodID\":1,\"influenceID\":11,\"date\":\"2022-03-29T10:50:13.1323132\"},{\"moodID\":1,\"influenceID\":6,\"date\":\"2022-03-28T10:50:13.1323132\"},{\"moodID\":3,\"influenceID\":8,\"date\":\"2022-03-27T10:50:13.1323132\"},{\"moodID\":1,\"influenceID\":5,\"date\":\"2022-03-26T10:50:13.1323132\"}]";
 
-			//GraphDays = JsonConvert.DeserializeObject<ObservableCollection<GraphDay>>(json);
+			GraphDays = JsonConvert.DeserializeObject<ObservableCollection<GraphDay>>(json);
 
 			var groupDaysByMood = GraphDays	//Inddeler i tre grupper, med en key-værdi for hver gruppe værende MoodID
 				.GroupBy(d => d.MoodID)     //(altså én gruppe med alle objekter med MoodID 1, én gruppe med alle objekter med MoodID 2, osv.)
@@ -134,6 +178,13 @@ namespace ExperimentsTester
 			{
 				Console.WriteLine();
 			}
+
+			var freshquery = from day in GraphDays
+							 group day
+							 by day.MoodID;
+
+			var anotherquery = from grp in freshquery
+							   select grp.Key.
 
 			//foreach (var grp in GraphDays
 			//					.GroupBy(d => d.MoodID)

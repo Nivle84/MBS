@@ -10,7 +10,8 @@
 			<!--<Label Text="{Binding Path=YANTestText}" FontSize="Medium" TextColor="HotPink"/>-->
 			<!--<Label Text="msgV XAML Test Tekst. Chart bør ses herunder." FontSize="Medium"/>-->
 			<chart:SfChart x:Name="sfChartMyStream" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"
-						   BackgroundColor="{StaticResource PrimaryBackground}">
+						   BackgroundColor="{StaticResource PrimaryBackground}"
+                           >
 				<chart:SfChart.PrimaryAxis>
 					<chart:CategoryAxis />
 				</chart:SfChart.PrimaryAxis>
@@ -23,6 +24,7 @@
 										Color="{StaticResource PrimaryAccent2}"
 										XBindingPath="XValue"
 										YBindingPath="YValue"
+                                        SplineType="Clamped"
 										Label="Mood over time.">
 					</chart:SplineSeries>
 				</chart:SfChart.Series>

@@ -14,8 +14,8 @@ namespace SplashScreenTest02.Services
 {
 	public class ApiHelper
 	{
-		//private Uri baseUri = new Uri(string.Format("https://10.0.2.2:44314/api/", string.Empty));
-		private Uri baseUri = new Uri(string.Format("https://localhost:44314/api/", string.Empty));
+		private Uri baseUri = new Uri(string.Format("https://10.0.2.2:44314/api/", string.Empty));
+		//private Uri baseUri = new Uri(string.Format("https://localhost:44314/api/", string.Empty));
 		private HttpClient client;
 		private HttpClient Client
 		{

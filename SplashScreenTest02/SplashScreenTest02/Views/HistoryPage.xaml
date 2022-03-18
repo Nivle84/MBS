@@ -28,7 +28,7 @@
 						SelectionMode="Single"
 						IsVisible="True"
 						>-->
-		<CollectionView BindingContext="{StaticResource hpVM}"
+        <CollectionView BindingContext="{StaticResource hpVM}"
 						x:Name="HistoryCV"
 						ItemsLayout="VerticalList"
 						ItemsSource="{Binding Path=DaysSource}"
@@ -38,8 +38,8 @@
 						IsVisible="True"
 						BackgroundColor="{StaticResource PrimaryBackground}"
 						VerticalScrollBarVisibility="Always"
-						>
-			<CollectionView.ItemTemplate>
+                        >
+            <CollectionView.ItemTemplate>
 				<DataTemplate>
 					<Grid Padding="0,5,5,5">
 						<Grid.GestureRecognizers>

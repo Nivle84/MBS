@@ -52,7 +52,7 @@ namespace SplashScreenTest02.Views
             //dvMainGrid.Children.Add(shortdateLabel, 1, 5, 1, 2);
         }
 
-        public DayView(DayViewVM dayViewVM)
+        public DayView(DayViewVM dayViewVM)     //Denne constructor bruges i HistoryDayPopup.
 		{
 			//dvMainGrid.HeightRequest = 800;
 			rowHeight = GridLength.Star;
@@ -166,7 +166,7 @@ namespace SplashScreenTest02.Views
 			dvMainGrid.Children.Add(noteEditor,              1, 4, 3, 5);
 			dvMainGrid.Children.Add(SaveDayButton,           3, 4, 5, 6);
 			dvMainGrid.Children.Add(GoBackButton,            1, 2, 5, 6);
-            dvMainGrid.Children.Add(dayIDLabel,              2, 3, 5, 6);
+            //dvMainGrid.Children.Add(dayIDLabel,              2, 3, 5, 6); //Debug label til at se ID'et på den givne dag ved brug af DayView som popup vindue i HistoryPage.
 
 		}
 

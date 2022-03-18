@@ -57,6 +57,7 @@ namespace SplashScreenTest02.ViewModels
 		public async void FillDaysList()
 		{
 			DaysSource = await MyFiller.GetUsersDays();
+			//DaysSource.OrderBy(d => d.Date);
 		}
 
 		public async void OpenPopupClicked(object obj)
