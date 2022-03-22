@@ -3,10 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SplashScreenTest02.Views.MyStream.MyStreamInfluencesView"
 			 xmlns:viewmodel="clr-namespace:SplashScreenTest02.ViewModels">
-	<!--<ContentView.Resources>
-		<viewmodel:MyStreamViewModel x:Key="msVM" x:Name="msVM_CB"/>
-	</ContentView.Resources>-->
-	<ContentView.Content>
+    <ContentView.Content>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
@@ -26,11 +23,12 @@
                      CornerRadius="14"/>
             <Label Grid.Row="1"
                    Grid.Column="0"
-                   Text="{Binding Path=PositiveInfluence}"
                    FontSize="Large"
                    VerticalOptions="CenterAndExpand"
                    VerticalTextAlignment="Center"
-                   HorizontalTextAlignment="Center"/>
+                   HorizontalTextAlignment="Center"
+                   Text="{Binding Path=PositiveInfluence}" />
+            <!--Text="{Binding Path=GreatestInfluences[0].InfluenceName}"/>-->
             <Label Grid.Row="1"
                    Grid.Column="1"
                    Text="{Binding Path=NegativeInfluence}"
@@ -40,11 +38,5 @@
                    HorizontalTextAlignment="Center"/>
 
         </Grid>
-      <!--<StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" >-->
-
-            <!--<Label FontSize="Large" Text="{Binding Path=TestText}" TextColor="HotPink"/>
-			<Label Text="{Binding Path=YANTestText}" FontSize="Large" TextColor="HotPink"/>-->
-			<!--<Label Text="MyStreamInfluencesView XAML" FontSize="Large"/>-->
-      <!--</StackLayout>-->
 	</ContentView.Content>
 </ContentView>
