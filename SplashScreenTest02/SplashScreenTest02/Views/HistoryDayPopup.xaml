@@ -10,22 +10,9 @@
 			 x:Name="this"
 			 Padding="50,200,50,150"
 			 HasKeyboardOffset="False">
-	<!--<pages:PopupPage.Resources>
-		<views2:DayView x:Key="popupDayView" x:Name="popupDayView_CB"/>
-		--><!--<viewmodel:DayViewVM x:Key="popupDayViewVM"/>--><!--
-	</pages:PopupPage.Resources>-->
-	
-	<pages:PopupPage.Content>
-		
-		<!--<Frame BackgroundColor="YellowGreen"
-			   x:Name="popupFrame_CB"
-			   Padding="100,50,100,50"
-			   >
-		</Frame>-->
-		<StackLayout>
-			<!--<views2:DayView x:Name="popupDayView_CB"
-			BindingContext="{Binding Source={x:Reference this}, Path=dayViewVM}" />-->
-			<ContentView Content="{Binding Path=popupDayView, Source={x:Reference this}}"/>
+    <pages:PopupPage.Content>
+        <StackLayout>
+            <ContentView Content="{Binding Path=popupDayView, Source={x:Reference this}}"/>
 			<Button Text="Slet Dag" BackgroundColor="DarkRed" TextColor="{Binding Source={StaticResource PrimaryText}}"
 					Command="{Binding Path=DeleteDayCommand, Source={x:Reference this}}"
 					HeightRequest="40"/>

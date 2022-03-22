@@ -16,7 +16,7 @@
 					<chart:CategoryAxis />
 				</chart:SfChart.PrimaryAxis>
 				<chart:SfChart.SecondaryAxis>
-					<chart:NumericalAxis Minimum="1" Maximum="3"/>
+					<chart:NumericalAxis Minimum="1" Maximum="3" ShowMinorGridLines="False" ShowMajorGridLines="False" IsInversed="True"/>
 				</chart:SfChart.SecondaryAxis>
 				<!--https://help.syncfusion.com/xamarin/charts/appearance-->
 				<chart:SfChart.Series>

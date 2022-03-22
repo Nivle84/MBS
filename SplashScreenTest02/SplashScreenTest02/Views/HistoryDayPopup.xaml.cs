@@ -20,40 +20,17 @@ namespace SplashScreenTest02.Views
 		public Command DeleteDayCommand { get; set; }
 		public Day EditedDay { get; set; }
 		public Day DeletedDay { get; set; }
-		//public HistoryDayPopup(DayViewVM dayViewVMFromHistoryPage)
-		//{
-		//	dayViewVM = dayViewVMFromHistoryPage;
-		//	//BindingContext = dayViewVM;
-		//	//popDayView_CB.BindingContext = dayViewVM;	//Der sker noget her det gør at den hopper ud, så InitializeComponent() slet ikke bliver kaldt. Men det er jo heller ikke selve popupvinduet som skal have den binding.
-		//	InitializeComponent();
-		//	//Debug.WriteLine(this.BindingContext.ToString());
-		//}
 
 		public HistoryDayPopup(Day dayFromHistoryPage, HistoryViewModel hpVM)
 		{
-			selectedDay = dayFromHistoryPage;
-			dayViewVM = new DayViewVM(selectedDay);   //Lader til at blive kaldt og constructet fint nok.
-			historyVM = hpVM;
 			Debug.WriteLine("HistoryDayPopup constructor called.");
+			selectedDay = dayFromHistoryPage;
+			dayViewVM = new DayViewVM(selectedDay);
+			historyVM = hpVM;
 			popupDayView = new DayView(dayViewVM);
-			//popupDayView.VerticalOptions = LayoutOptions.Center;
-			//popupDayView.HeightRequest = 800;
-
 
 			DeleteDayCommand = new Command(DeleteDay);
-			//this.Content = popupDayView;
-			//this.Content.VerticalOptions = LayoutOptions.End;
-			//this.HasSystemPadding = true;
-
-			//this.SystemPaddingSides = 50;
-			//this.Padding = 50;
-			//this.Content.HeightRequest = 800;
-			//this.HeightRequest = 800;
-			//popupFrame_CB.Content = popupDayView;	//Der går noget galt her. Den hopper ud.
-			//popupDayView_CB.BindingContext = new DayViewVM(selectedDay);
-			Debug.WriteLine("popupDayView.BindingContext set.");
 			InitializeComponent();
-			Debug.WriteLine("HistoryDayPopup initialized.");
 		}
 
 		protected override void OnAppearing()
@@ -66,7 +43,7 @@ namespace SplashScreenTest02.Views
 			//Det her blev godt nok en snørklet og grim implementering... -_-
 			//Men fordi jeg ikke var mere forudseende må det være fyldestgørende.
 			//Og det er vist ikke sådan helt rigtig tilladt ifm MVVM, men jeg synes godt
-			//at kunne forsvare det da det har med view'et at gøre...
+			//at kunne forsvare det da det trods alt er relateret til view'et...
 			try
 			{
 				//Den dag som er blevet redigeret og set'et i DayViewVM hentes.
@@ -80,8 +57,6 @@ namespace SplashScreenTest02.Views
 					DeletedDay = Newtonsoft.Json.JsonConvert.DeserializeObject<Day>(jsonDeletedDay);
 
 				//Hvis dagen som er blevet åbnet i popup'en er den samme som den dag der er blevet slettet, fjernes den fra historiklisten
-				//TODO Jeg synes det her burde virke, men dagen bliver stadig ikke fjernet fra view'et.
-				//Skal den set'es igen for at NotifyOnPropertyChanged bliver kaldt?
 				if (DeletedDay != null && selectedDay.DayID == DeletedDay.DayID)
 				{
 					//deletedDay = historyVM.DaysSource.Find(d => d.DayID == deletedDay.DayID);
@@ -98,7 +73,7 @@ namespace SplashScreenTest02.Views
 					if (dayIndex != -1)
 						historyVM.DaysSource[dayIndex] = EditedDay;
 				}
-				//Den redigerede dag nulstilles for en sikkerheds skyld, så der ikke opstår fejl.
+				//Den redigerede dag nulstilles for en sikkerheds skyld, for at minimere sandsynligheden for fejl.
 				Xamarin.Essentials.Preferences.Set(Constants.EditedDay, null);
 				EditedDay = null;
 			}
