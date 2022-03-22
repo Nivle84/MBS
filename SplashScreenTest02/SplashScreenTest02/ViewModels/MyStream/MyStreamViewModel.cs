@@ -19,38 +19,59 @@ namespace SplashScreenTest02.ViewModels
 		public MyStreamGraphViewModel MsGraphVM { get; set; }
 		public MyStreamInfluencesViewModel MsInfVM { get; set; }
 		public ObservableCollection<GraphDay> GraphDays = new ObservableCollection<GraphDay>();
-		public List<GraphDay> GraphDaysTestList { get; set; }
-		public ObservableCollection<Influence> GreatestInfluences { get; set; }
-		public Influence GoodInfluence { get; set; }
-		public Influence BadInfluence { get; set; }
-		public DataFiller MyFiller { get; set; }
-		public static string WhoIsThere([CallerMemberName] string memberName = "")
-		{
-			return memberName;
-		}
+		//private ObservableCollection<Influence> GreatestInfluences { get; set; }
+		//private List<Influence> Influences = new List<Influence>();
+		//private static Dictionary<int, int> GoodInfluenceDictionary = new Dictionary<int, int>()
+		//{
+		//	{1, 0},
+		//	{2, 0},
+		//	{3, 0},
+		//	{4, 0},
+		//	{5, 0},
+		//	{6, 0},
+		//	{7, 0},
+		//	{8, 0},
+		//	{9, 0},
+		//	{10, 0},
+		//	{11, 0},
+		//	{12, 0}
+		//};
+
+		//private static Dictionary<int, int> BadInfluenceDictionary = new Dictionary<int, int>()
+		//{
+		//	{1, 0},
+		//	{2, 0},
+		//	{3, 0},
+		//	{4, 0},
+		//	{5, 0},
+		//	{6, 0},
+		//	{7, 0},
+		//	{8, 0},
+		//	{9, 0},
+		//	{10, 0},
+		//	{11, 0},
+		//	{12, 0}
+		//};
+		private DataFiller MyFiller { get; set; }
 		public MyStreamViewModel()
 		{
-			//var whoDat = WhoIsThere();
-			//Debug.WriteLine("MyStreamViewModel() ctor called from: " + this.ToString() + whoDat);
 			Debug.WriteLine("MyStreamViewModel() ctor.");
-			//apiHelper = new ApiHelper();
 			MyFiller = new DataFiller();
-			//GraphDays = new ObservableCollection<GraphDay>();
-			GreatestInfluences = new ObservableCollection<Influence>()//;
-			{
-				new Influence()
-				{
-					InfluenceID = 1,
-					InfluenceName = "Family"
-				},
-				new Influence()
-				{
-					InfluenceID = 3,
-					InfluenceName = "Friends"
-				}
-			};
+			//GreatestInfluences = new ObservableCollection<Influence>();
+			//Influences = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Influence>>(Xamarin.Essentials.Preferences.Get(Constants.StoredInfluences, null));
+			//{
+			//	new Influence()
+			//	{
+			//		InfluenceID = 1,
+			//		InfluenceName = "Family"
+			//	},
+			//	new Influence()
+			//	{
+			//		InfluenceID = 3,
+			//		InfluenceName = "Friends"
+			//	}
+			//};
 
-			//GraphDays = new ObservableCollection<GraphDay>();
 			#region GraphDays test data
 			/*
 			{
@@ -99,72 +120,68 @@ namespace SplashScreenTest02.ViewModels
 			};
 			*/
 			#endregion
-			//bool getDaysSucces;
-			AnalyseDays();      //TODO - Der er et eller andet helt galt her. Den henter ikke noget.
-
-			//for (int i = 1; i < 3; i++)
-			//{
-			//	GraphDays.Add(
-			//		new GraphDay
-			//		{
-			//			Date = new DateTime(2022, 3, i),
-			//			InfluenceID = i,
-			//			MoodID = i,
-			//		});
-			//}
+			Task GetGraphDaysTask = Task.Run(async () => GraphDays = await MyFiller.FillGraphDays());
+			GetGraphDaysTask.Wait();
+			//AnalyseDays();
 
 			MsGraphVM = new MyStreamGraphViewModel(GraphDays);
-			MsInfVM = new MyStreamInfluencesViewModel(GreatestInfluences);
-
+			MsInfVM = new MyStreamInfluencesViewModel(GraphDays);
 		}
 
 		//Skab to lister af gode og dårlige dage
 		//Tæl hver Influence, tilføj de to Influence objekter til ObsColl
-		public async void AnalyseDays()
-		{
-			//GraphDaysTestList = new List<GraphDay>();
-			Task GetGraphDaysTask = Task.Run(async () => GraphDays = await MyFiller.FillGraphDays());
-			GetGraphDaysTask.Wait();
+		//public async void AnalyseDays()
+		//{
+		//	//GraphDaysTestList = new List<GraphDay>();
+		//	Task GetGraphDaysTask = Task.Run(async () => GraphDays = await MyFiller.FillGraphDays());
+		//	GetGraphDaysTask.Wait();
 
-			//GraphDaysTestList = await MyFiller.FillGraphDays();
-			//GraphDays = new ObservableCollection<GraphDay>();
-			//GraphDays = await MyFiller.FillGraphDays();
-			//DetermineGreatestInfluences();
+		//	var groupDaysByMood = GraphDays //Inddeler i tre grupper, med en key-værdi for hver gruppe værende MoodID
+		//		.GroupBy(d => d.MoodID)     //(altså én gruppe med alle objekter med MoodID 1, én gruppe med alle objekter med MoodID 2, osv.)
+		//		.OrderBy(k => k.Key)
+		//		.ToList();
 
-			//if (GraphDaysTestList.Count > 0)
-			//	return true;
-			//else
-			//	return false;
+		//	foreach (var moodGroup in groupDaysByMood)
+		//	{
+		//		foreach (var day in moodGroup)
+		//		{
+		//			AddInfluenceToDictionary(day.InfluenceID, moodGroup.Key);
+		//		}
+		//	}
 
-		}
+		//	Influence GreatestPositiveInfluence = FindGreatestInfluences(GoodInfluenceDictionary);
+		//	Influence GreatestNegativeInfluence = FindGreatestInfluences(BadInfluenceDictionary);
 
-		public async void DetermineGreatestInfluences()
-		{
-			//https://mtaulty.com/2007/09/28/m_9836/
+		//	GreatestInfluences = new ObservableCollection<Influence>()
+		//	{
+		//		GreatestPositiveInfluence,
+		//		GreatestNegativeInfluence
+		//	};
+		//}
 
-			var queryGoodDays = GraphDays
-				.GroupBy(d => d.MoodID)
-				.Where(m => m.Key == 1)	//Find alle elementer fra GraphDays hvor MoodID = 1 (alle good days)
-				.ToList();
+		//public void AddInfluenceToDictionary(int influenceIDToAdd, int moodID)
+		//{
+		//	int counter = 0;
+		//	switch (moodID)
+		//	{
+		//		case 1:
+		//			GoodInfluenceDictionary.TryGetValue(influenceIDToAdd, out counter);
+		//			GoodInfluenceDictionary[influenceIDToAdd] = ++counter;
+		//			break;
+		//		case 3:
+		//			BadInfluenceDictionary.TryGetValue(influenceIDToAdd, out counter);
+		//			BadInfluenceDictionary[influenceIDToAdd] = ++counter;
+		//			break;
+		//		default:
+		//			break;
+		//	}
+		//}
 
-			var queryBadDays = GraphDays
-				.GroupBy(d => d.MoodID)
-				.Where(m => m.Key == 3)
-				.ToList();
-
-			//Influence queryGoodInfluence = queryGoodDays
-			//	.Select(i => i.Key == 1)
-			//	//.GroupBy(i => i.Key)
-			//	.OrderBy(m => m.Key)
-			//	.Select()
-
-
-
-			var query = GraphDays
-				.GroupBy(x => x.InfluenceID)
-				.Where(g => g.Count() > 1)
-				.Select(y => y.Key)
-				.ToList();
-		}
+		//private Influence FindGreatestInfluences(Dictionary<int, int> influenceDictionary)
+		//{
+		//	int thisInfluenceID = influenceDictionary.Aggregate((a, b) => a.Value > b.Value ? a : b).Key;
+		//	Influence greatestInfluence = Influences.Where(i => i.InfluenceID == thisInfluenceID).FirstOrDefault();
+		//	return greatestInfluence;
+		//}
 	}
 }

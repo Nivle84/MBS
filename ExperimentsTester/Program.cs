@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using BC = BCrypt.Net.BCrypt;
+using Xamarin.Essentials;
 
 namespace ExperimentsTester
 {
@@ -18,18 +19,112 @@ namespace ExperimentsTester
 		public static DataFiller anotherFiller = new DataFiller();
 		public static ApiHelper apiHelper = new ApiHelper();
 
+		public static ObservableCollection<Influence> LargestInfluences = new ObservableCollection<Influence>();
+		public static List<Influence> Influences = new List<Influence>();
+		public static Influence BestInfluence = new Influence();
+		public static Influence WorstInfluence = new Influence();
 		static void Main(string[] args)
 		{
 			//GraphDays = new ObservableCollection<GraphDay>();
 			//var moods = anotherFiller.GetUsersDays();
 			//var testDays = TestGet();
 			//GetThoseDamnGraphDays();
-			AnalyseDays();
 			//Task createData = Task.Run(async () => await CreateDummyData(1, DateTime.Now));
 			//CreateDummyData(1, DateTime.Now);
-			//HashTest();
+			HashTest();
+
+			//AnalyseDays();
+			//Influences = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Influence>>(Xamarin.Essentials.Preferences.Get(Constants.StoredInfluences, null));
+			//GetInfluences();
+			//SortInfluencesIntoDictionaries();
+			//BestInfluence = FindLargestInfluences(GoodInfluenceDictionary);
+			//WorstInfluence = FindLargestInfluences(BadInfluenceDictionary);
+		}
+		#region influences test
+		public static async void GetInfluences()
+		{
+			Influences = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Influence>>("[{\"influenceID\":1,\"influenceName\":\"Family\"},{\"influenceID\":2,\"influenceName\":\"Relationships\"},{\"influenceID\":3,\"influenceName\":\"Friends\"},{\"influenceID\":4,\"influenceName\":\"Food\"},{\"influenceID\":5,\"influenceName\":\"Health\"},{\"influenceID\":6,\"influenceName\":\"Exercise\"},{\"influenceID\":7,\"influenceName\":\"Spiritual\"},{\"influenceID\":8,\"influenceName\":\"Career\"},{\"influenceID\":9,\"influenceName\":\"Education\"},{\"influenceID\":10,\"influenceName\":\"Travel\"},{\"influenceID\":11,\"influenceName\":\"Sleep\"},{\"influenceID\":12,\"influenceName\":\"Financial\"}]");
 		}
 
+		private static Influence FindLargestInfluences(Dictionary<int, int> influenceDictionary)
+		{
+			int thisInfluenceID = influenceDictionary.Aggregate((a, b) => a.Value > b.Value ? a : b).Key;
+			Influence largestInfluence = Influences.Where(i => i.InfluenceID == thisInfluenceID).FirstOrDefault();
+			return largestInfluence;
+		}
+
+		public static Dictionary<int, int> GoodInfluenceDictionary = new Dictionary<int, int>()
+		{
+			{1, 0},
+			{2, 0},
+			{3, 0},
+			{4, 0},
+			{5, 0},
+			{6, 0},
+			{7, 0},
+			{8, 0},
+			{9, 0},
+			{10, 0},
+			{11, 0},
+			{12, 0}
+		};
+
+		public static Dictionary<int, int> BadInfluenceDictionary = new Dictionary<int, int>()
+		{
+			{1, 0},
+			{2, 0},
+			{3, 0},
+			{4, 0},
+			{5, 0},
+			{6, 0},
+			{7, 0},
+			{8, 0},
+			{9, 0},
+			{10, 0},
+			{11, 0},
+			{12, 0}
+		};
+
+		private static void SortInfluencesIntoDictionaries()
+		{
+
+			//var json = "[{\"moodID\":2,\"influenceID\":8,\"date\":\"2022-04-24T10:50:13.1323132\"},{\"moodID\":1,\"influenceID\":2,\"date\":\"2022-04-23T10:50:13.1323132\"},{\"moodID\":3,\"influenceID\":8,\"date\":\"2022-04-22T10:50:13.1323132\"},{\"moodID\":3,\"influenceID\":4,\"date\":\"2022-04-21T10:50:13.1323132\"},{\"moodID\":3,\"influenceID\":10,\"date\":\"2022-04-20T10:50:13.1323132\"},{\"moodID\":3,\"influenceID\":9,\"date\":\"2022-04-19T10:50:13.1323132\"},{\"moodID\":3,\"influenceID\":8,\"date\":\"2022-04-18T10:50:13.1323132\"},{\"moodID\":3,\"influenceID\":10,\"date\":\"2022-04-17T10:50:13.1323132\"},{\"moodID\":3,\"influenceID\":2,\"date\":\"2022-04-16T10:50:13.1323132\"},{\"moodID\":1,\"influenceID\":6,\"date\":\"2022-04-15T10:50:13.1323132\"},{\"moodID\":3,\"influenceID\":2,\"date\":\"2022-04-14T10:50:13.1323132\"},{\"moodID\":3,\"influenceID\":7,\"date\":\"2022-04-13T10:50:13.1323132\"},{\"moodID\":3,\"influenceID\":11,\"date\":\"2022-04-12T10:50:13.1323132\"},{\"moodID\":2,\"influenceID\":3,\"date\":\"2022-04-11T10:50:13.1323132\"},{\"moodID\":3,\"influenceID\":10,\"date\":\"2022-04-10T10:50:13.1323132\"},{\"moodID\":1,\"influenceID\":12,\"date\":\"2022-04-09T10:50:13.1323132\"},{\"moodID\":3,\"influenceID\":7,\"date\":\"2022-04-08T10:50:13.1323132\"},{\"moodID\":1,\"influenceID\":6,\"date\":\"2022-04-07T10:50:13.1323132\"},{\"moodID\":1,\"influenceID\":10,\"date\":\"2022-04-06T10:50:13.1323132\"},{\"moodID\":1,\"influenceID\":6,\"date\":\"2022-04-05T10:50:13.1323132\"},{\"moodID\":1,\"influenceID\":3,\"date\":\"2022-04-04T10:50:13.1323132\"},{\"moodID\":3,\"influenceID\":1,\"date\":\"2022-04-03T10:50:13.1323132\"},{\"moodID\":3,\"influenceID\":10,\"date\":\"2022-04-02T10:50:13.1323132\"},{\"moodID\":3,\"influenceID\":2,\"date\":\"2022-04-01T10:50:13.1323132\"},{\"moodID\":2,\"influenceID\":2,\"date\":\"2022-03-31T10:50:13.1323132\"},{\"moodID\":1,\"influenceID\":9,\"date\":\"2022-03-30T10:50:13.1323132\"},{\"moodID\":1,\"influenceID\":11,\"date\":\"2022-03-29T10:50:13.1323132\"},{\"moodID\":1,\"influenceID\":6,\"date\":\"2022-03-28T10:50:13.1323132\"},{\"moodID\":3,\"influenceID\":8,\"date\":\"2022-03-27T10:50:13.1323132\"},{\"moodID\":1,\"influenceID\":5,\"date\":\"2022-03-26T10:50:13.1323132\"}]";
+			var json = "[{\"moodID\":1,\"influenceID\":6,\"date\":\"2022-04-26T08:47:04.6458404\"},{\"moodID\":3,\"influenceID\":6,\"date\":\"2022-04-25T08:47:04.6458404\"},{\"moodID\":1,\"influenceID\":4,\"date\":\"2022-04-24T08:47:04.6458404\"},{\"moodID\":2,\"influenceID\":1,\"date\":\"2022-04-23T08:47:04.6458404\"},{\"moodID\":2,\"influenceID\":10,\"date\":\"2022-04-22T08:47:04.6458404\"},{\"moodID\":1,\"influenceID\":3,\"date\":\"2022-04-21T08:47:04.6458404\"},{\"moodID\":1,\"influenceID\":7,\"date\":\"2022-04-20T08:47:04.6458404\"},{\"moodID\":3,\"influenceID\":8,\"date\":\"2022-04-19T08:47:04.6458404\"},{\"moodID\":2,\"influenceID\":9,\"date\":\"2022-04-18T08:47:04.6458404\"},{\"moodID\":1,\"influenceID\":11,\"date\":\"2022-04-17T08:47:04.6458404\"},{\"moodID\":2,\"influenceID\":11,\"date\":\"2022-04-16T08:47:04.6458404\"},{\"moodID\":2,\"influenceID\":9,\"date\":\"2022-04-15T08:47:04.6458404\"},{\"moodID\":2,\"influenceID\":4,\"date\":\"2022-04-14T08:47:04.6458404\"},{\"moodID\":2,\"influenceID\":2,\"date\":\"2022-04-13T08:47:04.6458404\"},{\"moodID\":2,\"influenceID\":8,\"date\":\"2022-04-12T08:47:04.6458404\"},{\"moodID\":2,\"influenceID\":5,\"date\":\"2022-04-11T08:47:04.6458404\"},{\"moodID\":3,\"influenceID\":2,\"date\":\"2022-04-10T08:47:04.6458404\"},{\"moodID\":2,\"influenceID\":11,\"date\":\"2022-04-09T08:47:04.6458404\"},{\"moodID\":3,\"influenceID\":4,\"date\":\"2022-04-08T08:47:04.6458404\"},{\"moodID\":2,\"influenceID\":4,\"date\":\"2022-04-07T08:47:04.6458404\"},{\"moodID\":3,\"influenceID\":6,\"date\":\"2022-04-06T08:47:04.6458404\"},{\"moodID\":1,\"influenceID\":12,\"date\":\"2022-04-05T08:47:04.6458404\"},{\"moodID\":3,\"influenceID\":4,\"date\":\"2022-04-04T08:47:04.6458404\"},{\"moodID\":1,\"influenceID\":12,\"date\":\"2022-04-03T08:47:04.6458404\"},{\"moodID\":3,\"influenceID\":7,\"date\":\"2022-04-02T08:47:04.6458404\"},{\"moodID\":3,\"influenceID\":11,\"date\":\"2022-04-01T08:47:04.6458404\"},{\"moodID\":3,\"influenceID\":8,\"date\":\"2022-03-31T08:47:04.6458404\"},{\"moodID\":1,\"influenceID\":10,\"date\":\"2022-03-30T08:47:04.6458404\"},{\"moodID\":3,\"influenceID\":9,\"date\":\"2022-03-29T08:47:04.6458404\"},{\"moodID\":2,\"influenceID\":12,\"date\":\"2022-03-28T08:47:04.6458404\"}]";
+			GraphDays = JsonConvert.DeserializeObject<ObservableCollection<GraphDay>>(json);
+
+			var groupDaysByMood = GraphDays //Inddeler i tre grupper, med en key-værdi for hver gruppe værende MoodID
+				.GroupBy(d => d.MoodID)     //(altså én gruppe med alle objekter med MoodID 1, én gruppe med alle objekter med MoodID 2, osv.)
+				.OrderBy(k => k.Key)
+				.ToList();
+
+
+			foreach (var moodGroup in groupDaysByMood)
+			{
+				foreach (var day in moodGroup)
+				{
+					AddInfluenceToDictionary(day.InfluenceID, moodGroup.Key);
+				}
+			}
+		}
+
+		public static void AddInfluenceToDictionary(int influenceIDToAdd, int moodID)
+		{
+			int counter = 0;
+			switch (moodID)
+			{
+				case 1:
+					GoodInfluenceDictionary.TryGetValue(influenceIDToAdd, out counter);
+					GoodInfluenceDictionary[influenceIDToAdd] = ++counter;
+					break;
+				case 3:
+					BadInfluenceDictionary.TryGetValue(influenceIDToAdd, out counter);
+					BadInfluenceDictionary[influenceIDToAdd] = ++counter;
+					break;
+				default:
+					break;
+			}
+		}
+		#endregion
 		public static string hashedInput;
 		public static string generatedSalt;
 		public static string storedHashedSaltedPassword = "$2a$11$vh/zMzo0AIQa4shGfuQxHeEDCp0tu5MEd/fJ/93p2X5/xd5wtG5.W";	//"testpass"
@@ -53,10 +148,12 @@ namespace ExperimentsTester
 
 				generatedSalt = BCrypt.Net.BCrypt.GenerateSalt();
 				hashedInput = BCrypt.Net.BCrypt.HashPassword(testUser01.UserPassword, generatedSalt);
+				string autoSaltedInput = BC.HashPassword(testUser01.UserPassword);
 
-				Console.WriteLine("Generated salt      = " + generatedSalt);
-				Console.WriteLine("Hashed input        = " + hashedInput);
-				Console.WriteLine("Stored hash-salt PW = " + storedHashedSaltedPassword);
+				Console.WriteLine("Generated salt         = " + generatedSalt);
+				Console.WriteLine("HashPassword(PW, salt) = " + hashedInput);
+				Console.WriteLine("HashPassword(PW)       = " + autoSaltedInput);
+				Console.WriteLine("Stored hash-salt PW    = " + storedHashedSaltedPassword);
 
 				passwordIsVerified = BCrypt.Net.BCrypt.Verify(testUser01.UserPassword, storedHashedSaltedPassword);
 				Console.WriteLine("Password is verified: " + passwordIsVerified + "\n");
@@ -164,8 +261,8 @@ namespace ExperimentsTester
 			 * Dette array kan så gennemgås for hvilken værdi der opstår oftest.
 			 */
 
-			Influence BestInfluence = new Influence();
-			Influence WorstInfluence = new Influence();
+			//Influence BestInfluence = new Influence();
+			//Influence WorstInfluence = new Influence();
 			int[] goodInfluences = new int[groupDaysByMood[0].Count()];
 			int[] badInfluences = new int[groupDaysByMood[2].Count()];
 
@@ -183,8 +280,8 @@ namespace ExperimentsTester
 							 group day
 							 by day.MoodID;
 
-			var anotherquery = from grp in freshquery
-							   select grp.Key.
+			//var anotherquery = from grp in freshquery
+			//				   select grp.Key.
 
 			//foreach (var grp in GraphDays
 			//					.GroupBy(d => d.MoodID)
@@ -222,7 +319,7 @@ namespace ExperimentsTester
 			int count = 0;
 
 			foreach (var keyGroup in groupDaysByMood)	//Denne fremgangsmåde fungerer (!), men virker lidt grim og klodset.
-			{											//Tænker at der er en hurtigere, smartere måde at gøre det på med LINQ.
+			{                                           //Tænker at der er en hurtigere, smartere måde at gøre det på med LINQ.
 				foreach (var gDay in keyGroup)
 				{
 					switch (keyGroup.Key)
@@ -239,7 +336,9 @@ namespace ExperimentsTester
 						default:
 							break;
 					}
+
 				}
+				//var test = keyGroup.Aggregate((a, b) => a.InfluenceID > b.InfluenceID ? a : b).InfluenceID;
 				count = 0;
 			}
 

@@ -7,10 +7,44 @@
 		<viewmodel:MyStreamViewModel x:Key="msVM" x:Name="msVM_CB"/>
 	</ContentView.Resources>-->
 	<ContentView.Content>
-      <StackLayout>
-			<!--<Label FontSize="Large" Text="{Binding Path=TestText}" TextColor="HotPink"/>-->
-			<Label Text="{Binding Path=YANTestText}" FontSize="Large" TextColor="HotPink"/>
-			<Label Text="MyStreamInfluencesView XAML" FontSize="Large"/>
-      </StackLayout>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <BoxView Grid.Row="1"
+                     Grid.Column="0"
+                     BackgroundColor="ForestGreen"
+                     CornerRadius="14"/>
+            <BoxView Grid.Row="1"
+                     Grid.Column="1"
+                     BackgroundColor="IndianRed"
+                     CornerRadius="14"/>
+            <Label Grid.Row="1"
+                   Grid.Column="0"
+                   Text="{Binding Path=PositiveInfluence}"
+                   FontSize="Large"
+                   VerticalOptions="CenterAndExpand"
+                   VerticalTextAlignment="Center"
+                   HorizontalTextAlignment="Center"/>
+            <Label Grid.Row="1"
+                   Grid.Column="1"
+                   Text="{Binding Path=NegativeInfluence}"
+                   FontSize="Large"
+                   VerticalOptions="CenterAndExpand"
+                   VerticalTextAlignment="Center"
+                   HorizontalTextAlignment="Center"/>
+
+        </Grid>
+      <!--<StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" >-->
+
+            <!--<Label FontSize="Large" Text="{Binding Path=TestText}" TextColor="HotPink"/>
+			<Label Text="{Binding Path=YANTestText}" FontSize="Large" TextColor="HotPink"/>-->
+			<!--<Label Text="MyStreamInfluencesView XAML" FontSize="Large"/>-->
+      <!--</StackLayout>-->
 	</ContentView.Content>
 </ContentView>
