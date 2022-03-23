@@ -42,7 +42,7 @@ namespace SplashScreenTest02.Views
 		{
 			//Det her blev godt nok en snørklet og grim implementering... -_-
 			//Men fordi jeg ikke var mere forudseende må det være fyldestgørende.
-			//Og det er vist ikke sådan helt rigtig tilladt ifm MVVM, men jeg synes godt
+			//Og det er vist ikke sådan helt rigtig tilladt ifm MVVM at dette ligger i code-behind, men jeg synes godt
 			//at kunne forsvare det da det trods alt er relateret til view'et...
 			try
 			{

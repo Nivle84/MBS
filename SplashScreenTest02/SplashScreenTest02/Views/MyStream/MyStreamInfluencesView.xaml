@@ -15,11 +15,11 @@
             </Grid.ColumnDefinitions>
             <BoxView Grid.Row="1"
                      Grid.Column="0"
-                     BackgroundColor="ForestGreen"
+                     BackgroundColor="{StaticResource SecondaryAccent1}"
                      CornerRadius="14"/>
             <BoxView Grid.Row="1"
                      Grid.Column="1"
-                     BackgroundColor="IndianRed"
+                     BackgroundColor="{StaticResource Abort}"
                      CornerRadius="14"/>
             <Label Grid.Row="1"
                    Grid.Column="0"

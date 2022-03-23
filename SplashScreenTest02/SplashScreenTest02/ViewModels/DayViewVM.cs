@@ -81,17 +81,14 @@ namespace MBStest03.ViewModels
 				return date;
 			}
 		}
-		//public Command SaveThisDayCommand { get; }
 		public IEnumerable<Influence> influenceList { get; set; }
 		public IEnumerable<Mood> moodList { get; set; }
 		DataFiller myFiller { get; set; }
 		public ApiHelper apiHelper { get; }
-		int dayViewVMNoParamCallTimes = 0;
 
 		public DayViewVM()
 		{
-			dayViewVMNoParamCallTimes++;
-			Debug.WriteLine($"DayViewVM() called {dayViewVMNoParamCallTimes} times from {ToString()}.");
+			Debug.WriteLine("DayViewVM() constructor called.");
 			ThisMood = new Mood();
 			ThisInfluence = new Influence();
 			ThisNote = new Note();
@@ -100,10 +97,6 @@ namespace MBStest03.ViewModels
 				Date = DateTime.Now.Date,
 				UserID = Preferences.Get(Constants.StoredUserID, 0)
 			};
-			//ThisUser = new User()
-			//{
-			//	UserID = Preferences.Get(Constants.StoredUserID, 0)
-			//};
 
 			myFiller = new DataFiller();
 			influenceList = myFiller.GetInfluences();
@@ -111,25 +104,21 @@ namespace MBStest03.ViewModels
 			apiHelper = new ApiHelper();
 		}
 
-		int dayViewVMParamCallTimes = 0;
 		public DayViewVM(Day selectedDay)
 		{
-			dayViewVMParamCallTimes++;
-			Debug.WriteLine($"DayViewVM(Day selectedDay) called {dayViewVMParamCallTimes} times.");
+			Debug.WriteLine($"DayViewVM(Day selectedDay) constructor called.");
 			myFiller = new DataFiller();
 			apiHelper = new ApiHelper();
 			influenceList = myFiller.GetInfluences();
 			moodList = myFiller.GetMoods();
 			ThisDay = selectedDay;
-			ThisMood = moodList.Single(m => m.MoodID == selectedDay.MoodID); //selectedDay.Mood;
-			ThisInfluence = influenceList.Single(i => i.InfluenceID == selectedDay.InfluenceID); //selectedDay.Influence;
+			ThisMood = moodList.Single(m => m.MoodID == selectedDay.MoodID);
+			ThisInfluence = influenceList.Single(i => i.InfluenceID == selectedDay.InfluenceID);
 			ThisNote = selectedDay.Note;
-			//ThisUser.UserID = selectedDay.UserID;
-			Debug.WriteLine("DayViewVM(Day selectedDay) constructor end.");
 		}
 
-		public bool DayHasBeenSaved = false;
-		public HistoryViewModel hpVM { get; set; }
+		//public bool DayHasBeenSaved = false;
+		//public HistoryViewModel hpVM { get; set; }
 		internal async void SaveThisDay()
 		{
 			ThisDay.Mood = ThisMood;
@@ -158,12 +147,12 @@ namespace MBStest03.ViewModels
 			{
 				Toast.MakeText(Android.App.Application.Context, "Dag gemt!", ToastLength.Short).Show();
 				ThisDay.Note = null;
-				DayHasBeenSaved = true;
+				//DayHasBeenSaved = true;
 			}
 			else
 			{
 				Toast.MakeText(Android.App.Application.Context, "Der skete en fejl. Error: " + response.ToString(), ToastLength.Long).Show();
-				DayHasBeenSaved = false;
+				//DayHasBeenSaved = false;
 			}
 
 			try

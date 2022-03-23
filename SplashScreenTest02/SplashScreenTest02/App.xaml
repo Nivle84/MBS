@@ -16,6 +16,7 @@
             <Color x:Key="Secondary">#568023</Color>
             <Color x:Key="SecondaryAccent1">#86a75e</Color>
 			<Color x:Key="SecondaryAccent2">#295303</Color>
+            <Color x:Key="Abort">indianred</Color>
 
             <Style TargetType="Button">
                 <Setter Property="TextColor" Value="{StaticResource PrimaryText}"></Setter>
