@@ -42,10 +42,7 @@
 		<StackLayout Grid.Row="3" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="5"
 					 HorizontalOptions="CenterAndExpand"
 					 FlowDirection="MatchParent"
-					 
-					 Orientation="Horizontal">
-			
-		
+					 Orientation="Horizontal">		
 		<CollectionView HorizontalScrollBarVisibility="Never" SelectionMode="Single"
 						ItemsSource="{Binding Path=moodList}"
 						SelectedItem="{Binding Path=ThisMood, Mode=TwoWay}"
@@ -173,7 +170,7 @@
 		<Editor Grid.Row="6" Grid.Column="1" Grid.RowSpan="3" Grid.ColumnSpan="3" BackgroundColor="{StaticResource PrimaryAccent1}" Placeholder="Indtast evt. en note til dagen."
                 IsSpellCheckEnabled="True" IsVisible="false" Text="{Binding Path=ThisNote.NoteString, Mode=TwoWay}"
                 x:Name="noteEditor"/>
-		<Button Grid.Row="9" Grid.Column="3" Text="Gem" Margin="0,0,0,0" BackgroundColor="{StaticResource Primary}"
+		<Button Grid.Row="9" Grid.Column="3" Text="Gem" Margin="0,0,0,0" BackgroundColor="{StaticResource Secondary}"
 				Command="{Binding Path=SaveThisDayCommand, Source={x:Reference this}}"
 				x:Name="SaveDayButton"
 				>
@@ -181,7 +178,7 @@
 				<TapGestureRecognizer Command="{Binding Path=SaveThisDayCommand, Source={x:Reference this}}" />
 			</Button.GestureRecognizers>-->
 		</Button>
-		<Button Grid.Row="9" Grid.Column="1" Text="Tilbage" BackgroundColor="{StaticResource SecondaryAccent2}" IsVisible="False"
+		<Button Grid.Row="9" Grid.Column="1" Text="Tilbage" BackgroundColor="{StaticResource Abort}" IsVisible="False"
 				x:Name="GoBackButton"
 				Command="{Binding Path=GoBackCommand, Source={x:Reference this}}"/>
 

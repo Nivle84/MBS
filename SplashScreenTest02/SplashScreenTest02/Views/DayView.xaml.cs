@@ -211,22 +211,17 @@ namespace SplashScreenTest02.Views
 		//public HistoryViewModel historyVM { get; set; }
 		private async void SaveDayClicked(object obj)
         {
+            bool daySaved = false;
 			try
 			{
-                
-                vm.SaveThisDay();
-                //historyVM.EditDay();
+                daySaved = await vm.SaveThisDay();
 			}
             catch (Exception ex)
 			{
-
+                Debug.WriteLine(ex.Message.ToString());
             }
-            if (vm.DayHasBeenSaved)
-            {
+            if (daySaved)
                 await Shell.Current.GoToAsync("///MyStreamPage");
-                //TODO
-                //Det her fungerer ikke. DayHasBeenSaved bliver af uvisse årsager ikke set i første omgang.
-            }
         }
     }
 }

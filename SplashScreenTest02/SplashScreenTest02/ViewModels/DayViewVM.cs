@@ -11,6 +11,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using Xamarin.Essentials;
 
 namespace MBStest03.ViewModels
@@ -119,7 +120,7 @@ namespace MBStest03.ViewModels
 
 		//public bool DayHasBeenSaved = false;
 		//public HistoryViewModel hpVM { get; set; }
-		internal async void SaveThisDay()
+		internal async Task<bool> SaveThisDay()
 		{
 			ThisDay.Mood = ThisMood;
 			ThisDay.MoodID = ThisMood.MoodID;
@@ -146,24 +147,32 @@ namespace MBStest03.ViewModels
 			if (response == HttpStatusCode.Created || response == HttpStatusCode.NoContent)
 			{
 				Toast.MakeText(Android.App.Application.Context, "Dag gemt!", ToastLength.Short).Show();
-				ThisDay.Note = null;
 				//DayHasBeenSaved = true;
+				try
+				{
+					//Er stadig ikke helt sikker på om det er good practice at
+					//forvente en exception.
+					await PopupNavigation.PopAsync();	//Der sker selvfølgelig en exception hvis instansen ikke er i et popupvindue.
+				}
+				catch (Exception ex)
+				{
+					Debug.WriteLine(ex.Message.ToString());
+				}
+				//ThisDay.Note = null;
+				//ThisDay.HasNote = false;
+				ThisDay = new Day()
+				{
+					Date = DateTime.Now.Date,
+					UserID = Preferences.Get(Constants.StoredUserID, 0)
+				};
+
+				return true;
 			}
 			else
 			{
 				Toast.MakeText(Android.App.Application.Context, "Der skete en fejl. Error: " + response.ToString(), ToastLength.Long).Show();
 				//DayHasBeenSaved = false;
-			}
-
-			try
-			{
-				//Er stadig ikke helt sikker på om det er good practice at
-				//forvente en exception.
-				await PopupNavigation.PopAsync();
-			}
-			catch (Exception ex)
-			{
-				Debug.WriteLine(ex.Message.ToString());
+				return false;
 			}
 		}
 

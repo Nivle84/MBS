@@ -6,7 +6,8 @@
              mc:Ignorable="d"
              x:Class="MBStest03.Views.LoginPage"
              Shell.TabBarIsVisible="False"
-			 xmlns:viewmodel="clr-namespace:MBStest03.ViewModels">
+			 xmlns:viewmodel="clr-namespace:MBStest03.ViewModels"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit">
 	<ContentPage.Resources>
 		<viewmodel:LoginViewModel x:Key="lpVM_V" />
 	</ContentPage.Resources>
@@ -38,10 +39,32 @@
 				<Image x:Name="imgDisp"/>
 				<Label Text="Mange Bække Små" FontSize="38" HorizontalTextAlignment="Center"/>
 				<Label Text="Log ind" FontSize="Large" HorizontalTextAlignment="Center"/>
-				<Entry HorizontalOptions="Fill" HorizontalTextAlignment="Center" Placeholder="E-mail" Text="{Binding CurrentUser.UserEmail, Mode=OneWayToSource}" IsTextPredictionEnabled="False" />
-				<Entry HorizontalOptions="Fill" HorizontalTextAlignment="Center" Placeholder="Kodeord" IsPassword="True" Text="{Binding CurrentUser.UserPassword, Mode=OneWayToSource}"/>
+                <Entry HorizontalOptions="Fill" HorizontalTextAlignment="Center" Placeholder="E-mail" Text="{Binding CurrentUser.UserEmail, Mode=OneWayToSource}" IsTextPredictionEnabled="False">
+                    <Entry.Behaviors>
+                        <xct:EmailValidationBehavior
+                            InvalidStyle="{StaticResource Key=InvalidEntryStyle}"
+                            ValidStyle="{StaticResource Key=ValidEntryStyle}"/>
+                        <!--https://docs.microsoft.com/en-us/xamarin/community-toolkit/behaviors/emailvalidationbehavior-->
+                    </Entry.Behaviors>
+                </Entry>
+                <Entry HorizontalOptions="Fill" HorizontalTextAlignment="Center" Placeholder="Kodeord" IsPassword="True" Text="{Binding CurrentUser.UserPassword, Mode=OneWayToSource}">
+                    <Entry.Behaviors>
+                        <xct:MultiValidationBehavior
+                            InvalidStyle="{StaticResource Key=InvalidEntryStyle}"
+                            ValidStyle="{StaticResource Key=ValidEntryStyle}">
+                            <xct:TextValidationBehavior
+                                MinimumLength="8"/>
+                            <xct:CharactersValidationBehavior 
+                                CharacterType="UppercaseLetter"
+                                MinimumCharacterCount="1"/>
+                            <xct:CharactersValidationBehavior
+                                CharacterType="Digit"
+                                MinimumCharacterCount="1"/>
+                        </xct:MultiValidationBehavior>
+                    </Entry.Behaviors>
+                </Entry>
 				<Button Text="Log ind" HorizontalOptions="Center" Command="{Binding LoginCommand}"/>
-                <Label Text="Opret Konto" TextDecorations="Underline" HorizontalOptions="Center" VerticalOptions="EndAndExpand">
+                <Label Text="Opret Bruger" TextDecorations="Underline" HorizontalOptions="Center" VerticalOptions="EndAndExpand">
 					<!--Jeg valgte at bruge en label i stedet for en knap mere, da jeg synes det virker bedre visuelt, og gør det knap så "tungt" at se på-->
                     <Label.GestureRecognizers>
 						<TapGestureRecognizer Command="{Binding GoToCreateUserCommand}"/>

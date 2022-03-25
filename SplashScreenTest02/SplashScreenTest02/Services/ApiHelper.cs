@@ -159,7 +159,7 @@ namespace SplashScreenTest02.Services
 					//https://localhost:44314/api/days/usergraphdays/1
 					var httpResponse = await Client.GetAsync(baseUri + "days/usergraphdays/" + userID);// + Preferences.Get(Constants.StoredUserID, 0).ToString());
 					Debug.WriteLine("		GetGraphDays() response.StatusCode is: " + httpResponse.StatusCode);
-					Debug.WriteLine(httpResponse.Content.ToString());
+					//Debug.WriteLine(httpResponse.Content.ToString());
 
 					switch (httpResponse.StatusCode)
 					{

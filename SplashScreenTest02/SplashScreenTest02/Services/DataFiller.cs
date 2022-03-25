@@ -5,6 +5,7 @@ using SplashScreenTest02.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
@@ -65,11 +66,20 @@ namespace SplashScreenTest02.Services
 
 		public async Task<ObservableCollection<GraphDay>> FillGraphDays()
 		{
-			var receivedJson = await ApiHelper.GetGraphDays(1);//Preferences.Get(Constants.StoredUserID, 0));
+			string receivedJson = string.Empty;
+			try
+			{
+				receivedJson = await ApiHelper.GetGraphDays(Preferences.Get(Constants.StoredUserID, 0));
+			}
+			catch (Exception ex)
+			{
+				Debug.WriteLine(ex.Message.ToString());
+			}
 		
 			//ObservableCollection<GraphDay> graphDays = new ObservableCollection<GraphDay>();
 			ObservableCollection<GraphDay> graphDays = new ObservableCollection<GraphDay>();
-			graphDays = JsonConvert.DeserializeObject<ObservableCollection<GraphDay>>(receivedJson);
+			if (receivedJson != string.Empty)
+				graphDays = JsonConvert.DeserializeObject<ObservableCollection<GraphDay>>(receivedJson);
 			//graphDays = JsonConvert.DeserializeObject<ObservableCollection<GraphDay>>(receivedJson);
 			return graphDays;
 		}

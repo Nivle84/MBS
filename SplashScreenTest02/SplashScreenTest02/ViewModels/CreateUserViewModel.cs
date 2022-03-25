@@ -38,9 +38,11 @@ namespace MBStest03.ViewModels
 
 		public async void CreateUserClicked(object obj)
 		{
-			if (CurrentUser.UserPassword == RepeatPassword)						//Tjek om de to kodeod er ens.
+			if (CurrentUser.UserEmail == CurrentUser.UserPassword)				//Tjek om email er brugt som kodeord.
+				Toast.MakeText(Android.App.Application.Context, "Email er ikke gyldigt som kodeord! Prøv igen.", ToastLength.Short).Show();
+			else if (CurrentUser.UserPassword == RepeatPassword)				//Tjek om de to kodeod er ens.
 			{
-				switch (await apiHelper.DoesUserExist(CurrentUser.UserEmail))	//Tjek om brugeren findes i forvejen
+				switch (await apiHelper.DoesUserExist(CurrentUser.UserEmail))	//Tjek om brugeren findes i forvejen i DB.
 				{
 					case true:	//Brugeren findes i forvejen
 						Toast.MakeText(Android.App.Application.Context, "Bruger findes allerede!", ToastLength.Short).Show();
@@ -51,19 +53,19 @@ namespace MBStest03.ViewModels
 						var apiResponseStatusCode = await apiHelper.ApiPoster("users/", CurrentUser);		//Post bruger til API.
 						switch (apiResponseStatusCode)
 						{
-							case HttpStatusCode.OK:
+							case HttpStatusCode.Created:						//Bruger blev oprettet, programmet navigerer tilbage til LoginPage.
 								Toast.MakeText(Android.App.Application.Context, "Bruger oprettet!", ToastLength.Long).Show();
 								await Shell.Current.GoToAsync(nameof(LoginPage));
 								break;
 							default:
-								Toast.MakeText(Android.App.Application.Context, "Der skete en fejl. Fejlkode: " + apiResponseStatusCode, ToastLength.Short).Show();
+								Toast.MakeText(Android.App.Application.Context, "Der skete en fejl. Fejlkode: " + apiResponseStatusCode, ToastLength.Long).Show();
 								break;
 						}
 						break;
 				}
 			}
 			else
-				Toast.MakeText(Android.App.Application.Context, "Kodeord matcher ikke! Prøv igen.", ToastLength.Short).Show();
+				Toast.MakeText(Android.App.Application.Context, "Kodeord matcher ikke! Prøv igen.", ToastLength.Long).Show();
 
 		}
 	}

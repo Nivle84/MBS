@@ -6,7 +6,8 @@
              mc:Ignorable="d"
              x:Class="MBStest03.Views.CreateUserPage"
 			 Shell.TabBarIsVisible="False"
-			 xmlns:viewmodel="clr-namespace:MBStest03.ViewModels">
+			 xmlns:viewmodel="clr-namespace:MBStest03.ViewModels"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit">
 	<ContentPage.Resources>
 		<viewmodel:CreateUserViewModel x:Key="cuVM_V"/>
 	</ContentPage.Resources>
@@ -39,9 +40,46 @@
 				<Image x:Name="imgDisp"/>
 				<Label Text="Mange Bække Små" FontSize="38" HorizontalTextAlignment="Center"/>
 				<Label Text="Opret bruger" FontSize="Large" HorizontalTextAlignment="Center"/>
-				<Entry HorizontalOptions="Fill" HorizontalTextAlignment="Center" Placeholder="E-mail" Text="{Binding CurrentUser.UserEmail, Mode=OneWayToSource}" />
-				<Entry HorizontalOptions="Fill" HorizontalTextAlignment="Center" Placeholder="Kodeord" IsPassword="True" Text="{Binding CurrentUser.UserPassword, Mode=OneWayToSource}"/>
-                <Entry HorizontalOptions="Fill" HorizontalTextAlignment="Center" Placeholder="Gentag kodeord" IsPassword="True" Text="{Binding Path=RepeatPassword, Mode=OneWayToSource}"/>
+                <Entry HorizontalOptions="Fill" HorizontalTextAlignment="Center" Placeholder="E-mail" Text="{Binding CurrentUser.UserEmail, Mode=OneWayToSource}">
+                    <Entry.Behaviors>
+                        <xct:EmailValidationBehavior
+                            InvalidStyle="{StaticResource Key=InvalidEntryStyle}">
+                        </xct:EmailValidationBehavior>
+                    </Entry.Behaviors>
+                </Entry>
+                <Entry HorizontalOptions="Fill" HorizontalTextAlignment="Center" Placeholder="Kodeord" IsPassword="True" Text="{Binding CurrentUser.UserPassword, Mode=OneWayToSource}">
+                    <Entry.Behaviors>
+                        <xct:MultiValidationBehavior
+                            InvalidStyle="{StaticResource Key=InvalidEntryStyle}"
+                            ValidStyle="{StaticResource Key=ValidEntryStyle}">
+                            <xct:TextValidationBehavior
+                                MinimumLength="8"/>
+                            <xct:CharactersValidationBehavior 
+                                CharacterType="UppercaseLetter"
+                                MinimumCharacterCount="1"/>
+                            <xct:CharactersValidationBehavior
+                                CharacterType="Digit"
+                                MinimumCharacterCount="1"/>
+                            
+                        </xct:MultiValidationBehavior>
+                    </Entry.Behaviors>
+                </Entry>
+                <Entry HorizontalOptions="Fill" HorizontalTextAlignment="Center" Placeholder="Gentag kodeord" IsPassword="True" Text="{Binding Path=RepeatPassword, Mode=OneWayToSource}">
+                    <Entry.Behaviors >
+                        <xct:MultiValidationBehavior
+                            InvalidStyle="{StaticResource Key=InvalidEntryStyle}"
+                            ValidStyle="{StaticResource Key=ValidEntryStyle}">
+                            <xct:TextValidationBehavior
+                                MinimumLength="8"/>
+                            <xct:CharactersValidationBehavior 
+                                CharacterType="UppercaseLetter"
+                                MinimumCharacterCount="1"/>
+                            <xct:CharactersValidationBehavior
+                                CharacterType="Digit"
+                                MinimumCharacterCount="1"/>
+                        </xct:MultiValidationBehavior>
+                    </Entry.Behaviors>
+                </Entry>
 				<Button Text="Opret bruger" HorizontalOptions="Center" Command="{Binding CreateUserCommand}"/>
 			</StackLayout>
 		</Grid>

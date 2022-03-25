@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Application xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="SplashScreenTest02.App">
+             x:Class="SplashScreenTest02.App"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit">
     <!--
         Define global resources and styles here, that apply to all pages in your app.
 	    https://www.xamarinhelp.com/xamarin-forms-page-templates/
@@ -37,6 +38,34 @@
                     </VisualStateGroupList>
                 </Setter>
             </Style>
+            <Style TargetType="Entry"
+                   x:Key="InvalidEntryStyle">
+                <Setter Property="TextColor" Value="{StaticResource Abort}"/>
+            </Style>
+            <Style TargetType="Entry"
+                   x:Key="ValidEntryStyle">
+                <Setter Property="TextColor" Value="{StaticResource SecondaryAccent1}"/>
+            </Style>
+            <!--<Style TargetType="Entry">
+                <Setter beh
+            </Style>-->
+            <Entry x:Key="EntryBehaviourPasswordValidation">
+                <Entry.Behaviors>
+                    <xct:MultiValidationBehavior
+                            InvalidStyle="{StaticResource Key=InvalidEntryStyle}"
+                            ValidStyle="{StaticResource Key=ValidEntryStyle}">
+                        <xct:TextValidationBehavior
+                                MinimumLength="8"/>
+                        <xct:CharactersValidationBehavior 
+                                CharacterType="UppercaseLetter"
+                                MinimumCharacterCount="1"/>
+                        <xct:CharactersValidationBehavior
+                                CharacterType="Digit"
+                                MinimumCharacterCount="1"/>
+                    </xct:MultiValidationBehavior>
+                </Entry.Behaviors>
+            </Entry>
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>
