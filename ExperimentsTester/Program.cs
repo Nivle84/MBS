@@ -30,8 +30,8 @@ namespace ExperimentsTester
 			//var testDays = TestGet();
 			//GetThoseDamnGraphDays();
 			//Task createData = Task.Run(async () => await CreateDummyData(1, DateTime.Now));
-			//CreateDummyData(1, DateTime.Now);
-			HashTest();
+			CreateDummyData(1, new DateTime(2022, 02, 02));
+			//HashTest();
 
 			//AnalyseDays();
 			//Influences = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Influence>>(Xamarin.Essentials.Preferences.Get(Constants.StoredInfluences, null));
@@ -170,7 +170,7 @@ namespace ExperimentsTester
 			List<Day> dummyDayList = new List<Day>();
 			DateTime dummyDate = startDate;
 
-			for (int i = 0; i < 40; i++)
+			for (int i = 0; i < 60; i++)
 			{
 				Day dummyDay = new Day() { UserID = userID};
 				dummyDay.MoodID = random.Next(1, 4);

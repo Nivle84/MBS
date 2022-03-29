@@ -13,6 +13,14 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
+            <Label Grid.Row="0"
+                   Grid.Column="0"
+                   Grid.ColumnSpan="2"
+                   HorizontalTextAlignment="Center"
+                   VerticalTextAlignment="End"
+                   Text="Største påvirkninger"
+                   FontSize="32"
+                   FontFamily="MbsFont"/>
             <BoxView Grid.Row="1"
                      Grid.Column="0"
                      BackgroundColor="{StaticResource SecondaryAccent1}"
@@ -24,6 +32,7 @@
             <Label Grid.Row="1"
                    Grid.Column="0"
                    FontSize="Large"
+                   FontFamily="MbsFont"
                    VerticalOptions="CenterAndExpand"
                    VerticalTextAlignment="Center"
                    HorizontalTextAlignment="Center"
@@ -33,6 +42,7 @@
                    Grid.Column="1"
                    Text="{Binding Path=NegativeInfluence}"
                    FontSize="Large"
+                   FontFamily="MbsFont"
                    VerticalOptions="CenterAndExpand"
                    VerticalTextAlignment="Center"
                    HorizontalTextAlignment="Center"/>

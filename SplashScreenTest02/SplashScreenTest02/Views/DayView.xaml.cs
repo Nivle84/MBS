@@ -64,42 +64,7 @@ namespace SplashScreenTest02.Views
             Debug.WriteLine("DayView(DayViewVM dayViewVM) called.");
             vm = dayViewVM;
             this.BindingContext = vm;
-			//row1.Height = 
-   //         row2.Height = GridLength.Auto;
-   //         row3.Height = GridLength.Auto;
-   //         row4.Height = GridLength.Auto;
-   //         row5.Height = GridLength.Auto;
-   //         row6.Height = GridLength.Auto;
-   //         row7.Height = GridLength.Auto;
-   //         row8.Height = GridLength.Auto;
-   //         row9.Height = GridLength.Auto;
-            //dvMainGrid.VerticalOptions = LayoutOptions.End;
-			/*
-            Grid mainGrid = new Grid()
-            {
-                RowDefinitions =
-                {
-                    new RowDefinition { Height = new GridLength(20)},
-                    new RowDefinition { Height = new GridLength((Double)GridUnitType.Star) },   //7 rækker
-                    new RowDefinition { Height = new GridLength((Double)GridUnitType.Star) },
-                    new RowDefinition { Height = new GridLength((Double)GridUnitType.Star) },
-                    new RowDefinition { Height = new GridLength((Double)GridUnitType.Star) },
-                    new RowDefinition { Height = new GridLength((Double)GridUnitType.Star) },
-                    new RowDefinition { Height = new GridLength((Double)GridUnitType.Star) },
-                    new RowDefinition { Height = new GridLength((Double)GridUnitType.Star) },
-                    new RowDefinition { Height = new GridLength(20)}
-                },
-                ColumnDefinitions =
-                {
-                    new ColumnDefinition { Width = new GridLength(20)},
-                    new ColumnDefinition { Width = new GridLength((Double)GridUnitType.Star)},
-                    new ColumnDefinition { Width = new GridLength((Double)GridUnitType.Star)},
-                    new ColumnDefinition { Width = new GridLength((Double)GridUnitType.Star)},
-                    new ColumnDefinition { Width = new GridLength(20)}
-                }
 
-            };
-            */
 			MoodClickedCommand = new Command(MoodClicked);
             InfluenceClickedCommand = new Command(InfluenceClicked);
             SaveThisDayCommand = new Command(SaveDayClicked);
@@ -118,10 +83,6 @@ namespace SplashScreenTest02.Views
 			dvMainGrid.RowDefinitions.Remove(row2);
 			dvMainGrid.RowDefinitions.Remove(row3);
 			dvMainGrid.RowDefinitions.Remove(row4);
-			//dvMainGrid.RowDefinitions.Remove(row5);
-			//dvMainGrid.RowDefinitions.Remove(row7);
-			//dvMainGrid.RowDefinitions.Remove(row8);
-			//dvMainGrid.RowDefinitions.Remove(row9);
 			Debug.WriteLine("Rows removed.");
             rownumber = 0;
             foreach (var row in dvMainGrid.RowDefinitions)
@@ -136,20 +97,6 @@ namespace SplashScreenTest02.Views
 			};
 
             row9.Height = GridLength.Auto;
-
-            //Column, Column + ColumnSpan, Row, Row + RowSpan
-            //Det er til starten af kolonne/række nummer whatever, og ikke span over X kolonner/rækker.
-            //dvMainGrid.Children.Add(testBox, 0, 5, 6, 7);
-            //dvMainGrid.Children.Add(new BoxView() { BackgroundColor = Color.LawnGreen, Opacity = 50 },            0, 5, 1, 2);
-            //dvMainGrid.Children.Add(new BoxView() { BackgroundColor = Color.LightGoldenrodYellow, Opacity = 50 }, 0, 5, 2, 3);
-            //dvMainGrid.Children.Add(new BoxView() { BackgroundColor = Color.Indigo, Opacity = 50 },               0, 5, 3, 4);
-            //dvMainGrid.Children.Add(new BoxView() { BackgroundColor = Color.DimGray, Opacity = 50 },              0, 5, 4, 5);
-            //dvMainGrid.Children.Add(new BoxView() { BackgroundColor = Color.Blue, Opacity = 50 },                 0, 5, 5, 6);
-            //dvMainGrid.Children.Add(new BoxView() { BackgroundColor = Color.SteelBlue, Opacity = 50 },            0, 5, 6, 7);
-            //dvMainGrid.Children.Add(new BoxView() { BackgroundColor = Color.Firebrick, Opacity = 50 },            0, 5, 7, 8);
-            //dvMainGrid.Children.Add(new BoxView() { BackgroundColor = Color.Tomato, Opacity = 50 },               0, 5, 8, 9);
-            //Label infLabels_CB = (Label)influenceCollectionView.FindByName("infLabels");
-            //infLabels_CB.
 
             Label dayIDLabel = new Label()
             {
@@ -221,7 +168,13 @@ namespace SplashScreenTest02.Views
                 Debug.WriteLine(ex.Message.ToString());
             }
             if (daySaved)
+			{
+                influenceCollectionView.IsVisible = true;
+                SelectedInfluence.IsVisible = false;
+                noteEditor.IsVisible = false;
+                GoBackButton.IsVisible = false;
                 await Shell.Current.GoToAsync("///MyStreamPage");
+			}
         }
     }
 }

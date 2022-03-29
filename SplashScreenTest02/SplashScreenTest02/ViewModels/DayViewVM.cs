@@ -165,6 +165,8 @@ namespace MBStest03.ViewModels
 					Date = DateTime.Now.Date,
 					UserID = Preferences.Get(Constants.StoredUserID, 0)
 				};
+				ThisMood = new Mood();
+				ThisInfluence = new Influence();
 
 				return true;
 			}
