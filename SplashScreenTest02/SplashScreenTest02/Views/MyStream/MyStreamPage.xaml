@@ -40,14 +40,14 @@
 						 Grid.Column="1"
 						 Grid.RowSpan="4"
 						 Grid.ColumnSpan="3"/>
-			<ContentView Content="{StaticResource msiV}"
+            <ContentView Content="{StaticResource msiV}"
                          BindingContext="{Binding Source=msVM.MsInfVM}"
 						 x:Name="msInfluencesView"
 						 Grid.Row="7"
 						 Grid.Column="1"
 						 Grid.RowSpan="2"
 						 Grid.ColumnSpan="3"/>
-						 <!--BindingContext="{Binding Source=msVM.MsInfVM}"-->
-		</Grid>
+        </Grid>
 	</ContentPage.Content>
 </ContentPage>
+    

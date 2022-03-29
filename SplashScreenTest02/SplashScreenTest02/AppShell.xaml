@@ -17,17 +17,13 @@
             <Style x:Key="BaseStyle" TargetType="Element">
                 <Setter Property="Shell.BackgroundColor" Value="{StaticResource Primary}" />
                 <Setter Property="Shell.ForegroundColor" Value="{StaticResource PrimaryAccent1}" />
-                <!--<Setter Property="Shell.ForegroundColor" Value="White" />-->
                 <Setter Property="Shell.TitleColor" Value="{StaticResource PrimaryAccent2}" />
-                <!--<Setter Property="Shell.TitleColor" Value="White" />-->
                 <Setter Property="Shell.DisabledColor" Value="#B4FFFFFF" />
                 <Setter Property="Shell.UnselectedColor" Value="#95FFFFFF" />
                 <Setter Property="Shell.TabBarBackgroundColor" Value="{StaticResource PrimaryAccent1}" />
-				<Setter Property="Shell.TabBarForegroundColor" Value="#95FFFFFF"/>
-                <!--<Setter Property="Shell.TabBarForegroundColor" Value="White"/>-->
-				<Setter Property="Shell.TabBarUnselectedColor" Value="{StaticResource PrimaryAccent2}"/>
-				<Setter Property="Shell.TabBarTitleColor" Value="#95FFFFFF"/>
-                <!--<Setter Property="Shell.TabBarTitleColor" Value="White"/>-->
+                <Setter Property="Shell.TabBarForegroundColor" Value="#95FFFFFF"/>
+                <Setter Property="Shell.TabBarUnselectedColor" Value="{StaticResource PrimaryAccent2}"/>
+                <Setter Property="Shell.TabBarTitleColor" Value="#95FFFFFF"/>
             </Style>
             <Style TargetType="TabBar" BasedOn="{StaticResource BaseStyle}" />
             <Style TargetType="FlyoutItem" BasedOn="{StaticResource BaseStyle}" />
@@ -44,31 +40,19 @@
 		<Tab Title="Min Å" Icon="iconmystream.png">
 			<ShellContent ContentTemplate="{DataTemplate local2:MyStreamPage}" Route="MyStreamPage" />
 		</Tab>
-		<Tab Title="Historik" Icon="iconhistory.png">
-			<ShellContent ContentTemplate="{DataTemplate local2:HistoryPage}" Route="HistoryPage"/>
-		</Tab>
-		<!--<ShellContent Title="Registrér" Icon="iconregister.png" ContentTemplate="{DataTemplate local2:MainPage}" />
-		<ShellContent Title="Min Å" Icon="iconmystream.png" ContentTemplate="{DataTemplate local2:MyStreamPage}"/>
-		<ShellContent Title="Historik" Icon="iconhistory.png" ContentTemplate="{DataTemplate local2:HistoryPage}"/>-->
-		
-		<!--<ShellContent Title="About" Icon="icon_about.png" Route="AboutPage" ContentTemplate="{DataTemplate local:AboutPage}" />
-        <ShellContent Title="Browse" Icon="icon_feed.png" ContentTemplate="{DataTemplate local:ItemsPage}" />-->
+        <Tab Title="Historik" Icon="iconhistory.png">
+            <ShellContent ContentTemplate="{DataTemplate local2:HistoryPage}" Route="HistoryPage"/>
+        </Tab>
     </TabBar>
 
 	<TabBar>
 		<ShellContent Route="LoginPage" ContentTemplate="{DataTemplate local2:LoginPage}"/>
 	</TabBar>
-	<TabBar>
-		<ShellContent Route="CreateUserPage" ContentTemplate="{DataTemplate local2:CreateUserPage}"/>
-	</TabBar>
-	<!--<ShellItem Route="login">
-		<ShellContent ContentTemplate="{DataTemplate local2:LoginPage}" />
-	</ShellItem>
-	<ShellItem Route="createUser">
-		<ShellContent ContentTemplate="{DataTemplate local2:CreateUserPage}"/>
-	</ShellItem>-->
-	
-	<!--
+    <TabBar>
+        <ShellContent Route="CreateUserPage" ContentTemplate="{DataTemplate local2:CreateUserPage}"/>
+    </TabBar>
+
+    <!--
         If you would like to navigate to this content you can do so by calling
         await Shell.Current.GoToAsync("//LoginPage");
     -->

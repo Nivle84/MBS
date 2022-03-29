@@ -73,12 +73,12 @@ namespace SplashScreenTest02.ViewModels
 			};
 			*/
 			#endregion
-			//Task GetGraphDaysTask = Task.Run(async () => GraphDays = await MyFiller.FillGraphDays());
-			//GetGraphDaysTask.Wait();
-			GraphDayDummyData();
+			Task GetGraphDaysTask = Task.Run(async () => GraphDays = await MyFiller.FillGraphDays());
+			GetGraphDaysTask.Wait();
+			//GraphDayDummyData();
 
-					//TODO TODO TODO TODO
-					//Lav standard constructors så view'et i det mindste ikke crasher ved ingen GraphDays
+			//TODO TODO TODO TODO
+			//Lav standard constructors så view'et i det mindste ikke crasher ved ingen GraphDays
 			MsGraphVM = new MyStreamGraphViewModel(GraphDays);
 			MsInfVM = new MyStreamInfluencesViewModel(GraphDays);
 		}
