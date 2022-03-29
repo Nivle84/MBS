@@ -23,7 +23,7 @@ namespace SplashScreenTest02.ViewModels
 			CreateChartDataPoints(graphDaysCollection);
 		}
 
-		public void CreateChartDataPoints(ObservableCollection<GraphDay> dataPointsSource)
+		private void CreateChartDataPoints(ObservableCollection<GraphDay> dataPointsSource)
 		{
 			foreach (GraphDay graphDay in dataPointsSource)
 			{

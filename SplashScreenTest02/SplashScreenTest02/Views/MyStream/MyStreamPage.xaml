@@ -11,12 +11,6 @@
 		<view1:MyStreamInfluencesView x:Key="msiV" x:Name="msiV_CB"/>
 	</ContentPage.Resources>
 	<ContentPage.Content>
-		<!--<Label Text="Vås" FontSize="Large"/>-->
-		<!--<StackLayout>
-            <Label Text="Min Å placeholder!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>-->
 		<Grid BindingContext="{StaticResource msVM}" BackgroundColor="{StaticResource PrimaryBackground}">
 			<Grid.RowDefinitions>
 				<RowDefinition Height="20"/>

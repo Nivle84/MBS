@@ -12,8 +12,6 @@ namespace SplashScreenTest02.ViewModels
 {
 	public class MyStreamInfluencesViewModel : BaseViewModel
 	{
-		//public string TestText { get; set; }
-		//public string YANTestText { get; set; }
 		public string PositiveInfluence { get; set; }
 		public string NegativeInfluence { get; set; }
 		private ObservableCollection<Influence> GreatestInfluences { get; set; }
@@ -62,7 +60,7 @@ namespace SplashScreenTest02.ViewModels
 			NegativeInfluence = GreatestInfluences[1].InfluenceName;
 		}
 
-		public async void AnalyseDays()
+		private void AnalyseDays()
 		{
 			var groupDaysByMood = GraphDays //Inddeler i tre grupper, med en key-værdi for hver gruppe værende MoodID
 				.GroupBy(d => d.MoodID)     //(altså én gruppe med alle objekter med MoodID 1, én gruppe med alle objekter med MoodID 2, osv.)
@@ -87,10 +85,10 @@ namespace SplashScreenTest02.ViewModels
 			};
 		}
 
-		public void AddInfluenceToDictionary(int influenceIDToAdd, int moodID)
+		private void AddInfluenceToDictionary(int influenceIDToAdd, int moodID)
 		{
 			int counter = 0;
-			switch (moodID)	//En case per gruppe
+			switch (moodID)	//En case per relevant gruppe
 			{
 				case 1:
 					GoodInfluenceDictionary.TryGetValue(influenceIDToAdd, out counter);	//Output'er value'en associeret med key'en for det pågældende InfluenceID til counter variablen.

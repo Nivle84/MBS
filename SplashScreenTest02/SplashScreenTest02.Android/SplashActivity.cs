@@ -43,9 +43,9 @@ namespace SplashScreenTest02.Droid
 		{
 			//throw new NotImplementedException();
 			//StartActivity(new Intent(Application.Context, typeof(MainActivity)));
-			//mainAct = new Intent(this, typeof(MainActivity));
+			mainAct = new Intent(this, typeof(MainActivity));
 			//mainAct.PutExtra();
-			//animation.Cancel();
+			animation.Cancel();
 		}
 
 		public void OnAnimationRepeat(Animator animation)
@@ -56,9 +56,9 @@ namespace SplashScreenTest02.Droid
 		{
 			PreLaunch preLaunch = new PreLaunch();
 			//Bundle bundle = preLaunch.GatherBundle();
-			mainAct = new Intent(this, typeof(MainActivity));
+			//mainAct = new Intent(this, typeof(MainActivity));
 			//mainAct.PutExtra("preLaunchBundle", bundle);
-			animation.Cancel(); //Man når desværre ikke at se den fine loadingskærm hvis cancel sker hernede.
+			//animation.Cancel(); //Man når desværre ikke at se den fine loadingskærm hvis cancel sker hernede.
 		}
 
 		protected override void OnCreate(Bundle savedInstanceState)
