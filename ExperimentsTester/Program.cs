@@ -199,9 +199,14 @@ namespace ExperimentsTester
 				Console.WriteLine(item.Date);
 			}
 			var json = JsonConvert.SerializeObject(dummyDayList, Formatting.None);
-			Console.WriteLine(json);
 
-			await apiHelper.ApiPoster("days/postmultiple", dummyDayList);
+			//TILFØJELSE D. 29/03-22
+			//Jævnfør "MBS - Bilag - Projektlog" d. 15/03-22
+			//så fungerer denne metode ikke (intet bliver posted).
+			//Workaround er at kopiere nedenstående print fra konsollen og poste til "days/postmultiple/" via Postman el. lign.
+			Console.WriteLine(json);
+			
+			await apiHelper.ApiPoster("days/postmultiple/", dummyDayList);
 			return true;
 		}
 
