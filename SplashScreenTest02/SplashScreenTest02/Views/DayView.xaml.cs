@@ -18,7 +18,7 @@ namespace SplashScreenTest02.Views
         public Command MoodClickedCommand { get; }
         public Command InfluenceClickedCommand { get; }
         public Command SaveDayClickedCommand { get; }
-        public Command SequenceIncreaseCommand { get; }
+        //public Command SequenceIncreaseCommand { get; }
         public Command SaveThisDayCommand { get; }
         public Command GoBackCommand { get; }
 		public GridLength rowHeight { get; set; }
@@ -181,7 +181,7 @@ namespace SplashScreenTest02.Views
                 SelectedInfluence.IsVisible = true;         //således at de ikke bare skjules men "unloades" fra hukommelsen.
                 noteEditor.IsVisible = true;                //I og med at programmet ikke er større end det er,
                 GoBackButton.IsVisible = true;              //synes jeg dog at det er acceptabelt
-            }                                               //(load-tid stadig inden for kravspec).
+            }                                               //(load-tid stadig inden for kravspec i skrivende stund).
         }
 
         private void InfluenceClicked(object obj)

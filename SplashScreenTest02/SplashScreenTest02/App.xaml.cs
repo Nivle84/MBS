@@ -29,7 +29,7 @@ namespace SplashScreenTest02
 			var culture = CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("da-DK");
 			SetLocale(culture);
 			//Preferences.Set(Constants.StoredUserID, 0);
-			if (Preferences.Get(Constants.StoredUserID, 0) != 0)    //Hvis der findes et ID, naviger til Login, ellers naviger til main.
+			if (Preferences.Get(Constants.StoredUserID, 0) != 0)    //Hvis der ikkr findes et ID, naviger til Login, ellers naviger til main.
 				await Shell.Current.GoToAsync("///main");
 			else
 				await Shell.Current.GoToAsync("LoginPage");
