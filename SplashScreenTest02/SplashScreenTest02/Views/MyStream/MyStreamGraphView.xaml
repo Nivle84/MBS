@@ -6,12 +6,9 @@
 			 xmlns:viewmodel="clr-namespace:SplashScreenTest02.ViewModels"
 			 x:Name="this">
 	<ContentView.Content>
-		<StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" >
-			<!--<Label Text="{Binding Path=YANTestText}" FontSize="Medium" TextColor="HotPink"/>-->
-			<!--<Label Text="msgV XAML Test Tekst. Chart bør ses herunder." FontSize="Medium"/>-->
-			<chart:SfChart x:Name="sfChartMyStream" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"
-						   BackgroundColor="{StaticResource PrimaryBackground}"
-                           >
+        <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" >
+            <chart:SfChart x:Name="sfChartMyStream" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"
+						   BackgroundColor="{StaticResource PrimaryBackground}">
 				<chart:SfChart.PrimaryAxis>
 					<chart:CategoryAxis />
 				</chart:SfChart.PrimaryAxis>

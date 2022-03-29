@@ -77,8 +77,8 @@ namespace SplashScreenTest02.ViewModels
 			GetGraphDaysTask.Wait();
 			//GraphDayDummyData();
 
-			//TODO TODO TODO TODO
-			//Lav standard constructors så view'et i det mindste ikke crasher ved ingen GraphDays
+					//TODO TODO TODO TODO
+					//Lav standard constructors så view'et i det mindste ikke crasher ved ingen GraphDays
 			MsGraphVM = new MyStreamGraphViewModel(GraphDays);
 			MsInfVM = new MyStreamInfluencesViewModel(GraphDays);
 		}

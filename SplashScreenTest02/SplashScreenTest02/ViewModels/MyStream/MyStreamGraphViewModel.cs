@@ -15,10 +15,6 @@ namespace SplashScreenTest02.ViewModels
 		public ObservableCollection<ChartDataPoint> pointsForChart { get; set; }
 		public MyStreamGraphViewModel(ObservableCollection<GraphDay> graphDaysCollection)
 		{
-			//Debug.WriteLine("Start of MyStreamGraphViewModel ctor.");
-			//if (graphDaysCollection.Count > 0)
-			//	Debug.WriteLine("Parameter graphDaysCollection.Count = " + graphDaysCollection.Count);
-
 			pointsForChart = new ObservableCollection<ChartDataPoint>();
 			CreateChartDataPoints(graphDaysCollection);
 		}
