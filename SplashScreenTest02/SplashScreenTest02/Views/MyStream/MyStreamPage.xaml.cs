@@ -1,5 +1,4 @@
-﻿
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace MBStest03.Views
@@ -16,12 +15,8 @@ namespace MBStest03.Views
         public MyStreamPage()
         {
             InitializeComponent();
-			//msGraphView.Content = msgV_CB;
 			msGraphView.BindingContext = msVM_CB.MsGraphVM;
 			msInfluencesView.BindingContext = msVM_CB.MsInfVM;
-
-
-
 		}
     }
 }

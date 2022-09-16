@@ -5,35 +5,35 @@
 			 xmlns:viewmodel="clr-namespace:SplashScreenTest02.ViewModels"
 			 xmlns:view1="clr-namespace:SplashScreenTest02.Views.MyStream"
 			 xmlns:view2="clr-namespace:SplashScreenTest02.Views">
-	<ContentPage.Resources>
-		<viewmodel:MyStreamViewModel x:Key="msVM" x:Name="msVM_CB"/>
-		<view2:MyStreamGraphView x:Key="msgV" x:Name="msgV_CB"/>
-		<view1:MyStreamInfluencesView x:Key="msiV" x:Name="msiV_CB"/>
-	</ContentPage.Resources>
-	<ContentPage.Content>
-		<Grid BindingContext="{StaticResource msVM}" BackgroundColor="{StaticResource PrimaryBackground}">
-			<Grid.RowDefinitions>
-				<RowDefinition Height="20"/>
-				<RowDefinition Height="*"/>
-				<RowDefinition Height="*"/>
-				<RowDefinition Height="*"/>
-				<RowDefinition Height="*"/>
-				<RowDefinition Height="*"/>
-				<RowDefinition Height="*"/>
-				<RowDefinition Height="*"/>
-				<RowDefinition Height="*"/>
-				<RowDefinition Height="20"/>
-			</Grid.RowDefinitions>
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="20"/>
-				<ColumnDefinition Width="*"/>
-				<ColumnDefinition Width="*"/>
-				<ColumnDefinition Width="*"/>
-				<ColumnDefinition Width="20"/>
-			</Grid.ColumnDefinitions>
-			<!--Denne implementering lader til at være "decoupled" af en art.
+    <ContentPage.Resources>
+        <viewmodel:MyStreamViewModel x:Key="msVM" x:Name="msVM_CB"/>
+        <view1:MyStreamInfluencesView x:Key="msiV" x:Name="msiV_CB"/>
+        <view2:MyStreamGraphView x:Key="msgV" x:Name="msgV_CB"/>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid BindingContext="{StaticResource msVM}" BackgroundColor="{StaticResource PrimaryBackground}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="20"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="20"/>
+            </Grid.ColumnDefinitions>
+            <!--Denne implementering lader til at være "decoupled" af en art.
 				Altså er det ikke en resource som XAML er "klar over" og kan se.-->
-			<ContentView Content="{StaticResource msgV}"
+            <ContentView Content="{StaticResource msgV}"
 						 BindingContext="{Binding Source=msVM.MsGraphVM}"
 						 x:Name="msGraphView"
 						 Grid.Row="3"
@@ -48,6 +48,5 @@
 						 Grid.RowSpan="2"
 						 Grid.ColumnSpan="3"/>
         </Grid>
-	</ContentPage.Content>
+    </ContentPage.Content>
 </ContentPage>
-    
