@@ -54,7 +54,7 @@ namespace SplashScreenTest02.ViewModels
 		{
 			GraphDays = graphDays;
 			GreatestInfluences = new ObservableCollection<Influence>();
-			Influences = MyFiller.GetInfluences();//Newtonsoft.Json.JsonConvert.DeserializeObject<List<Influence>>(Xamarin.Essentials.Preferences.Get(Constants.StoredInfluences, null));
+			Influences = MyFiller.GetInfluences();
 			AnalyseDays();
 			PositiveInfluence = GreatestInfluences[0].InfluenceName;
 			NegativeInfluence = GreatestInfluences[1].InfluenceName;
@@ -91,8 +91,10 @@ namespace SplashScreenTest02.ViewModels
 			switch (moodID)	//En case per relevant gruppe
 			{
 				case 1:
-					GoodInfluenceDictionary.TryGetValue(influenceIDToAdd, out counter);	//Output'er value'en associeret med key'en for det pågældende InfluenceID til counter variablen.
-					GoodInfluenceDictionary[influenceIDToAdd] = ++counter;				//Forøger værdien med 1 og indsætter den på den samme plads i dictionary'en.
+					GoodInfluenceDictionary.TryGetValue(influenceIDToAdd, out counter);
+					//Output'er value'en associeret med key'en for det pågældende InfluenceID til counter variablen.
+					GoodInfluenceDictionary[influenceIDToAdd] = ++counter;
+					//Forøger værdien med 1 og indsætter den på den samme plads i dictionary'en.
 					break;
 				case 3:
 					BadInfluenceDictionary.TryGetValue(influenceIDToAdd, out counter);
@@ -104,9 +106,11 @@ namespace SplashScreenTest02.ViewModels
 		}
 
 		private Influence FindGreatestInfluences(Dictionary<int, int> influenceDictionary)
-		{																		//hvis largest er størst ? behold largest : ellers set value til next, vælg key tilhørende value
-			int thisInfluenceID = influenceDictionary.Aggregate((largest, next) => largest.Value > next.Value ? largest : next).Key;	//Løber gennem dictionary'en og sammenligner værdierne. Key'en associeret med den højeste værdi udvælges.
-			Influence greatestInfluence = Influences.Where(i => i.InfluenceID == thisInfluenceID).FirstOrDefault();	//Influence'en med ID'et fundet ovenover udvælges og returneres.
+		{	//hvis largest er størst ? behold largest : ellers set value til next, vælg key tilhørende value
+			int thisInfluenceID = influenceDictionary.Aggregate((largest, next) => largest.Value > next.Value ? largest : next).Key;
+			//Løber gennem dictionary'en og sammenligner værdierne. Key'en associeret med den højeste værdi udvælges.
+			Influence greatestInfluence = Influences.Where(i => i.InfluenceID == thisInfluenceID).FirstOrDefault();
+			//Influence'en med ID'et fundet ovenover udvælges og returneres.
 			return greatestInfluence;
 		}
 	}

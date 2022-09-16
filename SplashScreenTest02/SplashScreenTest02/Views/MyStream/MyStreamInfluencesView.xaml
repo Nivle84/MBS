@@ -37,7 +37,6 @@
                    VerticalTextAlignment="Center"
                    HorizontalTextAlignment="Center"
                    Text="{Binding Path=PositiveInfluence}" />
-            <!--Text="{Binding Path=GreatestInfluences[0].InfluenceName}"/>-->
             <Label Grid.Row="1"
                    Grid.Column="1"
                    Text="{Binding Path=NegativeInfluence}"
@@ -46,7 +45,6 @@
                    VerticalOptions="CenterAndExpand"
                    VerticalTextAlignment="Center"
                    HorizontalTextAlignment="Center"/>
-
         </Grid>
 	</ContentView.Content>
 </ContentView>

@@ -34,14 +34,12 @@
             <!--Denne implementering lader til at være "decoupled" af en art.
 				Altså er det ikke en resource som XAML er "klar over" og kan se.-->
             <ContentView Content="{StaticResource msgV}"
-						 BindingContext="{Binding Source=msVM.MsGraphVM}"
 						 x:Name="msGraphView"
 						 Grid.Row="3"
 						 Grid.Column="1"
 						 Grid.RowSpan="4"
 						 Grid.ColumnSpan="3"/>
             <ContentView Content="{StaticResource msiV}"
-                         BindingContext="{Binding Source=msVM.MsInfVM}"
 						 x:Name="msInfluencesView"
 						 Grid.Row="7"
 						 Grid.Column="1"
